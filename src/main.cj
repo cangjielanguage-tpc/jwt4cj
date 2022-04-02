@@ -1,0 +1,6 @@
+
+import com.itouxin.jwt.*
+
+func main() {
+    println(JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJ0b29sdHQiOiJodHRwczovL3Rvb2x0dC5jb20ifSx7ImpqaiI6IjEyMzQifV0sImlhdCI6MTY0ODg5MzEzMSwiZXhwIjoxNjUwMDM4Mzk5LCJhdWQiOiIiLCJpc3MiOiJpdG91eGluIiwic3ViIjoiIn0.CCjw3szYDNUnRkuEnI6RuecBzNpTbGlWsfdiEIf5ggk").toString())
+}

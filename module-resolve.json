@@ -1,0 +1,16 @@
+{
+  "resolves": [
+    {
+      "organization": "jwt",
+      "name": "jwt",
+      "path": "./",
+      "version": "1.0.0",
+      "hash": "-2010631156335563878",
+      "output_type": "executable",
+      "command_option": "",
+      "requires": [],
+      "package_requires": {},
+      "foreign_requires": {}
+    }
+  ]
+}
