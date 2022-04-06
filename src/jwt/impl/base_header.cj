@@ -29,6 +29,11 @@ public class BaseHeader <: Header {
     }
 
 
+    public func toString(): String {
+        return this.serialize().toJson().toString()
+    }
+
+
     public func serialize(): DataModel {
         return DataModelStruct().add(field<String>("alg", algorithm)).add(field<String> ("typ", `type`))
     }

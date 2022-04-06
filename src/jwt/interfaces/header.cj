@@ -2,7 +2,7 @@ package jwt.interfaces
 
 from std import serialization.*
 
-public interface Header <: Serializable<Header> {
+public interface Header <: Serializable<Header> & ToString {
     /**
      *
      * 

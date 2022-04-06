@@ -5,7 +5,7 @@ from std import collection.*
 import jwt.common.*
 
 
-public class BasePayload <: Payload {
+public class BasePayload <: Payload & ToString {
     private var issuer: String = ""
     private var subject: String = ""
     private var audience: String = ""
@@ -13,7 +13,7 @@ public class BasePayload <: Payload {
     private var notBefore: UInt64 = 0
     private var issuedAt: UInt64 = 0
     private var id: String = ""
-    // TODO 
+
     private var claims: HashMap<String, Claim> = HashMap()
 
     public init() {
@@ -90,6 +90,11 @@ public class BasePayload <: Payload {
 
     public func setClaims(claims: HashMap<String, Claim>) {
         this.claims.putAll(claims)
+    }
+
+
+    public func toString(): String {
+        return this.serialize().toJson().toString()
     }
 
 

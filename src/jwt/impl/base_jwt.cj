@@ -29,16 +29,31 @@ public class BaseJWT <: DecodeJWT & Header & Payload {
     }
 
     
-    public func getHeader(): String {
+    public func getEncodedHeader(): String {
         return this.parts[0]
     }
 
-    public func getPayload(): String {
+
+    public func getHeader(): Header {
+        return this.header
+    }
+
+    public func getEncodedPayload(): String {
         return this.parts[1]
+    }
+
+
+    public func getPayload(): Payload {
+        return this.payload
     }
 
     public func getSignature():String {
         return this.parts[2]
+    }
+
+
+    public func getToken(): String {
+        return "${parts[0]}.${parts[1]}.${parts[2]}"
     }
 
 

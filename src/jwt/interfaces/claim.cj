@@ -2,7 +2,7 @@ package jwt.interfaces
 
 from encoding import json.*
 
-public interface Claim {
+public interface Claim /**<: Serializable<Claim> */{
 
     func getValue(): JsonValue
 
@@ -17,7 +17,5 @@ public interface Claim {
 
 
     func asFloat64(): Float64
-
-    //func asObject<T>(): T
 
 }

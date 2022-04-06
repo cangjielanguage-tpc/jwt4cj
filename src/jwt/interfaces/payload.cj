@@ -5,7 +5,7 @@ from std import collection.*
 from std import serialization.*
 
 
-public interface Payload <: Serializable<Payload> {
+public interface Payload <: Serializable<Payload> & ToString {
     func getIssuer(): String
     func getSubject(): String
     func getAudience(): String

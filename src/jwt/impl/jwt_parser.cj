@@ -11,7 +11,7 @@ public class JWTParser {
 
 
     public static func parseHeader(header: String): Header {
-        // println(json.toJsonString())
+        // println(header.toString())
         return BaseHeader.deserialize(DataModel.fromJson(JsonValue.fromStr(base64UrlDecode(header))))
     }
 
