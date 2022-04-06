@@ -1,6 +1,8 @@
 package jwt.interfaces
 
-public interface Header {
+from std import serialization.*
+
+public interface Header <: Serializable<Header> {
     /**
      *
      * 

@@ -1,6 +1,9 @@
 
 import jwt.*
+import jwt.interfaces.*
 
 func main() {
-    println(JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJ0b29sdHQiOiJodHRwczovL3Rvb2x0dC5jb20ifSx7ImpqaiI6IjEyMzQifV0sImlhdCI6MTY0ODg5MzEzMSwiZXhwIjoxNjUwMDM4Mzk5LCJhdWQiOiIiLCJpc3MiOiJpdG91eGluIiwic3ViIjoiIn0.CCjw3szYDNUnRkuEnI6RuecBzNpTbGlWsfdiEIf5ggk").toString())
+    let jwt: DecodeJWT = JWT.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.UQmqAUhUrpDVV2ST7mZKyLTomVfg7sYkEjmdDI5XF8Q")
+    println(jwt.getAlgorithm())
+    println(jwt.getClaim("admin").asBool())
 }

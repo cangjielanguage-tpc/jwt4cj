@@ -62,15 +62,15 @@ public class BaseJWT <: DecodeJWT & Header & Payload {
         return this.payload.getAudience()
     }
 
-    public func getExpiresAt(): Time {
+    public func getExpiresAt(): UInt64 {
         return this.payload.getExpiresAt()
     }
 
-    public func getNotBefore(): Time {
+    public func getNotBefore(): UInt64 {
         return this.payload.getNotBefore()
     }
 
-    public func getIssuedAt(): Time {
+    public func getIssuedAt(): UInt64 {
         return this.payload.getIssuedAt()
     }
 
@@ -90,5 +90,20 @@ public class BaseJWT <: DecodeJWT & Header & Payload {
     public func toString(): String {
         return this.parts[0]
     }
+
+
+    public func serialize(): DataModel {
+        return DataModelStruct().add(field<String>("parts", ""))
+    }
+    
+    public static func deserialize(dm: DataModel): DecodeJWT {
+        var dms = match (dm) {
+            case data: DataModelStruct => data
+            case _ => throw Exception("this data is not DataModelStruct") 
+        }
+    
+        return BaseJWT.fromString(String.deserialize(dms.get("parts")))
+    }
+
 
 }

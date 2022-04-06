@@ -2,6 +2,7 @@ package jwt.impl
 
 from encoding import json.*
 from encoding import base64.*
+from std import collection.*
 
 import jwt.interfaces.*
 
@@ -10,19 +11,13 @@ public class JWTParser {
 
 
     public static func parseHeader(header: String): Header {
-        let json: JsonObject = JsonValue.fromStr(base64UrlDecode(header)).asObject().getOrThrow()
         // println(json.toJsonString())
-        let h = BaseHeader(json.get("alg").toString())
-        return h
+        return BaseHeader.deserialize(DataModel.fromJson(JsonValue.fromStr(base64UrlDecode(header))))
     }
 
     public static func parsePayload(payload: String): Payload {
-        println(base64UrlDecode(payload))
-        let json: JsonObject = JsonValue.fromStr(base64UrlDecode(payload)).asObject().getOrThrow()
-        println(json.toJsonString())
-        let p = BasePayload()
-        
-        return p
+        // println(JsonValue.fromStr(base64UrlDecode(payload)))
+        return BasePayload.deserialize(DataModel.fromJson(JsonValue.fromStr(base64UrlDecode(payload))))
     }
 
 
