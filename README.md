@@ -1,7 +1,7 @@
 # jwt
 
 #### 介绍
-自研语言jwt组件库
+该项目通过自研仓颉语言实现jwt(JSON Web Token)的组件，该组件库遵循[RFC7519](https://datatracker.ietf.org/doc/html/rfc7519)协议
 
 #### 软件架构
 软件架构说明
@@ -22,9 +22,12 @@
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+该项目当前处于`开发阶段`,可通过cpm（Cangjie Package Manager）构建、运行并测试该项目。
+```bash
+git clone https://gitee.com/HW-PLLab/jwt.git
+cd jwt
+cpm build && ./bin/main
+```
 
 #### 参与贡献
 
