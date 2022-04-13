@@ -1,6 +1,6 @@
 package jwt.exception
 
-public class JWTDecodeException <: RuntimeException {
+public class JWTValidationException <: RuntimeException {
     public init(message: String) {
         super(message);
     }

@@ -8,6 +8,7 @@ public interface Header <: Serializable<Header> & ToString {
      * 
      */
     func getType(): String
+    
     func getAlgorithm(): String
 
 }

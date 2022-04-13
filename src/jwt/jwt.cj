@@ -18,5 +18,10 @@ public class JWT {
     public static func verify(jwt: DecodeJWT): DecodeJWT {
         return jwt
     }
+
+
+    public static func builder(): JWTBuilder {
+        return JWTBuilder()
+    }
     
 }
