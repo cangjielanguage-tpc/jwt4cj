@@ -1,5 +1,8 @@
 package jwt.algorithm
 
+//from crypto import enc.*
+from encoding import base64.*
+
 public class HmacAlgorithm <: Algorithm {
     private var secret: String
 
@@ -15,10 +18,11 @@ public class HmacAlgorithm <: Algorithm {
 
 
     public func sign(content: Array<UInt8>): Array<UInt8> {
+        // var sign: String = HMac.hmacSHA256(secret.toUtf8Array(), data)
         return Array<UInt8>(20, {i => UInt8(97 + i)})
     }
 
-    public func verify(jwt: DecodeJWT): Unit {
-        
+   public func verify(content: Array<UInt8>): Array<UInt8> {
+        return sign(content)
     }
 }

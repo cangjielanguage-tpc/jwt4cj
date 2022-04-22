@@ -9,9 +9,8 @@
       "organization": "crypto",
       "version":"1.0.0",
       "path": "../crypto"
-      }
+    }
   },
-  "package_requires": {},
   "foreign_requires": {},
   "output_type": "executable",
   "command_option": ""

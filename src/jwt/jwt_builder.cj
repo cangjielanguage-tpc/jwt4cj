@@ -6,6 +6,7 @@ from std import serialization.*
 from std import collection.*
 from std import time.*
 
+import jwt.interfaces.*
 import jwt.impl.*
 import jwt.common.*
 import jwt.exception.*
@@ -38,9 +39,7 @@ public class JWTBuilder {
     }
 
     public func withIssuer(issuer: String): JWTBuilder {
-        println(issuer)
         this.payload.put(PublicField.ISSUER, JsonString(issuer))
-        println(issuer)
         return this
     }
 
@@ -112,7 +111,7 @@ public class JWTBuilder {
         return this
     }
 
-    public func sign(): String {
+    public func sign(): DecodeJWT {
         if ("none".equals(this.algorithm.getName())) {
             throw JWTEncodeException("Algorithm cannot be empty")
         }
@@ -126,11 +125,12 @@ public class JWTBuilder {
 
         let headerEncoded = toBase64String(headerJson.toUtf8Array())
         let payloadEncoded = toBase64String(payloadJson.toUtf8Array())
+        println("${headerEncoded}.${payloadEncoded}")
         let signature = String.fromUtf8(this.algorithm.sign("${headerEncoded}.${payloadEncoded}".toUtf8Array()))
-        return "${headerEncoded}.${payloadEncoded}.${signature}"
+        return JWT.decode("${headerEncoded}.${payloadEncoded}.${signature}")
     }
 
-    public func sign(algorithm: Algorithm): String {
+    public func sign(algorithm: Algorithm): DecodeJWT {
         this.algorithm = algorithm
         return this.sign()
     }

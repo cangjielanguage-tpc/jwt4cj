@@ -1,9 +1,34 @@
 package jwt
 
-public class JWTValidator {
+import jwt.algorithm.*
+import jwt.exception.AlgorithmMismatchException
 
+class JWTValidator {
+    private var jwt: DecodeJWT
 
-    public func verify(): Unit {
-        
+    init(jwt: DecodeJWT) {
+        this.jwt = jwt
+    }
+
+    public func verify(algorithm: Algorithm): Unit {
+        verifyAlgorithm(jwt, algorithm);
+        algorithm.verify((this.jwt.getEncodedHeader() + "." + this.jwt.getEncodedPayload()).toUtf8Array(), jwt.getSignature().toUtf8Array())
+    }
+
+    public func verify(jwt: DecodeJWT, algorithm: Algorithm): Unit {
+        verify(algorithm)
+        verifyContent(jwt);
+    }
+
+    func verifyAlgorithm(jwt: DecodeJWT, algorithm: Algorithm): Unit {
+        if (!algorithm.getName().equals(jwt.getAlgorithm())) {
+            throw AlgorithmMismatchException("The provided Algorithm doesn't match the one defined in the JWT's Header.");
+        }
+    }
+
+    func verifyContent(jwt: DecodeJWT): Unit {
+        if (!this.jwt.getAudience().equals(jwt.getAudience())) {
+            throw InvalidClaimException("The Claim 'aud' value doesn't contain the required audience.");
+        }
     }
 }

@@ -10,8 +10,8 @@ public class NoneAlgorithm <: Algorithm {
         return content
     }
 
-    public func verify(jwt: DecodeJWT): Unit {
-        
+    public func verify(content: Array<UInt8>): Array<UInt8> {
+        return content
     }
 
 }

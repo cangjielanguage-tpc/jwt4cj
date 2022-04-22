@@ -1,4 +1,9 @@
 # jwt
+<p align="center">
+<img alt="" src="https://badg.now.sh/badge/cjc/v0.27.4?color=green" style="display: inline-block;" />
+<img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" />
+<img alt="" src="https://badg.now.sh/badge/project/open?color=green" style="display: inline-block;" />
+</p>
 
 #### 介绍
 该项目通过自研仓颉语言实现jwt(JSON Web Token)的组件，该组件库遵循[RFC7519](https://datatracker.ietf.org/doc/html/rfc7519)协议

@@ -1,14 +1,28 @@
 {
   "resolves": [
     {
+      "organization": "crypto",
+      "name": "crypto",
+      "path": "/home/clzy/code-server/projects/crypto",
+      "version": "1.0.0",
+      "hash": "-2010422907327607968",
+      "output_type": "static",
+      "command_option": "",
+      "requires": [],
+      "package_requires": {},
+      "foreign_requires": {}
+    },
+    {
       "organization": "jwt",
       "name": "jwt",
       "path": "./",
       "version": "1.0.0",
-      "hash": "-2010631156335563878",
+      "hash": "-2010632483063637928",
       "output_type": "executable",
       "command_option": "",
-      "requires": [],
+      "requires": [
+        "crypto"
+      ],
       "package_requires": {},
       "foreign_requires": {}
     }

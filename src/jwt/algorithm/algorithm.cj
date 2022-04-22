@@ -37,9 +37,22 @@ public abstract class Algorithm {
         return this.description
     }
 
+    public func verify(content: Array<UInt8>, signature: Array<UInt8>): Bool {
+         let verify = verify(content)
+        if (verify.size() == signature.size()) {
+            for (i in 0..verify.size()) {
+                if (signature[i] != verify[i]) {
+                    return false
+                }
+            }
+            return true
+        }
+        return false
+    }
+
     public func sign(content: Array<UInt8>): Array<UInt8>
 
 
-    public func verify(jwt: DecodeJWT): Unit
+    public func verify(content: Array<UInt8>): Array<UInt8>
 
 }

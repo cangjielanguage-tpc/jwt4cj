@@ -8,16 +8,5 @@ import jwt.interfaces.*
 import jwt.algorithm.*
 
 func main() {
-    
-    try {
-        
-
-        
-    
-    } catch (e: Throwable) {
-        e.printStackTrace()
-    } finally{
-        
-    }
 
 }
