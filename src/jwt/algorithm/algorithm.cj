@@ -1,8 +1,9 @@
 package jwt.algorithm
 
 import jwt.interfaces.*
+import jwt.exception.SignatureVerificationException
 
-public abstract class Algorithm {
+public abstract class Algorithm <: ToString {
     
     private var name: String;
     private var description: String;
@@ -37,22 +38,28 @@ public abstract class Algorithm {
         return this.description
     }
 
-    public func verify(content: Array<UInt8>, signature: Array<UInt8>): Bool {
-         let verify = verify(content)
-        if (verify.size() == signature.size()) {
-            for (i in 0..verify.size()) {
-                if (signature[i] != verify[i]) {
-                    return false
-                }
-            }
-            return true
+    public func verify(content: Array<UInt8>, signature: Array<UInt8>): Unit {
+        let verify = verify(content)
+        println(verify)
+        println(signature)
+        if (verify.size() != signature.size()) {
+            throw SignatureVerificationException("The Token's Signature resulted invalid when verified using the Algorithm: " + this.toString())
         }
-        return false
+        for (i in 0..verify.size()) {
+            if (signature[i] != verify[i]) {
+                throw SignatureVerificationException("The Token's Signature resulted invalid when verified using the Algorithm: " + this.toString())
+            }
+        }
     }
 
     public func sign(content: Array<UInt8>): Array<UInt8>
 
 
     public func verify(content: Array<UInt8>): Array<UInt8>
+
+
+    public func toString(): String {
+        return this.name
+    }
 
 }

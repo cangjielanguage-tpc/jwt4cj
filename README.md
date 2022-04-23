@@ -1,7 +1,7 @@
 # jwt
 <p align="center">
 <img alt="" src="https://badg.now.sh/badge/cjc/v0.27.4?color=green" style="display: inline-block;" />
-<img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" />
+<!-- <img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" /> -->
 <img alt="" src="https://badg.now.sh/badge/project/open?color=green" style="display: inline-block;" />
 </p>
 
@@ -12,11 +12,81 @@
 软件架构说明
 
 ##### 功能列表
-| 功能点 | 当前状态 |
-| -- | -- |
-| 基础编码解码 | 正在进行 |
-| 加密算法扩展 |  |
-| 国密算法扩展 |  |
+
+<table>
+    <tr>
+        <th>功能点</th>
+        <th>说明</th>
+        <th>状态</th>
+    </tr>
+    <tr>
+        <td>JWT</td>
+        <td></td>
+        <td>正在进行</td>
+    </tr>
+    <tr>
+        <td>JWS</td>
+        <td></td>
+        <td>正在进行</td>
+    </tr>
+    <tr>
+        <td>JWE</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">HMAC</td>
+        <td>HS256</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>HS384</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>HS512</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">RSA</td>
+        <td>RS256</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>RS384</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>RS512</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">ECDSA</td>
+        <td>ES256</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ES384</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ES512</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3">SM</td>
+        <td>SM2</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>SM3</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>SM4</td>
+        <td></td>
+    </tr>
+</table>
 
 
 #### 安装教程

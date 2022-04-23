@@ -1,6 +1,7 @@
 package jwt.algorithm
 
 //from crypto import enc.*
+import jwt.utils.Base64Util
 
 public class Base64Algorithm <: Algorithm {
 
@@ -10,7 +11,7 @@ public class Base64Algorithm <: Algorithm {
 
 
     public func sign(content: Array<UInt8>): Array<UInt8> {
-        return toBase64String(content).toUtf8Array()
+        return Base64Util.urlEncode(content).toUtf8Array()
     }
 
      public func verify(content: Array<UInt8>): Array<UInt8> {

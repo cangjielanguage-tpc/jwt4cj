@@ -1,6 +1,6 @@
 package jwt.exception
 
-open public class JWTValidationException <: RuntimeException {
+public class SignatureVerificationException <: JWTValidationException {
     public init(message: String) {
         super(message);
     }

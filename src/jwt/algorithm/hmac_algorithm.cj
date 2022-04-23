@@ -15,10 +15,7 @@ public class HmacAlgorithm <: Algorithm {
         return HmacAlgorithm("HS256", "HmacSHA256", secret);
     }
 
-
-
     public func sign(content: Array<UInt8>): Array<UInt8> {
-        // var sign: String = HMac.hmacSHA256(secret.toUtf8Array(), data)
         return Array<UInt8>(20, {i => UInt8(97 + i)})
     }
 

@@ -1,7 +1,6 @@
 package jwt
 
 from encoding import json.*
-from encoding import base64.*
 from std import serialization.*
 from std import collection.*
 from std import time.*
@@ -11,6 +10,7 @@ import jwt.impl.*
 import jwt.common.*
 import jwt.exception.*
 import jwt.algorithm.*
+import jwt.utils.Base64Util
 
 public class JWTBuilder {
 
@@ -123,10 +123,17 @@ public class JWTBuilder {
         let headerJson = JsonObject((header as HashMap<String, JsonValue>).getOrThrow()).toJsonString();
         let payloadJson = JsonObject((payload as HashMap<String, JsonValue>).getOrThrow()).toJsonString();
 
-        let headerEncoded = toBase64String(headerJson.toUtf8Array())
-        let payloadEncoded = toBase64String(payloadJson.toUtf8Array())
-        println("${headerEncoded}.${payloadEncoded}")
-        let signature = String.fromUtf8(this.algorithm.sign("${headerEncoded}.${payloadEncoded}".toUtf8Array()))
+        let headerUtf8Array = Base64Util.urlEncode(headerJson.toUtf8Array()).toUtf8Array()
+        let payloadUtf8Array = Base64Util.urlEncode(payloadJson.toUtf8Array()).toUtf8Array()
+        let contentLength = headerUtf8Array.size() + payloadUtf8Array.size() + 1
+        var content: Array<UInt8> = Array<UInt8>(contentLength, {i => 0})
+        Utf8View(headerUtf8Array).copyTo(content, 0)
+        Utf8View(".".toUtf8Array()).copyTo(content, headerUtf8Array.size())
+        Utf8View(payloadUtf8Array).copyTo(content, headerUtf8Array.size() + 1)
+        // println(Base64Util.urlEncode(content))
+        let signature = String.fromUtf8(this.algorithm.sign(content))
+        let headerEncoded = String.fromUtf8(headerUtf8Array)
+        let payloadEncoded = String.fromUtf8(payloadUtf8Array)
         return JWT.decode("${headerEncoded}.${payloadEncoded}.${signature}")
     }
 
@@ -135,4 +142,5 @@ public class JWTBuilder {
         return this.sign()
     }
 
+    
 }
