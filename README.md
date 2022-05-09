@@ -1,6 +1,6 @@
 # jwt
 <p align="center">
-<img alt="" src="https://badg.now.sh/badge/cjc/v0.27.4?color=green" style="display: inline-block;" />
+<img alt="" src="https://badg.now.sh/badge/cjc/v0.28.4?color=green" style="display: inline-block;" />
 <!-- <img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" /> -->
 <img alt="" src="https://badg.now.sh/badge/project/open?color=green" style="display: inline-block;" />
 </p>

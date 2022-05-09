@@ -3,7 +3,7 @@ package jwt.algorithm
 import jwt.interfaces.*
 import jwt.exception.SignatureVerificationException
 
-public abstract class Algorithm <: ToString {
+public abstract class Algorithm <: ToString & Equatable<Algorithm> {
     
     private var name: String;
     private var description: String;
@@ -60,6 +60,14 @@ public abstract class Algorithm <: ToString {
 
     public func toString(): String {
         return this.name
+    }
+
+    public operator func ==(algorithm: Algorithm): Bool {
+        return this.name.equals(algorithm.getName())
+    }
+
+    public operator func !=(algorithm: Algorithm): Bool {
+        return !(this ==(algorithm))
     }
 
 }

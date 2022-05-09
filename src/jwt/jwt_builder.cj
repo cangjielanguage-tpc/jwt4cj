@@ -1,7 +1,7 @@
 package jwt
 
 from encoding import json.*
-from std import serialization.*
+from serialization import serialization.*
 from std import collection.*
 from std import time.*
 
@@ -112,9 +112,7 @@ public class JWTBuilder {
     }
 
     public func sign(): DecodeJWT {
-        if ("none".equals(this.algorithm.getName())) {
-            throw JWTEncodeException("Algorithm cannot be empty")
-        }
+
         header.put(PublicField.ALGORITHM, JsonString(this.algorithm.getName()))
         if (!header.contains(PublicField.TYPE)) {
             header.put(PublicField.TYPE, JsonString("JWT"));
@@ -125,6 +123,15 @@ public class JWTBuilder {
 
         let headerUtf8Array = Base64Util.urlEncode(headerJson.toUtf8Array()).toUtf8Array()
         let payloadUtf8Array = Base64Util.urlEncode(payloadJson.toUtf8Array()).toUtf8Array()
+        
+        let headerEncoded = String.fromUtf8(headerUtf8Array)
+        let payloadEncoded = String.fromUtf8(payloadUtf8Array)
+
+        if (algorithm == Algorithm.None()) {
+            return JWT.decode("${headerEncoded}.${payloadEncoded}")
+        }
+
+        // JWS
         let contentLength = headerUtf8Array.size() + payloadUtf8Array.size() + 1
         var content: Array<UInt8> = Array<UInt8>(contentLength, {i => 0})
         Utf8View(headerUtf8Array).copyTo(content, 0)
@@ -132,8 +139,6 @@ public class JWTBuilder {
         Utf8View(payloadUtf8Array).copyTo(content, headerUtf8Array.size() + 1)
         // println(Base64Util.urlEncode(content))
         let signature = String.fromUtf8(this.algorithm.sign(content))
-        let headerEncoded = String.fromUtf8(headerUtf8Array)
-        let payloadEncoded = String.fromUtf8(payloadUtf8Array)
         return JWT.decode("${headerEncoded}.${payloadEncoded}.${signature}")
     }
 

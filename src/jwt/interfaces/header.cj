@@ -1,8 +1,8 @@
 package jwt.interfaces
 
-from std import serialization.*
+from serialization import serialization.*
 
-public interface Header <: Serializable<Header> & ToString {
+public interface Header <: ToString {
     /**
      *
      * 
@@ -10,5 +10,7 @@ public interface Header <: Serializable<Header> & ToString {
     func getType(): String
     
     func getAlgorithm(): String
+
+    func getContentType(): String
 
 }

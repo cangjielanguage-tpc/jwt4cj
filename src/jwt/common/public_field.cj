@@ -3,6 +3,7 @@ package jwt.common
 public record PublicField {
     public static let ALGORITHM: String = "alg"
     public static let TYPE: String = "typ"
+    public static let CONTENT_TYPE: String = "typ"
 
 
     public static let ISSUER: String = "iss"

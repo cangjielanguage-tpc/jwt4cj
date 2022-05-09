@@ -44,3 +44,4 @@ Temporary Items
 build
 bin
 unittest
+module-resolve.json

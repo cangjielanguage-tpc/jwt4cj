@@ -7,6 +7,6 @@ import jwt.*
 import jwt.interfaces.*
 import jwt.algorithm.*
 
-func main() {
+main() {
 
 }

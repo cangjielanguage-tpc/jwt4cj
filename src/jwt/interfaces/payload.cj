@@ -2,10 +2,10 @@ package jwt.interfaces
 
 from std import time.*
 from std import collection.*
-from std import serialization.*
+from serialization import serialization.*
 
 
-public interface Payload <: Serializable<Payload> & ToString {
+public interface Payload <: ToString {
     func getIssuer(): String
     func getSubject(): String
     func getAudience(): String

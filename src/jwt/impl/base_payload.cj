@@ -5,7 +5,7 @@ from std import collection.*
 import jwt.common.*
 
 
-public class BasePayload <: Payload & ToString {
+public class BasePayload <: Payload &  Serializable<Payload> {
     private var issuer: String = ""
     private var subject: String = ""
     private var audience: String = ""
