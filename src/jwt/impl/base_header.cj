@@ -41,7 +41,7 @@ public class BaseHeader <: Header & Serializable<Header> {
 
     public func serialize(): DataModel {
         let dataModel = DataModelStruct().add(field<String>(PublicField.ALGORITHM, algorithm)).add(field<String> (PublicField.TYPE, `type`))
-        if (contentType.size() > 0) {
+        if (contentType.size > 0) {
             dataModel.add(field<String>(PublicField.CONTENT_TYPE, contentType))
         }
         return dataModel
@@ -54,7 +54,7 @@ public class BaseHeader <: Header & Serializable<Header> {
         }
         var result = BaseHeader(String.deserialize(dms.get(PublicField.ALGORITHM)))
         let contentType = String.deserialize(dms.get(PublicField.CONTENT_TYPE))
-        if (contentType.size() > 0) {
+        if (contentType.size > 0) {
             result.contentType = contentType
         }
         return result

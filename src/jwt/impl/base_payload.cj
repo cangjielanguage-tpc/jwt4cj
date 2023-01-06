@@ -99,16 +99,16 @@ public class BasePayload <: Payload &  Serializable<Payload> {
 
 
     public func serialize(): DataModel {
-        var struct = DataModelStruct().add(field<String>("iss", issuer)).add(field<UInt64> ("exp", expiresAt)).
+        var structes = DataModelStruct().add(field<String>("iss", issuer)).add(field<UInt64> ("exp", expiresAt)).
             add(field<String>("sub", subject)).add(field<String>("aud", audience)).add(field<UInt64>("nbf", notBefore)).
             add(field<UInt64>("iat", issuedAt)).add(field<String>("jti", id))
 
         for ((key, v) in claims) {
             let jsonValue: JsonValue = v.getValue()
             let f: Field =  Field(key, DataModel.fromJson(jsonValue))
-            struct.add(f)
+            structes.add(f)
         }
-        return struct
+        return structes
     }
     
     public static func deserialize(dm: DataModel): Payload {
@@ -117,7 +117,7 @@ public class BasePayload <: Payload &  Serializable<Payload> {
             case _ => throw Exception("this data is not DataModelStruct") 
         }
         var result = BasePayload()
-        let fields:  Buffer<Field> = dms.getFields()
+        let fields:  ArrayList<Field> = dms.getFields()
         for (f in fields) {   
             let name: String = f.getName()
             if (name == PublicField.SUBJECT) {

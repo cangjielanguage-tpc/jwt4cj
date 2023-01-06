@@ -1,11 +1,9 @@
 package jwt.common
 
-public record PublicField {
+public class PublicField {
     public static let ALGORITHM: String = "alg"
     public static let TYPE: String = "typ"
     public static let CONTENT_TYPE: String = "typ"
-
-
     public static let ISSUER: String = "iss"
     public static let SUBJECT: String = "sub"
     public static let AUDIENCE: String = "aud"

@@ -10,11 +10,7 @@ public class Base64Util {
 
 
     public static func urlDecode(content: String): Array<UInt8> {
-        var c = content.replace("-", "+").replace("_", "/") + match (content.size() % 4) {
-            case 2 => "=="
-            case 3 => "="
-            case _ => ""
-        }
+        var c = content.replace("-", "+").replace("_", "/")
         return fromBase64String(c).getOrThrow()
     }
 }

@@ -23,8 +23,8 @@ public class BaseJWT <: DecodeJWT & Header & Payload & Serializable<DecodeJWT> {
     public static func fromString(jwt: String): BaseJWT {
         
         let parts: Array<String> = jwt.split('.')
-        if (parts.size() < 2) {
-            throw JWTDecodeException("The token was expected to have more then 2 parts, but got ${parts.size()}.")
+        if (parts.size < 2) {
+            throw JWTDecodeException("The token was expected to have more then 2 parts, but got ${parts.size}.")
         }
         return BaseJWT(parts)
     }

@@ -1,6 +1,5 @@
 package jwt.algorithm
 
-//from crypto import enc.*
 from encoding import base64.*
 
 public class HmacAlgorithm <: Algorithm {
