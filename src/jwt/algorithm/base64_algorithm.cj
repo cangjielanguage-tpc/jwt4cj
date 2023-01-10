@@ -1,6 +1,5 @@
 package jwt.algorithm
 
-//from crypto import enc.*
 import jwt.utils.Base64Util
 
 public class Base64Algorithm <: Algorithm {

@@ -1,122 +1,106 @@
-# jwt
+<div align="center">
+<h1>jwt</h1>
+</div>
+
 <p align="center">
-<img alt="" src="https://badg.now.sh/badge/cjc/v0.28.4?color=green" style="display: inline-block;" />
-<!-- <img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" /> -->
-<img alt="" src="https://badg.now.sh/badge/project/open?color=green" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.36.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-0%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
-#### 介绍
-该项目通过自研仓颉语言实现jwt(JSON Web Token)的组件，该组件库遵循[RFC7519](https://datatracker.ietf.org/doc/html/rfc7519)协议
+## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/>介绍
 
-#### 软件架构
-软件架构说明
+一个基于RFC 7519 的 JSON Web Token 和 JSON Web Signature的仓颉库。
 
-##### 功能列表
+### 特性
 
-<table>
-    <tr>
-        <th>功能点</th>
-        <th>说明</th>
-        <th>状态</th>
-    </tr>
-    <tr>
-        <td>JWT</td>
-        <td></td>
-        <td>正在进行</td>
-    </tr>
-    <tr>
-        <td>JWS</td>
-        <td></td>
-        <td>正在进行</td>
-    </tr>
-    <tr>
-        <td>JWE</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td rowspan="3">HMAC</td>
-        <td>HS256</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>HS384</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>HS512</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td rowspan="3">RSA</td>
-        <td>RS256</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>RS384</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>RS512</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td rowspan="3">ECDSA</td>
-        <td>ES256</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>ES384</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>ES512</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td rowspan="3">SM</td>
-        <td>SM2</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>SM3</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>SM4</td>
-        <td></td>
-    </tr>
-</table>
+- 🚀 支持 HMAC 算法及验证
+- 🚀 支持 ECDSA 算法及验证
+- 🚀 支持 RSA 算法及验证
 
+### 路线
 
-#### 安装教程
+<p align="center">
+<img src="./doc/assets/milestone.png" width="100%" >
+</p>
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构
 
-#### 使用说明
+### 源码目录
 
-该项目当前处于`开发阶段`,可通过cpm（Cangjie Package Manager）构建、运行并测试该项目。
-```bash
-git clone https://gitee.com/HW-PLLab/jwt.git
-cd jwt
-cpm build && ./bin/main
+```shell
+.
+├── README.md
+├── doc
+│   ├── assets
+│   ├── api.md
+│   ├── design.md
+│   ├── framework-roadmap-logo.pptx
+│   ├── proposal.md
+│   └── xxx_lib.md
+├── src
+│   └── jwt
+│       ├── algorithms
+│       ├── exceptions
+│       ├── impl
+│       ├── interfaces
+│   └── headerParams.cj
+│   └── jwt.cj
+│   └── jwtCreator.cj
+│   └── jwtDecoder.cj
+│   └── jwtVerifier.cj
+│   └── registeredClaims.cj
+│   └── tokenUtils.cj
+└── test   
+    ├── HLT
+    ├── LLT
+    └── UT
 ```
 
-#### 参与贡献
+- `doc`是库的设计文档、提案、库的使用文档
+- `src`是库源码目录
+- `test`是存放测试用例，包括HLT用例、LLT 用例和UT用例
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+### 接口说明
 
+主要是核心类和成员函数说明,详情见 [API](./doc/api.md)
 
-#### 特技
+## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 编译执行
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### 编译
+
+```shell
+cd test/LLT
+cjc ./*.cj
+```
+### 安装
+
+```shell
+# install cjc;
+source cangjie/cangjie/envsetup.sh;
+cjc -v;
+```
+
+### 运行
+
+```cangjie
+ cjc testcase0001.cj
+ ./main
+ echo $?
+```
+
+### 使用说明
+
+#### XXX功能示例
+
+执行结果如下：
+
+```shell
+***
+```
+
+## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
+
+[@shawnzhao19](https://gitee.com/shawnzhao19)

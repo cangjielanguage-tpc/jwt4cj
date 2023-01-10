@@ -42,10 +42,10 @@ public abstract class Algorithm <: ToString & Equatable<Algorithm> {
         let verify = verify(content)
         println(verify)
         println(signature)
-        if (verify.size() != signature.size()) {
+        if (verify.size != signature.size) {
             throw SignatureVerificationException("The Token's Signature resulted invalid when verified using the Algorithm: " + this.toString())
         }
-        for (i in 0..verify.size()) {
+        for (i in 0..verify.size) {
             if (signature[i] != verify[i]) {
                 throw SignatureVerificationException("The Token's Signature resulted invalid when verified using the Algorithm: " + this.toString())
             }

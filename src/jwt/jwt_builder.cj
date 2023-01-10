@@ -131,13 +131,8 @@ public class JWTBuilder {
             return JWT.decode("${headerEncoded}.${payloadEncoded}")
         }
 
-        // JWS
-        let contentLength = headerUtf8Array.size() + payloadUtf8Array.size() + 1
+        let contentLength = headerUtf8Array.size + payloadUtf8Array.size + 1
         var content: Array<UInt8> = Array<UInt8>(contentLength, {i => 0})
-        Utf8View(headerUtf8Array).copyTo(content, 0)
-        Utf8View(".".toUtf8Array()).copyTo(content, headerUtf8Array.size())
-        Utf8View(payloadUtf8Array).copyTo(content, headerUtf8Array.size() + 1)
-        // println(Base64Util.urlEncode(content))
         let signature = String.fromUtf8(this.algorithm.sign(content))
         return JWT.decode("${headerEncoded}.${payloadEncoded}.${signature}")
     }

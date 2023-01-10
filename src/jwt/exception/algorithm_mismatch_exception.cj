@@ -1,7 +1,8 @@
 package jwt.exception
 
-public class AlgorithmMismatchException <: RuntimeException {
+public class AlgorithmMismatchException <: Exception {
+    
     public init(message: String) {
-        super(message);
+        super(message)
     }
 }

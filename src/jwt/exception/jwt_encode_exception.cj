@@ -1,9 +1,8 @@
 package jwt.exception
 
-public class JWTEncodeException <: RuntimeException {
+public class JWTEncodeException <: Exception {
 
-    
     public init(message: String) {
-        super(message);
+        super(message)
     }
 }
