@@ -1,6 +1,6 @@
 package jwt.exception
 
-public class JWTEncodeException <: Exception {
+public open class JWTCreationException <: Exception {
 
     public init(message: String) {
         super(message)
