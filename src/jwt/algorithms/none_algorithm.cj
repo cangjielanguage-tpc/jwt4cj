@@ -1,12 +1,12 @@
 package jwt.algorithms
 
-class NoneAlgorithm<T> <: Algorithm<T> {
+class NoneAlgorithm <: Algorithm {
 
     init() {
         super("none", "none")
     }
 
-    public func verify(jwt: DecodedJWT<T>): Unit {
+    public func verify(jwt: DecodedJWT): Unit {
 
         try {
             var signatureBytes: Array<UInt8> = fromBase64String(jwt.getSignature()).getOrThrow()

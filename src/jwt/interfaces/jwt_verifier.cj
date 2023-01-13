@@ -5,7 +5,7 @@ package jwt.interfaces
  * Implementations must be thread-safe.
  * Instances are created using Verification.
  */
-public interface JWTVerifier<T> {
+public interface JWTVerifier {
     /**
      * Performs the verification against the given Token.
      *
@@ -13,7 +13,7 @@ public interface JWTVerifier<T> {
      * @return a verified and decoded JWT.
      * @throws JWTVerificationException if any of the verification steps fail
      */
-    func verify(token: String): DecodedJWT<T>
+    func verify(token: String): DecodedJWT
 
     /**
      * Performs the verification against the given DecodedJWT.
@@ -22,5 +22,5 @@ public interface JWTVerifier<T> {
      * @return a verified and decoded JWT.
      * @throws JWTVerificationException if any of the verification steps fail
      */
-    func verify(jwt: DecodedJWT<T>): DecodedJWT<T>
+    func verify(jwt: DecodedJWT): DecodedJWT
 }

@@ -5,7 +5,7 @@ from std import collection.*
 /**
  * The Payload class represents the 2nd part of the JWT, where the Payload value is held.
  */
-public interface Payload<T> {
+public interface Payload {
     /**
      * Get the value of the "iss" claim, or None if it's not available.
      *
@@ -62,13 +62,13 @@ public interface Payload<T> {
      * @param name the name of the Claim to retrieve.
      * @return a non-null Claim.
      */
-    func getClaim(name: String): Claim<T>
+    func getClaim(name: String): Claim
 
     /**
      * Get the Claims defined in the Token.
      *
      * @return a non-null Map containing the Claims defined in the Token.
      */
-    func getClaims(): HashMap<String, Claim<T>>
+    func getClaims(): HashMap<String, Claim>
 
 }

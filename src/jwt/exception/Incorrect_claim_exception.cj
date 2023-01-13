@@ -2,12 +2,12 @@ package jwt.exception
 
 import jwt.interfaces.*
 
-public class IncorrectClaimException<T> <: InvalidClaimException {
+public class IncorrectClaimException <: InvalidClaimException {
     
     private var claimName: String
-    private var claimValue: Claim<T>
+    private var claimValue: Claim
 
-    public init(message: String, claimName: String, claim: Claim<T>) {
+    public init(message: String, claimName: String, claim: Claim) {
         super(message)
         this.claimName = claimName
         this.claimValue = claim
@@ -17,7 +17,7 @@ public class IncorrectClaimException<T> <: InvalidClaimException {
         return this.claimName
     }
 
-    public func getClaimValue(): Claim<T> {
+    public func getClaimValue(): Claim {
         return this.claimValue
     }
 }
