@@ -6,13 +6,8 @@ class NoneAlgorithm <: Algorithm {
     }
 
     public func verify(jwt: DecodedJWT): Unit {
-        try {
-            var signatureBytes: Array<UInt8> = fromBase64String(jwt.getSignature()).getOrThrow()
-            if (signatureBytes.size > 0) {
-                throw SignatureVerificationException("noneAlgorithm exception")
-            }
-        } catch (e: IllegalArgumentException) {
-            throw SignatureVerificationException("noneAlgorithm exception")
+        if (jwt.getSignature() != "") {
+            throw SignatureVerificationException("noneAlgorithm exception!")
         }
     }
 

@@ -1,14 +1,18 @@
 package jwt.impl.json
 
 from encoding import json.*
-from std import collection.ArrayList
-from std import collection.Map
-from std import time.Time
+from std import collection.*
+from std import time.*
 import jwt.exception.JWTDecodeException
 import jwt.interfaces.Claim
 import jwt.interfaces.NodeType
 
 let JSON_NULL = JsonNull()
+public let MISSING_CLAIM = JsonNodeClaim()
+
+func createClaim(data: JsonValue): Claim {
+    JsonNodeClaim(data)
+}
 
 /*
  * 使用std.json实现的claim
@@ -22,7 +26,7 @@ public class JsonNodeClaim <: Claim {
         this.missing = true
     }
 
-    public init(data: NodeType) {
+    public init(data: JsonValue) {
         this.data = data
     }
 
@@ -54,19 +58,19 @@ public class JsonNodeClaim <: Claim {
         Time(data.asInt().getValue(), 0)
     }
 
-    public func asArray(): Array<NodeType> {
+    public func asArray(): Array<JsonValue> {
         asList().toArray()
     }
 
-    public func asList(): ArrayList<NodeType> {
+    public func asList(): ArrayList<JsonValue> {
         data.asArray().getItems()
     }
 
-    public func asMap(): Map<String, NodeType> {
+    public func asMap(): Map<String, JsonValue> {
         data.asObject().getFields()
     }
 
-    public func getValue(): NodeType {
+    public func getValue(): JsonValue {
         return data
     }
 
@@ -77,10 +81,5 @@ public class JsonNodeClaim <: Claim {
             data.toStr()
         }
     }
-}
 
-func createClaim(data: JsonValue): Claim {
-    JsonNodeClaim(data)
 }
-
-public let MISSING_CLAIM = JsonNodeClaim()

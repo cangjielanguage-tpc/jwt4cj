@@ -1,0 +1,32 @@
+// DEPENDENCE: test_ecdsa_privateKey.pem
+// DEPENDENCE: test_ecdsa_publicKey.pem
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+
+from cryptocj import eccj.*
+from std import os.posix.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.*
+from jwt import jwt.utils.*
+
+main() {  
+    var path: String = getcwd()
+    let pri_key: String = "${path}/test_ecdsa_privateKey.pem"
+    var s: Array<UInt8> = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let header: Array<UInt8> = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9".toUtf8Array()
+    let payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let ecdsa = Algorithm.ECDSA256(pri_key)
+    println("*****************************************************************************")
+    println("签名开始前，传入的原文数组内容是:" + "${s}")
+    let ret = ecdsa.sign(s)
+    println("*****************************************************************************")
+    var str = Base64Util.urlEncode(ret)
+    println("打印生成的签名值使用Base64加密后是:" + "${str}")
+    let pub_key: String = "${path}/test_ecdsa_publicKey.pem"
+    let token = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0." + str
+    let ecdsa2 = Algorithm.ECDSA256(pub_key)
+    var jd = JWTDecoder(token)
+    ecdsa2.verify(jd)
+    return 0
+}

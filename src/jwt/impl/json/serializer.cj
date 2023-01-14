@@ -1,10 +1,6 @@
 package jwt.impl.json
 
 from std import collection.map
-from std import collection.reduce
-from std import time.Time
-from encoding import json.JsonObject
-from encoding import json.JsonValue
 import jwt.exception.JWTCreationException
 
 public open class Serializer <: ToString {
