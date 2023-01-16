@@ -1,12 +1,18 @@
 package jwt.impl.json
 
-from encoding import json.JsonObject
+from std import collection.*
 
 public open class Deserializer {
-    public func deserialize(jsonStr: String): HashMap<String, Claim> {
-        let data = JsonValue.fromStr(jsonStr).asObject()
-        let valueMap = data.getFields()
-        valueMap
-        HashMap<String, Claim>()
+    protected func deserialize(jsonStr: String): HashMap<String, Claim> {
+        JsonValue.fromStr(jsonStr).asObject().getFields()
+            |> map {kv: (String, JsonValue) => (kv[0], createClaim(kv[1]))}
+            |> collectHashMap
+    }
+
+    protected func asStringList(claim: ?Claim): Option<ArrayList<String>> {
+        match (claim) {
+            case Some(v) => v.asList() |> map {a: JsonValue => a.toStr()} |> collectArrayList
+            case _ => None
+        }
     }
 }

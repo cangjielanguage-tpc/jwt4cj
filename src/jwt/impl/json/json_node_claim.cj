@@ -4,24 +4,34 @@ from encoding import json.*
 from std import collection.ArrayList
 from std import collection.Map
 from std import time.Time
+import jwt.exception.JWTDecodeException
 import jwt.interfaces.Claim
+import jwt.interfaces.NodeType
+
+let JSON_NULL = JsonNull()
 
 /*
  * 使用std.json实现的claim
  */
 public class JsonNodeClaim <: Claim {
     private let data: JsonValue
+    private var missing = false
 
-    public init(data: JsonValue) {
+    protected init() {
+        this.data = JSON_NULL
+        this.missing = true
+    }
+
+    public init(data: NodeType) {
         this.data = data
     }
 
     public func isNull(): Bool {
-        data.kind() == JsonKind.JsNull
+        !isMissing() && data.kind() == JsonKind.JsNull
     }
 
     public func isMissing(): Bool {
-        data.kind() == JsonKind.JsNull
+        missing
     }
 
     public func asBool(): Bool {
@@ -44,41 +54,33 @@ public class JsonNodeClaim <: Claim {
         Time(data.asInt().getValue(), 0)
     }
 
-    public func asArray(): Array<JsonValue> {
+    public func asArray(): Array<NodeType> {
         asList().toArray()
     }
 
-    public func asList(): ArrayList<JsonValue> {
+    public func asList(): ArrayList<NodeType> {
         data.asArray().getItems()
     }
 
-    public func asMap(): Map<String, JsonValue> {
+    public func asMap(): Map<String, NodeType> {
         data.asObject().getFields()
     }
 
-    public func getValue(): JsonValue {
+    public func getValue(): NodeType {
         return data
+    }
+
+    public func toString(): String {
+        if (missing) {
+            ""
+        } else {
+            data.toStr()
+        }
     }
 }
 
-extend JsonValue {
-    operator func ==(other: JsonValue): Bool {
-        this.toString() == other.toString()
-    }
+func createClaim(data: JsonValue): Claim {
+    JsonNodeClaim(data)
 }
-extend JsonKind {
-    private func toFlag(): Int64 {
-        match (this) {
-            case JsNull => 0
-            case JsBool => 1
-            case JsInt => 2
-            case JsFloat => 3
-            case JsString => 4
-            case JsArray => 5
-            case JsObject => 6
-        }
-    }
-    operator func ==(other: JsonKind): Bool {
-        this.toFlag() == other.toFlag()
-    }
-}
+
+public let MISSING_CLAIM = JsonNodeClaim()

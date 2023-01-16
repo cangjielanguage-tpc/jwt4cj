@@ -9,28 +9,28 @@ public interface Header {
      *
      * @return the Algorithm defined or None.
      */
-    func getAlgorithm(): String
+    func getAlgorithm(): Option<String>
 
     /**
      * Getter for the Type "typ" claim defined in the JWT's Header. If the claim is missing it will return None.
      *
      * @return the Type defined or None.
      */
-    func getType(): String
+    func getType(): Option<String>
 
     /**
      * Getter for the Content Type "cty" claim defined in the JWT's Header. If the claim is missing it will return None.
      *
      * @return the Content Type defined or None.
      */
-    func getContentType(): String
+    func getContentType(): Option<String>
 
     /**
      * Get the value of the "kid" claim, or None if it's not available.
      *
      * @return the Key ID value or None.
      */
-    func getKeyId(): String
+    func getKeyId(): Option<String>
 
     /**
      * Get a Private Claim given it's name. If the Claim wasn't specified in the Header, a 'null claim' will be
@@ -39,6 +39,5 @@ public interface Header {
      * @param name the name of the Claim to retrieve.
      * @return a non-null Claim.
      */
-    func getHeaderClaim(name: String): Claim
-    
+    func getHeaderClaim(name: String): Option<Claim>
 }

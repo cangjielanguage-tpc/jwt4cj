@@ -1,6 +1,7 @@
 package jwt.impl.json
 
 from std import collection.HashMap
+from std import time.Time
 from encoding import json.JsonObject
 from encoding import json.JsonValue
 import jwt.exception.JWTCreationException
@@ -24,6 +25,10 @@ func parse(value: Any): JsonValue {
         case value: Int64 => JsonInt((value as Int64).getOrThrow())
         case value: Float64 => JsonFloat((value as Float64).getOrThrow())
         case value: String => JsonString((value as String).getOrThrow())
+        case value: Time => 
+            let a = value as Time
+            let b = a?.unixTimeStamp().seconds()
+            JsonInt(b.getOrThrow())
         case value: JsonValue => value
         case _ => throw JWTCreationException("value type not support")
     }
