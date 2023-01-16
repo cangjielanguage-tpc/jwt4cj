@@ -4,8 +4,7 @@ from std import time.*
 
 public class TokenExpiredException <: JWTVerificationException {
 
-    private var time: Time;
-
+    private var time: Time
 
     public init(message: String, time: Time) {
         super(message)
@@ -13,6 +12,6 @@ public class TokenExpiredException <: JWTVerificationException {
     }
 
      public func getExpiredOn(): Time {
-        return this.time;
+        return this.time
     }
 }

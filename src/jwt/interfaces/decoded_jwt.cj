@@ -3,7 +3,7 @@ package jwt.interfaces
 /**
  * Class that represents a Json Web Token that was decoded from it's string representation.
  */
-public interface DecodedJWT <: Header & Payload & ToString {
+public interface DecodedJWT<T> <: Header<T> & Payload<T> {
     /**
      * Getter for the String Token used to create this JWT instance.
      *
@@ -17,7 +17,7 @@ public interface DecodedJWT <: Header & Payload & ToString {
      *
      * @return the Header of the JWT.
      */
-    func getHeader(): Header
+    func getHeader(): String
 
     /**
      * Getter for the Payload contained in the JWT as a Base64 encoded String.
@@ -25,7 +25,7 @@ public interface DecodedJWT <: Header & Payload & ToString {
      *
      * @return the Payload of the JWT.
      */
-    func getPayload(): Payload
+    func getPayload(): String
 
     /**
      * Getter for the Signature contained in the JWT as a Base64 encoded String.

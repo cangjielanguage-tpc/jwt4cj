@@ -4,7 +4,13 @@
   "name": "jwt",
   "description": "nothing here",
   "version": "0.0.1",
-  "requires": {},
+  "requires": {
+    "cryptocj": {
+      "organization": "cangjie",
+      "version": "0.0.5",
+      "path": "./cryptocj"
+    }
+  },
   "package_requires": {},
   "output_type": "dynamic",
   "command_option": "-O2"
