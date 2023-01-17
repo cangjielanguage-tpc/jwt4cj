@@ -3,7 +3,6 @@ package jwt.exception
 import jwt.interfaces.*
 
 public class IncorrectClaimException <: InvalidClaimException {
-    
     private var claimName: String
     private var claimValue: Claim
 
@@ -12,7 +11,7 @@ public class IncorrectClaimException <: InvalidClaimException {
         this.claimName = claimName
         this.claimValue = claim
     }
-    
+
     public func getClaimName(): String {
         return this.claimName
     }

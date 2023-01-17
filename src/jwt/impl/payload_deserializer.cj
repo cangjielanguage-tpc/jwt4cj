@@ -10,7 +10,7 @@ public class PayloadDeserializer <: Deserializer {
         let issuer: ?String = map.get(RegisteredClaims.ISSUER)?.asString()
         let subject: ?String = map.get(RegisteredClaims.SUBJECT)?.asString()
         let aud = map.get(RegisteredClaims.AUDIENCE)
-        let audience: ?ArrayList<String> = asStringList(map.get(RegisteredClaims.AUDIENCE))
+        let audience: ?ArrayList<String> = getStringOrArray(RegisteredClaims.AUDIENCE, map)
         let expiresAt: ?Time = map.get(RegisteredClaims.EXPIRES_AT)?.asTime()
         let notBefore: ?Time = map.get(RegisteredClaims.NOT_BEFORE)?.asTime()
         let issuedAt: ?Time = map.get(RegisteredClaims.ISSUED_AT)?.asTime()

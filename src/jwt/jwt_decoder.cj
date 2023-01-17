@@ -1,44 +1,109 @@
 package jwt
 
-import jwt.interfaces.*
-import jwt.exception.*
-from std import collection.*
-from encoding import json.*
-from encoding import base64.*
 from std import time.*
+from std import collection.ArrayList
+from std import collection.Map
+import jwt.interfaces.Claim
+import jwt.interfaces.DecodedJWT
+import jwt.interfaces.Header
+import jwt.interfaces.Payload
+import jwt.impl.JWTParser
+import jwt.utils.Base64Util
 
-abstract class JWTDecoder <: DecodedJWT {
-
-    private var parts: Array<String> = Array<String>()
+class JWTDecoder <: DecodedJWT {
+    private let parts: Array<String>
+    private let token: String
+    private let header: Header
+    private let payload: Payload
 
     init(jwt: String) {
+        this(JWTParser(), jwt)
+    }
+
+    init(parser: JWTParser, jwt: String) {
+        this.token = jwt
         parts = TokenUtils.splitToken(jwt)
         var headerJson: String
         var payloadJson: String
         try {
-            headerJson = String.fromUtf8(fromBase64String(parts[0]).getOrThrow())
-            payloadJson = String.fromUtf8(fromBase64String(parts[1]).getOrThrow())
-        } catch (e: JWTDecodeException) {
-            throw JWTDecodeException("The UTF-8 Charset isn't initialized.")
-        } catch (e: IllegalArgumentException) {
+            headerJson = Base64Util.urlDecode(parts[0])
+            payloadJson = Base64Util.urlDecode(parts[1])
+        } catch (e: NoneValueException) {
             throw JWTDecodeException("The input is not a valid base 64 encoded string.")
         }
-        
-    }
-
-    public func getHeader(): String {
-        return parts[0]
-    }
-
-    public func getPayload(): String {
-        return parts[1]
-    }
-
-    public func getSignature(): String {
-        return parts[2]
+        header = parser.parseHeader(headerJson)
+        payload = parser.parsePayload(payloadJson)
     }
 
     public func getToken(): String {
-        return "${parts[0]}${parts[1]}${parts[2]}"
+        token
+    }
+
+    public func getHeader(): String {
+        parts[0]
+    }
+
+    public func getPayload(): String {
+        parts[1]
+    }
+
+    public func getSignature(): String {
+        parts[2]
+    }
+
+    public func getAlgorithm(): Option<String> {
+        header.getAlgorithm()
+    }
+
+    public func getType(): Option<String> {
+        header.getType()
+    }
+
+    public func getContentType(): Option<String> {
+        header.getContentType()
+    }
+
+    public func getKeyId(): Option<String> {
+        header.getKeyId()
+    }
+
+    public func getHeaderClaim(name: String): Option<Claim> {
+        header.getHeaderClaim(name)
+    }
+
+    public func getIssuer(): Option<String> {
+        payload.getIssuer()
+    }
+
+    public func getSubject(): Option<String> {
+        payload.getSubject()
+    }
+
+    public func getAudience(): Option<ArrayList<String>> {
+        payload.getAudience()
+    }
+
+    public func getExpiresAt(): Option<Time> {
+        payload.getExpiresAt()
+    }
+
+    public func getNotBefore(): Option<Time> {
+        payload.getNotBefore()
+    }
+
+    public func getIssuedAt(): Option<Time> {
+        payload.getIssuedAt()
+    }
+
+    public func getId(): Option<String> {
+        payload.getId()
+    }
+
+    public func getClaim(name: String): Option<Claim> {
+        payload.getClaim(name)
+    }
+
+    public func getClaims(): Map<String, Claim> {
+        payload.getClaims()
     }
 }

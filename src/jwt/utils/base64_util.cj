@@ -3,7 +3,6 @@ package jwt.utils
 from encoding import base64.*
 
 public class Base64Util {
-
     public static func urlEncode(content: Array<UInt8>): String {
         return toBase64String(content).replace("+", "-").replace("/", "_")
     }

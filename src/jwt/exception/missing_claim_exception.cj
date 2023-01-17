@@ -1,7 +1,6 @@
 package jwt.exception
 
-open public class MissingClaimException <: InvalidClaimException {
-    
+public open class MissingClaimException <: InvalidClaimException {
     private var claimName: String
 
     public init(claimName: String) {
