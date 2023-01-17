@@ -3,7 +3,7 @@ package jwt.interfaces
 /**
  * Class that represents a Json Web Token that was decoded from it's string representation.
  */
-public interface DecodedJWT<T> <: Header<T> & Payload<T> {
+public interface DecodedJWT <: Header & Payload {
     /**
      * Getter for the String Token used to create this JWT instance.
      *

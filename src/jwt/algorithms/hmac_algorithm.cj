@@ -6,7 +6,7 @@ import jwt.interfaces.*
 from cryptocj import hmaccj.*
 from encoding import hex.*
 
-public class HMACAlgorithm<T> <: Algorithm<T> {
+public class HMACAlgorithm <: Algorithm {
 
     private var secret: Array<UInt8> = Array<UInt8>()
     private static let JWT_PART_SEPARATOR: Array<UInt8> = [46]
@@ -25,7 +25,7 @@ public class HMACAlgorithm<T> <: Algorithm<T> {
         return secretStr.toUtf8Array()
     }
 
-    public func verify(jwt: DecodedJWT<T>): Unit {
+    public func verify(jwt: DecodedJWT): Unit {
         try {
             var signatureBytes: Array<UInt8> = fromBase64String(jwt.getSignature()).getOrThrow()
             var valid: Bool = verifySignatureFor(getDescription(), secret, jwt.getHeader(), jwt.getPayload(), signatureBytes)

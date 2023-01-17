@@ -4,7 +4,7 @@ package jwt.interfaces
  * The JWTPartsParser class defines which parts of the JWT should be converted
  * to its specific Object representation instance.
  */
-public interface JWTPartsParser<T> {
+public interface JWTPartsParser {
     /**
      * Parses the given JSON into a Payload instance.
      *
@@ -12,7 +12,7 @@ public interface JWTPartsParser<T> {
      * @return the Payload.
      * @throws JWTDecodeException if the json doesn't have a proper JSON format.
      */
-    func parsePayload(jsons: String): Payload<T>
+    func parsePayload(jsons: String): Payload
 
     /**
      * Parses the given JSON into a Header instance.
@@ -21,5 +21,5 @@ public interface JWTPartsParser<T> {
      * @return the Header.
      * @throws JWTDecodeException if the json doesn't have a proper JSON format.
      */
-    func parseHeader(jsons: String): Header<T>
+    func parseHeader(jsons: String): Header
 }

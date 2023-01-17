@@ -7,7 +7,7 @@ from encoding import json.*
 from encoding import base64.*
 from std import time.*
 
-abstract class JWTDecoder<T> <: DecodedJWT<T> {
+abstract class JWTDecoder <: DecodedJWT {
 
     private var parts: Array<String> = Array<String>()
 

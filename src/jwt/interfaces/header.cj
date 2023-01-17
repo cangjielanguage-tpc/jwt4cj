@@ -3,7 +3,7 @@ package jwt.interfaces
 /**
  * The Header class represents the 1st part of the JWT, where the Header value is held.
  */
-public interface Header<T> {
+public interface Header {
     /**
      * Getter for the Algorithm "alg" claim defined in the JWT's Header. If the claim is missing it will return None.
      *
@@ -39,6 +39,6 @@ public interface Header<T> {
      * @param name the name of the Claim to retrieve.
      * @return a non-null Claim.
      */
-    func getHeaderClaim(name: String): Claim<T>
+    func getHeaderClaim(name: String): Claim
     
 }
