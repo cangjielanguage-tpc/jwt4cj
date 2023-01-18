@@ -11,5 +11,4 @@ public class PublicField {
     public static let NOT_BEFORE: String = "nbf"
     public static let ISSUED_AT: String = "iat"
     public static let ID: String = "jti"
-
 }

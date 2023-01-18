@@ -72,5 +72,4 @@ public interface Payload {
      * @return a non-null Map containing the Claims defined in the Token.
      */
     func getClaims(): Map<String, Claim>
-
 }

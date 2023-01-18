@@ -8,7 +8,7 @@ public class JWTParser <: JWTPartsParser {
     private let headerReader = HeaderDeserializer()
     private let payloadReader = PayloadDeserializer()
 
-    init() {}
+    public init() {}
 
     public override func parseHeader(jsons: String): Header {
         try {

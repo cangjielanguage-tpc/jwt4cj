@@ -5,8 +5,8 @@ import jwt.impl.json.Serializer
 public open class ClaimsSerializer <: Serializer {
     public func serialize(holder: ClaimsHolder): String {
         let claims = holder.getClaims()
-        for (kv in claims) {
-            put(kv[0], kv[1])
+        for ((key, value) in claims) {
+            put(key, value)
         }
         toString()
     }

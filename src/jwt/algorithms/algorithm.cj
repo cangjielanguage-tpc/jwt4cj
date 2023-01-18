@@ -1,7 +1,6 @@
 package jwt.algorithms
 
 public abstract class Algorithm {
-    
     private var name: String
     private var description: String
 
@@ -57,7 +56,6 @@ public abstract class Algorithm {
     public func verify(jwt: DecodedJWT): Unit
 
     public open func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
-        
         var contentBytes: Array<UInt8> = Array<UInt8>()
         contentBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
         Char.intoUtf8Array('.', contentBytes, headerBytes.size)
@@ -66,5 +64,4 @@ public abstract class Algorithm {
     }
 
     public func sign(contentBytes: Array<UInt8>): Array<UInt8>
-
 }

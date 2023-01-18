@@ -5,7 +5,7 @@ from std import time.*
 /*
  * The Claim class holds the value in a generic way so that it can be recovered in many representations.
  */
-public interface Claim <: ToString{
+public interface Claim <: ToString {
     /*
      * Whether this Claim has a null value or not.
      * If the claim is not present, it will return false hence checking isMissing is advised as well
