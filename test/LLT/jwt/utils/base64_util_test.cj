@@ -3,9 +3,9 @@
 from jwt import jwt.utils.*
 
 main() {
-    let str = "as?"
+    let str = "as?0"
     let bytes = str.toUtf8Array()
-    let urlsafe_b64 = "YXM_"
+    let urlsafe_b64 = "YXM_MA"
 
     let str2b64 = Base64Util.urlEncode(str)
     if (str2b64 != urlsafe_b64) {

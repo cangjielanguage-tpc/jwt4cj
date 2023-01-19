@@ -1,10 +1,10 @@
 package jwt.interfaces
 
-/**
+/*
  * Constructs and holds the checks required for a JWT to be considered valid.
  */
 public interface Verification {
-    /**
+    /*
      * Verifies whether the JWT contains an Issuer ("iss") claim that equals to the value provided.
      * This check is case-sensitive.
      *
@@ -15,7 +15,7 @@ public interface Verification {
         return withIssuer([issuer])
     }
 
-    /**
+    /*
      * Verifies whether the JWT contains an Issuer ("iss") claim that contains all the values provided.
      * This check is case-sensitive. An empty array is considered as a None.
      *
@@ -24,7 +24,7 @@ public interface Verification {
      */
     func withIssuer(issuer: Array<String>): Verification
 
-    /**
+    /*
      * Verifies whether the JWT contains a Subject ("sub") claim that equals to the value provided.
      * This check is case-sensitive.
      *
@@ -33,7 +33,7 @@ public interface Verification {
      */
     func withSubject(subject: String): Verification
 
-    /**
+    /*
      * Verifies whether the JWT contains an Audience ("aud") claim that contains all the values provided.
      * This check is case-sensitive. An empty array is considered as a None.
      *
@@ -42,7 +42,7 @@ public interface Verification {
      */
     func withAudience(audience: Array<String>): Verification
 
-    /**
+    /*
      * Verifies whether the JWT contains an Audience ("aud") claim contain at least one of the specified audiences.
      * This check is case-sensitive. An empty array is considered as a None.
      *
@@ -51,7 +51,7 @@ public interface Verification {
      */
     func withAnyOfAudience(audience: Array<String>): Verification
 
-    /**
+    /*
      * Define the default window in seconds in which the Not Before, Issued At and Expires At Claims
      * will still be valid. Setting a specific leeway value on a given Claim will override this value for that Claim.
      *
@@ -61,7 +61,7 @@ public interface Verification {
      */
     func acceptLeeway(leeway: Int64): Verification
 
-    /**
+    /*
      * Set a specific leeway window in seconds in which the Expires At ("exp") Claim will still be valid.
      * Expiration Date is always verified when the value is present.
      * This method overrides the value set with acceptLeeway
@@ -72,7 +72,7 @@ public interface Verification {
      */
     func acceptExpiresAt(leeway: Int64): Verification
 
-    /**
+    /*
      * Set a specific leeway window in seconds in which the Not Before ("nbf") Claim will still be valid.
      * Not Before Date is always verified when the value is present.
      * This method overrides the value set with acceptLeeway
@@ -83,7 +83,7 @@ public interface Verification {
      */
     func acceptNotBefore(leeway: Int64): Verification
 
-    /**
+    /*
      * Set a specific leeway window in seconds in which the Issued At ("iat") Claim will still be valid.
      * This method overrides the value set with {@link #acceptLeeway(long)}.
      * By default, the Issued At claim is always verified when the value is present,
@@ -97,7 +97,7 @@ public interface Verification {
      */
     func acceptIssuedAt(leeway: Int64): Verification
 
-    /**
+    /*
      * Verifies whether the JWT contains a JWT ID ("jti") claim that equals to the value provided.
      * This check is case-sensitive.
      *
@@ -106,7 +106,7 @@ public interface Verification {
      */
     func withJWTId(jwtId: String): Verification
 
-    /**
+    /*
      * Verifies whether the claim is present in the JWT, with any value including None.
      *
      * @param name the Claim's name.
@@ -115,7 +115,7 @@ public interface Verification {
      */
     func withClaimPresence(name: String): Verification
 
-    /**
+    /*
      * Verifies whether the claim is present with a None value.
      *
      * @param name the Claim's name.
@@ -124,7 +124,7 @@ public interface Verification {
      */
     func withNullClaim(name: String): Verification
 
-    /**
+    /*
      * Verifies whether the claim is equal to the given Boolean value.
      *
      * @param name  the Claim's name.
@@ -134,7 +134,7 @@ public interface Verification {
      */
     func withClaim(name: String, value: Bool): Verification
 
-    /**
+    /*
      * Verifies whether the claim is equal to the given value:Int64.
      *
      * @param name  the Claim's name.
@@ -144,7 +144,7 @@ public interface Verification {
      */
     func withClaim(name: String, value: Int64): Verification
 
-    /**
+    /*
      * Verifies whether the claim is equal to the given value:Int64.
      *
      * @param name  the Claim's name.
@@ -154,7 +154,7 @@ public interface Verification {
      */
     func withClaim(name: String, value: Float64): Verification
 
-    /**
+    /*
      * Verifies whether the claim is equal to the given value:String.
      * This check is case-sensitive.
      *
@@ -165,7 +165,7 @@ public interface Verification {
      */
     func withClaim(name: String, value: String): Verification
 
-    /**
+    /*
      * Verifies whether the claim is equal to the given value:Time.
      * Note that date-time claims are serialized as seconds since the epoch:
      * when verifying date-time claim value, any time units more granular than seconds will not be considered.
@@ -177,7 +177,7 @@ public interface Verification {
      */
     func withClaim(name: String, value: Time): Verification
 
-    /**
+    /*
      * Verifies whether the claim contain at least the given String items.
      *
      * @param name  the Claim's name.
@@ -187,7 +187,7 @@ public interface Verification {
      */
     func withArrayClaim(name: String, items: Array<String>): Verification
 
-    /**
+    /*
      * Verifies whether the claim contain at least the given Integer items.
      *
      * @param name  the Claim's name.
@@ -197,14 +197,14 @@ public interface Verification {
      */
     func withIntArrayClaim(name: String, items: Array<Int64>): Verification
 
-    /**
+    /*
      * Skip the Issued At ("iat") claim Verification. By default, the Verification is performed.
      *
      * @return this same Verification instance.
      */
     func ignoreIssuedAt(): Verification
 
-    /**
+    /*
      * Creates a new and reusable instance of the JWTVerifier with the configuration already provided.
      *
      * @return a new jwt.interfaces.JWTVerifier instance.

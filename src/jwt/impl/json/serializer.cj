@@ -56,21 +56,6 @@ func parse(value: Any): JsonValue {
         case value: ArrayList<String> => value |> map(str2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Time> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Any> => value |> map(parse) |> reduce(JsonArray(), jv2arr)
-        case value: Map<String, Bool> =>
-            value |> map {kv: (String, Bool) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
-        case value: Map<String, Int64> =>
-            value |> map {kv: (String, Int64) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
-        case value: Map<String, Float64> =>
-            value |> map {kv: (String, Float64) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
-        case value: Map<String, String> =>
-            value |> map {kv: (String, String) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
-        case value: Map<String, Time> =>
-            value |> map {kv: (String, Time) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
         case value: Map<String, Any> =>
             value |> map {kv: (String, Any) => (kv[0], parse(kv[1]))}
                 |> reduce(JsonObject(), jv2obj)

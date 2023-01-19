@@ -51,55 +51,55 @@ class JWTDecoder <: DecodedJWT {
         parts[2]
     }
 
-    public func getAlgorithm(): Option<String> {
+    public func getAlgorithm(): String {
         header.getAlgorithm()
     }
 
-    public func getType(): Option<String> {
+    public func getType(): String {
         header.getType()
     }
 
-    public func getContentType(): Option<String> {
+    public func getContentType(): String {
         header.getContentType()
     }
 
-    public func getKeyId(): Option<String> {
+    public func getKeyId(): String {
         header.getKeyId()
     }
 
-    public func getHeaderClaim(name: String): Option<Claim> {
+    public func getHeaderClaim(name: String): Claim {
         header.getHeaderClaim(name)
     }
 
-    public func getIssuer(): Option<String> {
+    public func getIssuer(): String {
         payload.getIssuer()
     }
 
-    public func getSubject(): Option<String> {
+    public func getSubject(): String {
         payload.getSubject()
     }
 
-    public func getAudience(): Option<ArrayList<String>> {
+    public func getAudience(): ArrayList<String> {
         payload.getAudience()
     }
 
-    public func getExpiresAt(): Option<Time> {
+    public func getExpiresAt(): Time {
         payload.getExpiresAt()
     }
 
-    public func getNotBefore(): Option<Time> {
+    public func getNotBefore(): Time {
         payload.getNotBefore()
     }
 
-    public func getIssuedAt(): Option<Time> {
+    public func getIssuedAt(): Time {
         payload.getIssuedAt()
     }
 
-    public func getId(): Option<String> {
+    public func getId(): String {
         payload.getId()
     }
 
-    public func getClaim(name: String): Option<Claim> {
+    public func getClaim(name: String): Claim {
         payload.getClaim(name)
     }
 

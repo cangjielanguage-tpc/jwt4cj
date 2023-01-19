@@ -223,8 +223,8 @@ public class Builder {
      * Add a custom Map Claim with the given items.
      * <p>
      * Accepted nested types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Boolean}, {@linkplain Integer}, {@linkplain Long}, {@linkplain Double},
-     * {@linkplain String} and {@linkplain Date}. {@linkplain Map}s cannot contain null keys or values.
+     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
+     * {@linkplain String} and {@linkplain Time}. {@linkplain Map}s cannot contain null keys or values.
      * {@linkplain List}s can contain null elements.
      *
      * @param name the Claim's name.
@@ -236,8 +236,8 @@ public class Builder {
         // validate map contents
         if (!validateClaim(map)) {
             throw IllegalArgumentException(
-                "Expected map containing Map, List, Boolean, Integer, "
-                    + "Long, Double, String and Date"
+                "Expected map containing Map, List, Bool, Int64, "
+                    + "Float64, String and Time"
             )
         }
         addClaim(name, map)
@@ -248,8 +248,8 @@ public class Builder {
      * Add a custom List Claim with the given items.
      * <p>
      * Accepted nested types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Boolean}, {@linkplain Integer}, {@linkplain Long}, {@linkplain Double},
-     * {@linkplain String} and {@linkplain Date}. {@linkplain Map}s cannot contain null keys or values.
+     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
+     * {@linkplain String} and {@linkplain Time}. {@linkplain Map}s cannot contain null keys or values.
      * {@linkplain List}s can contain null elements.
      *
      * @param name the Claim's name.
@@ -261,8 +261,8 @@ public class Builder {
         // validate list contents
         if (!validateClaim(list)) {
             throw IllegalArgumentException(
-                "Expected list containing Map, List, Boolean, Integer, "
-                    + "Long, Double, String and Date"
+                "Expected list containing Map, List, Bool, Int64, "
+                    + "Float64, String and Time"
             )
         }
         addClaim(name, list)
@@ -312,8 +312,8 @@ public class Builder {
      * nothing is changed.
      * <p>
      * Accepted types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Boolean}, {@linkplain Integer}, {@linkplain Long}, {@linkplain Double},
-     * {@linkplain String} and {@linkplain Date}.
+     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
+     * {@linkplain String} and {@linkplain Time}.
      * {@linkplain Map}s and {@linkplain List}s can contain null elements.
      * </p>
      *
@@ -329,8 +329,8 @@ public class Builder {
     public func withPayload(payloadClaims: Map<String, Any>): Builder {
         if (!validatePayload(payloadClaims)) {
             throw IllegalArgumentException(
-                "Claim values must only be of types Map, List, Boolean, Integer, "
-                    + "Long, Double, String, Date, Instant, and Null"
+                "Claim values must only be of types Map, List, Bool, Int64, "
+                    + "Float64, String, Time, and Null"
             )
         }
 
@@ -379,20 +379,25 @@ public class Builder {
         return true
     }
 
-    private static func isSupportedType(value: ?Any): Bool {
+    private static func isSupportedType(value: Any): Bool {
         match (value) {
-            case value: ArrayList<Any> => validateClaim(value)
-            case value: Map<String, Any> => validateClaim(value)
-            case _ => isBasicType(value)
+            case value: ArrayList<Any> => println(1); validateClaim(value)
+            case value: Map<String, Any> => println(2); validateClaim(value)
+            case _ => println(3); isBasicType(value)
         }
     }
 
-    private static func isBasicType(value: ?Any): Bool {
+    private static func isBasicType(value: Any): Bool {
         match (value) {
-            case None => true
-            case Some(v) =>
-                v is Array<Int64> || v is Array<String> || v is String || v is Int64 || v is Float64 || v is Time ||
-                    v is Bool
+            case value:Bool => true
+            case value:Int64 => true
+            case value:Float64 => true
+            case value:Time => true
+            case value:String => true
+            case value:Array<Int64> => true
+            case value:Array<String> => true
+            case value:Option<Any> => true
+            case _ => false
         }
     }
 
@@ -409,10 +414,6 @@ public class Builder {
         headerClaims.put(HeaderParams.ALGORITHM, algorithm.getName())
         if (!headerClaims.contains(HeaderParams.TYPE)) {
             headerClaims.put(HeaderParams.TYPE, "JWT")
-        }
-        let signingKeyId: ?String = "algorithm.getSigningKeyId()"
-        if (signingKeyId != None) {
-            withKeyId(signingKeyId.getOrThrow())
         }
         return JWTCreator(algorithm, headerClaims, payloadClaims).sign()
     }
