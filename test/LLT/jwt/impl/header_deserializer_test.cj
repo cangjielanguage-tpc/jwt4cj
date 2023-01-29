@@ -14,22 +14,22 @@ main(){
 }"###
     let deser = HeaderDeserializer()
     let header = deser.doDeserialize(jsonStr)
-    if(header.getAlgorithm() != Some("HS256")){
+    if(header.getAlgorithm() != "HS256"){
         return 1
     }
-    if(header.getType() != Some("JWT")){
+    if(header.getType() != "JWT"){
         return 2
     }
-    if(header.getContentType() != Some("JWT")){
+    if(header.getContentType() != "JWT"){
         return 3
     }
-    if(header.getKeyId() != Some("the key for signature validation")){
+    if(header.getKeyId() != "the key for signature validation"){
         return 4
     }
-    if(header.getHeaderClaim("mykey")?.asString() != Some("myvalue")){
+    if(header.getHeaderClaim("mykey").asString() != "myvalue"){
         return 5
     }
-    if(header.getHeaderClaim("mykey1")?.asString() != None){
+    if(!header.getHeaderClaim("mykey1").isMissing()){
         return 6
     }
     0

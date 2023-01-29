@@ -2,6 +2,7 @@ package jwt.impl
 
 import jwt.interfaces.Claim
 import jwt.interfaces.Header
+import jwt.impl.json.MISSING_CLAIM
 
 public class BaseHeader <: Header {
     private let algorithm: ?String
@@ -18,23 +19,23 @@ public class BaseHeader <: Header {
         this.tree = tree
     }
 
-    public func getAlgorithm(): Option<String> {
-        algorithm
+    public func getAlgorithm(): String {
+        algorithm.getOrThrow()
     }
 
-    public func getType(): Option<String> {
-        typ
+    public func getType(): String {
+        typ.getOrThrow()
     }
 
-    public func getContentType(): Option<String> {
-        contentType
+    public func getContentType(): String {
+        contentType.getOrThrow()
     }
 
-    public func getKeyId(): Option<String> {
-        keyId
+    public func getKeyId(): String {
+        keyId.getOrThrow()
     }
 
-    public func getHeaderClaim(name: String): Option<Claim> {
-        tree.get(name)
+    public func getHeaderClaim(name: String): Claim {
+        tree.get(name) ?? MISSING_CLAIM
     }
 }

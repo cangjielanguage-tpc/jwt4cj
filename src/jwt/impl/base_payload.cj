@@ -4,6 +4,7 @@ from std import time.Time
 from std import collection.ArrayList
 import jwt.interfaces.Claim
 import jwt.interfaces.Header
+import jwt.impl.json.MISSING_CLAIM
 
 public class BasePayload <: Payload {
     private let issuer: ?String
@@ -35,36 +36,36 @@ public class BasePayload <: Payload {
         this.tree = tree
     }
 
-    public func getIssuer(): Option<String> {
-        issuer
+    public func getIssuer(): String {
+        issuer.getOrThrow()
     }
 
-    public func getSubject(): Option<String> {
-        subject
+    public func getSubject(): String {
+        subject.getOrThrow()
     }
 
-    public func getAudience(): Option<ArrayList<String>> {
-        audience
+    public func getAudience(): ArrayList<String> {
+        audience.getOrThrow()
     }
 
-    public func getExpiresAt(): Option<Time> {
-        expiresAt
+    public func getExpiresAt(): Time {
+        expiresAt.getOrThrow()
     }
 
-    public func getNotBefore(): Option<Time> {
-        notBefore
+    public func getNotBefore(): Time {
+        notBefore.getOrThrow()
     }
 
-    public func getIssuedAt(): Option<Time> {
-        issuedAt
+    public func getIssuedAt(): Time {
+        issuedAt.getOrThrow()
     }
 
-    public func getId(): Option<String> {
-        jwtId
+    public func getId(): String {
+        jwtId.getOrThrow()
     }
 
-    public func getClaim(name: String): Option<Claim> {
-        tree.get(name)
+    public func getClaim(name: String): Claim {
+        tree.get(name) ?? MISSING_CLAIM
     }
 
     public func getClaims(): Map<String, Claim> {

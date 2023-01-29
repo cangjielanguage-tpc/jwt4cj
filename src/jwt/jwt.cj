@@ -11,10 +11,14 @@ public class JWT {
         this.parser = JWTParser()
     }
 
-    // public func decode(token:String): DecodedJWT {}
-    
-    // public static func decode(token:String): DecodedJWT{}
-    
+    public func decodeJwt(token: String): DecodedJWT {
+        JWTDecoder(parser, token)
+    }
+
+    public static func decode(token: String): DecodedJWT {
+        JWTDecoder(token)
+    }
+
     // public static func require(algorithm:Algorithm): Verification{}
     
     /*
