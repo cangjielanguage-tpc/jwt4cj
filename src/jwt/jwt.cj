@@ -19,6 +19,10 @@ public class JWT {
         JWTDecoder(token)
     }
 
+    public static func require(algorithm: Algorithm): Verification {
+        BaseJWTVerifier.builder(algorithm);
+    }
+
     // public static func require(algorithm:Algorithm): Verification{}
     
     /*
