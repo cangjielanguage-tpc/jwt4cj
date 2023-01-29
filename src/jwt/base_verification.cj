@@ -9,7 +9,7 @@ from std import time.*
 
 
 
-public class BaseVerification <: Verification { // 静态类
+public class BaseVerification <: Verification {
     
     private var algorithm: Algorithm;
     private var expectedChecks: ArrayList<ExpectedCheckHolder>;
@@ -366,12 +366,12 @@ public class BaseVerification <: Verification { // 静态类
 
     private func assertInstantIsFuture(claimVal: Time, leeway: Int64, now: Time): Bool {
         var between = Duration.second(leeway)
-        return !( (now - between) > claimVal);  //leeway 是 second
+        return !( (now - between) > claimVal);
     }
 
     private func assertInstantIsPast(claimVal: Time, leeway: Int64, now: Time): Bool {
         var between = Duration.second(leeway)
-        return !( (now + between) < claimVal);  //leeway 是 second
+        return !( (now + between) < claimVal);
     }
 
     private func assertValidAudienceClaim( audience: ArrayList<String>, values: ArrayList<String> , shouldContainAll: Bool): Bool {
@@ -393,7 +393,7 @@ public class BaseVerification <: Verification { // 静态类
         }
 
         return !((shouldContainAll && !containsAll)
-                || (!shouldContainAll && disjoint)); // 判断是否存在相同元素  Collections.disjoint(audience, values)
+                || (!shouldContainAll && disjoint));
     }
 
 
