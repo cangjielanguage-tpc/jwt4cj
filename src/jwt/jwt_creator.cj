@@ -11,6 +11,7 @@ import jwt.impl.HeaderClaimsHolder
 import jwt.impl.PayloadSerializer
 import jwt.impl.PayloadClaimsHolder
 import jwt.utils.Base64Util
+import jwt.interfaces.NodeType
 
 public class JWTCreator {
     private let algorithm: Algorithm
@@ -381,9 +382,9 @@ public class Builder {
 
     private static func isSupportedType(value: Any): Bool {
         match (value) {
-            case value: ArrayList<Any> => println(1); validateClaim(value)
-            case value: Map<String, Any> => println(2); validateClaim(value)
-            case _ => println(3); isBasicType(value)
+            case value: ArrayList<Any> => println("got ArrayList<Any>"); validateClaim(value)
+            case value: Map<String, Any> => println("got Map<String, Any>"); validateClaim(value)
+            case _ => println("got other"); isBasicType(value)
         }
     }
 
@@ -397,6 +398,7 @@ public class Builder {
             case value:Array<Int64> => true
             case value:Array<String> => true
             case value:Option<Any> => true
+            case value:NodeType => true
             case _ => false
         }
     }
