@@ -1,22 +1,17 @@
 package jwt
 
 from std import time.*
-from std import collection.ArrayList
-from std import collection.Map
 import jwt.interfaces.Claim
-import jwt.interfaces.DecodedJWT
 import jwt.interfaces.Header
 import jwt.interfaces.Payload
-import jwt.impl.JWTParser
-import jwt.utils.Base64Util
 
-class JWTDecoder <: DecodedJWT {
+public class JWTDecoder <: DecodedJWT {
     private let parts: Array<String>
     private let token: String
     private let header: Header
     private let payload: Payload
 
-    init(jwt: String) {
+    public init(jwt: String) {
         this(JWTParser(), jwt)
     }
 

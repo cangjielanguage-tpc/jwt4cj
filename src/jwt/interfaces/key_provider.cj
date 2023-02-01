@@ -15,7 +15,7 @@ public interface KeyProvider<U, R> {
      * Provides a hint on which Public Key to use to verify the token's signature.
      * @return the Public Key instance
      */
-    func getPublicKeyById(keyId: String): U
+    func getPublicKey(): U
 
     /*
      * Getter for the Private Key instance. Used to sign the content on the JWT signing stage.
@@ -24,11 +24,4 @@ public interface KeyProvider<U, R> {
      */
     func getPrivateKey(): R
 
-    /*
-     * Getter for the Id of the Private Key used to sign the tokens.
-     * This represents the `kid` claim and will be placed in the Header.
-     *
-     * @return the Key Id that identifies the Private Key or null if it's not specified.
-     */
-    func getPrivateKeyId(): String
 }

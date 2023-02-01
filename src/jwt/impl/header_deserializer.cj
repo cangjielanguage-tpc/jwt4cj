@@ -1,7 +1,6 @@
 package jwt.impl
 
 import jwt.common.HeaderParams
-import jwt.interfaces.Header
 import jwt.impl.json.Deserializer
 
 public class HeaderDeserializer <: Deserializer {

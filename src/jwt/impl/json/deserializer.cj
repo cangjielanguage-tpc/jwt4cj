@@ -2,7 +2,6 @@ package jwt.impl.json
 
 from std import collection.ArrayList
 from std import collection.Map
-from std import collection.collectArrayList
 from std import collection.collectHashMap
 from std import collection.map
 import jwt.exception.JWTDecodeException
