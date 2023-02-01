@@ -20,6 +20,7 @@ main() {
     let pri_key: String = "${path}/test_rsa_privateKey.pem"
     let pub_key: String = "${path}/test_rsa_publicKey.pem"
     var rsa = Algorithm.RSA256(pri_key)
+    var rsa2 = Algorithm.RSA256(pri_key, Array<UInt8>())
     let ret = rsa.sign(src)
     let ret2 = rsa.sign(src_header, src_payload)
     if (Base64Util.urlEncode(ret) == Base64Util.urlEncode(ret2)) {

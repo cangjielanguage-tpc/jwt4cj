@@ -62,6 +62,10 @@ public class HMACAlgorithm <: Algorithm {
     func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
         var hmac: HMACCJ = HMACCJ()
         var arr: Array<UInt8> = Array<UInt8>()
+        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
+        headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
+        contentBytes[headerBytes.size] = b'.'
+        payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)
         match (algorithm) {
             case "HmacSHA256" => hmac.hmacInit(privateKey, AlgorithmType.Sha256)
                                  arr = Array<UInt8>(Int64(AlgorithmType.Sha256.getBits()), item: 0)
@@ -71,8 +75,7 @@ public class HMACAlgorithm <: Algorithm {
                                  arr = Array<UInt8>(Int64(AlgorithmType.Sha512.getBits()), item: 0)
             case _ => ()
         }
-        hmac.hmacUpdate(headerBytes)
-        hmac.hmacUpdate(payloadBytes)
+        hmac.hmacUpdate(contentBytes)
         hmac.hmacUpdate(JWT_PART_SEPARATOR)
         hmac.hmacFinal(arr)
         return arr
@@ -82,17 +85,15 @@ public class HMACAlgorithm <: Algorithm {
         var hmac: HMACCJ = HMACCJ()
         var arr: Array<UInt8> = Array<UInt8>()
         match (algorithm) {
-            case "HmacSHA256" => hmac.hmacInit(privateKey, AlgorithmType.Sha256)
-                                 hmac.hmacUpdate(contentBytes)
+            case "HmacSHA256" => hmac.hmacInit(privateKey, AlgorithmType.Sha256)               
                                  arr = Array<UInt8>(Int64(AlgorithmType.Sha256.getBits()), item: 0)
             case "HmacSHA384" => hmac.hmacInit(privateKey, AlgorithmType.Sha384)
-                                 hmac.hmacUpdate(contentBytes)
                                  arr = Array<UInt8>(Int64(AlgorithmType.Sha384.getBits()), item: 0)
             case "HmacSHA512" => hmac.hmacInit(privateKey, AlgorithmType.Sha512)
-                                 hmac.hmacUpdate(contentBytes)
                                  arr = Array<UInt8>(Int64(AlgorithmType.Sha512.getBits()), item: 0)
             case _ => ()
         }
+        hmac.hmacUpdate(contentBytes)
         hmac.hmacFinal(arr)
         return arr
     }
