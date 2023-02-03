@@ -34,25 +34,25 @@ public class BaseVerification <: Verification {
 
 
     public func withAnyOfAudience(audience: Array<String>): Verification{
-        return this;
+        let value: ArrayList<String> = ArrayList<String>(audience)
+        return withAnyOfAudience(value);
     }
 
     public func withArrayClaim(name: String, items: Array<String>): Verification{
-        return this;
+
+        let value: ArrayList<String> = ArrayList<String>(items)
+        return withArrayClaim(name, value);
     }
 
     public func withAudience(audience: Array<String>): Verification{
-        return this;
+        let value: ArrayList<String> = ArrayList<String>(audience)
+        return withAudience(value);
     }
-
-    public func withClaim(name: String, value: Float64): Verification {
-        return this;
+    
+    public func withArrayClaim(name: String, items: Array<Int64>): Verification {
+        let value: ArrayList<Int64> = ArrayList<Int64>(items)
+        return withArrayClaim(name, value);
     }
-
-    public func withIntArrayClaim(name: String, items: Array<Int64>): Verification {
-        return this;
-    }
-
 
 
     public func withIssuer(issuer: Array<String>): Verification {
@@ -61,7 +61,7 @@ public class BaseVerification <: Verification {
 
         let fun = { claim: Claim, decodedJWT: DecodedJWT => 
             if (claim.isMissing()) {
-                return true
+                return false
             }
             if ( value.size == 0 || !value.contains((claim.asString())) ){
                 throw  IncorrectClaimException(
@@ -80,7 +80,11 @@ public class BaseVerification <: Verification {
 
 
     public func withSubject(subject: String): Verification {
-        let fun = { claim: Claim, decodedJWT: DecodedJWT => subject == claim.asString() }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => 
+            if (claim.isMissing()) {
+                return false
+            }
+            subject == claim.asString() }
 
         addCheck(RegisteredClaims.SUBJECT, fun);
         return this;
@@ -91,7 +95,7 @@ public class BaseVerification <: Verification {
         let fun = {claim: Claim, decodedJWT: DecodedJWT =>
 
             if (claim.isMissing()) {
-                return true
+                return false
             }
 
             if (!assertValidAudienceClaim(decodedJWT.getAudience(), value, true)) {
@@ -111,7 +115,7 @@ public class BaseVerification <: Verification {
         let fun = {claim: Claim, decodedJWT: DecodedJWT =>
 
             if (claim.isMissing()) {
-                return true
+                return false
             }
             
             if(!assertValidAudienceClaim(decodedJWT.getAudience(), value, false)) {
@@ -126,44 +130,31 @@ public class BaseVerification <: Verification {
 
 
     public func acceptLeeway(leeway: Int64): Verification{
-        try {
-            assertPositive(leeway);
-            this.defaultLeeway = leeway;
-            return this;
-        } catch(e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        assertPositive(leeway);
+        this.defaultLeeway = leeway;
+        return this;
+
     }
 
     public func acceptExpiresAt(leeway: Int64): Verification {
-        try {
-            assertPositive(leeway);
-            customLeeways.put(RegisteredClaims.EXPIRES_AT, leeway);
-            return this;
-        } catch(e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        assertPositive(leeway);
+        customLeeways.put(RegisteredClaims.EXPIRES_AT, leeway);
+        return this;
        
     }
 
     public func acceptNotBefore(leeway: Int64): Verification {
-        try {
-            assertPositive(leeway);
-            customLeeways.put(RegisteredClaims.NOT_BEFORE, leeway);
-            return this;
-        } catch(e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        assertPositive(leeway);
+        customLeeways.put(RegisteredClaims.NOT_BEFORE, leeway);
+        return this;
+    
     }
 
     public func acceptIssuedAt(leeway: Int64): Verification {
-        try {
-            assertPositive(leeway);
-            customLeeways.put(RegisteredClaims.ISSUED_AT, leeway);
-            return this;
-        } catch(e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        assertPositive(leeway);
+        customLeeways.put(RegisteredClaims.ISSUED_AT, leeway);
+        return this;
+        
     }
 
     public func ignoreIssuedAt(): Verification {
@@ -172,113 +163,115 @@ public class BaseVerification <: Verification {
     }
 
     public func withJWTId(jwtId: String): Verification {
-        let fun = { claim: Claim, decodedJWT: DecodedJWT => jwtId.equals(claim.asString()) }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => 
+            if (claim.isMissing()) {
+                return false
+            }
+            jwtId.equals(claim.asString()) }
         addCheck(RegisteredClaims.JWT_ID, fun);
         return this;
     }
 
-    public func withClaimPresence(name: String): Verification {
+    public func withClaimPresence(name: String): Verification { 
         
         //since addCheck already checks presence, we just return true
-        let fun = { claim: Claim, decodedJWT: DecodedJWT => true }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => 
+                   return true 
+                  }
         withClaim(name, fun);
         return this;
     }
 
      public func withNullClaim(name: String): Verification {
-        try {
-            
-            let fun = { claim: Claim, decodedJWT: DecodedJWT => claim.isMissing() }
-            withClaim(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => claim.isMissing() }
+        withClaim(name, fun);
+        return this;
         
     }
 
     public func withClaim(name: String, value: Bool): Verification {
-        try {
-            
-            let fun = { claim: Claim, decodedJWT: DecodedJWT =>  value == claim.asBool() }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT =>  
+            if (claim.isMissing()) {
+                return false
+            }
+            value == claim.asBool() }
+        addCheck(name, fun);
+        return this;
     }
 
     public func withClaim(name: String, value: Int64): Verification {
-        try {
             
-            let fun = { claim: Claim, decodedJWT: DecodedJWT =>  value == claim.asInt() }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw  IllegalArgumentException()
-        }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT =>  
+            if (claim.isMissing()) {
+                return false
+            }
+            value == claim.asInt() }
+        addCheck(name, fun);
+        return this;
+      
+    }
+
+    public func withClaim(name: String, value: Float64): Verification {
+            
+        let fun = { claim: Claim, decodedJWT: DecodedJWT =>  
+            if (claim.isMissing()) {
+                return false
+            }
+            value == claim.asFloat()}
+        addCheck(name, fun);
+        return this;
+        
     }
 
 
     public func withClaim(name: String, value: String): Verification{
-        try {
             
-            // { a: Int64, b: Int64 => print(a-b);false }
-            let fun = { claim: Claim, decodedJWT: DecodedJWT => value.equals(claim.asString()) }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException){
-            throw IllegalArgumentException("The Algorithm cannot be null.");
-
-        }
+        // { a: Int64, b: Int64 => print(a-b);false }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => 
+            if (claim.isMissing()) {
+                return false
+            }
+            value.equals(claim.asString()) }
+        addCheck(name, fun);
+        return this;
+        
     }
 
     public func withClaim(name: String, value: Time): Verification { // 比较时间
-        try {
             
-            // Since date-time claims are serialized as epoch seconds,
-            // we need to compare them with only seconds-granularity
-            let fun = { claim: Claim, decodedJWT: DecodedJWT =>  value == claim.asTime()} 
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("The Algorithm cannot be null.");
-
-        }
+        // Since date-time claims are serialized as epoch seconds,
+        // we need to compare them with only seconds-granularity
+        let fun = { claim: Claim, decodedJWT: DecodedJWT =>  
+            if (claim.isMissing()) {
+                return false
+            }
+            value == claim.asTime()} 
+        addCheck(name, fun);
+        return this;
+        
     }
 
     public func withClaim(name: String, predicate: (Claim, DecodedJWT)->Bool): Verification {
-        try {
             
-            let fun = { claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT) }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("The Algorithm cannot be null.");
-
-        }         
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT) }
+        addCheck(name, fun);
+        return this;
+               
     }
 
     public func withArrayClaim(name: String, items: ArrayList<String>): Verification {
-        try {
             
-            let fun = { claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items) }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("The Algorithm cannot be null.");
-        }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items) }
+        addCheck(name, fun);
+        return this;
+        
     }
 
     public func withArrayClaim(name: String, items: ArrayList<Int64>): Verification {
-        try {
             
-            let fun = { claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items) }
-            addCheck(name, fun);
-            return this;
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("The Algorithm cannot be null.");
-        }
+        let fun = { claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items) }
+        addCheck(name, fun);
+        return this;
     }
 
     public func build(): JWTVerifier {
@@ -294,7 +287,7 @@ public class BaseVerification <: Verification {
     public func getLeewayFor(name: String): Int64 {
 
         if(customLeeways.contains(name)) {
-            return customLeeways.get(name).getOrThrow();
+            return customLeeways.get(name).getOrThrow(); 
         } else {
             return defaultLeeway;
         }
@@ -322,7 +315,6 @@ public class BaseVerification <: Verification {
             return false
         }
         let claimArr = asStringList(Some(claim)).getOrThrow()
-
         for (pattern in expectedClaimValue) {
             if(!claimArr.contains(pattern)){
                 return false
@@ -336,7 +328,6 @@ public class BaseVerification <: Verification {
             return false
         }
         let claimArrInt = asIntList(Some(claim)).getOrThrow()
-
         for (pattern in expectedClaimValue) {
             if(!claimArrInt.contains(pattern)){
                 return false
@@ -347,16 +338,22 @@ public class BaseVerification <: Verification {
 
 
     private func assertValidInstantClaim(claimName: String, claim: Claim, leeway: Int64, shouldBeFuture: Bool): Bool {
+        if (claim.isMissing()) {
+            return true
+        }
+
         var claimVal: Time = claim.asTime();
         var now: Time = time;
         var isValid: Bool;
         if (shouldBeFuture) {
             isValid = assertInstantIsFuture(claimVal, leeway, now);
             if (!isValid) {
+                println("22")
                 throw TokenExpiredException("The Token has expired on ${claimVal}.", claimVal);
             }
         } else {
             isValid = assertInstantIsPast(claimVal, leeway, now);
+            print(isValid)
             if (!isValid) {
                 throw IncorrectClaimException("The Token can't be used before ${claimVal}.", claimName, claim);
             }
@@ -365,6 +362,9 @@ public class BaseVerification <: Verification {
     }
 
     private func assertInstantIsFuture(claimVal: Time, leeway: Int64, now: Time): Bool {
+        println("11")
+        println(now)
+        println(claimVal)
         var between = Duration.second(leeway)
         return !( (now - between) > claimVal);
     }
@@ -407,6 +407,7 @@ public class BaseVerification <: Verification {
         let fun = { claim: Claim, decodedJWT: DecodedJWT => 
             if (claim.isMissing()) {
                 throw MissingClaimException(name)
+                
             }
             return predicate(claim, decodedJWT);
         

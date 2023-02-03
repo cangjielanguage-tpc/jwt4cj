@@ -1,4 +1,4 @@
-package jwt.impl
+package jwt.interfaces
 
 // import jwt.interfaces.*
 
