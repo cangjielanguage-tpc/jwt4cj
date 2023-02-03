@@ -195,7 +195,7 @@ public interface Verification {
      * @return this same Verification instance.
      * @throws IllegalArgumentException the name is None.
      */
-    func withIntArrayClaim(name: String, items: Array<Int64>): Verification
+    func withArrayClaim(name: String, items: Array<Int64>): Verification
 
     /*
      * Skip the Issued At ("iat") claim Verification. By default, the Verification is performed.

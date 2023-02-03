@@ -8,7 +8,7 @@ from std import collection.*
 from std import time.*
 
 
-public class BaseJWTVerifier <: jwt.interfaces.JWTVerifier {
+public class BaseJWTVerifier <: JWTVerifier {
 
     private let algorithm: Algorithm;
 
@@ -32,14 +32,8 @@ public class BaseJWTVerifier <: jwt.interfaces.JWTVerifier {
     }
 
     public func verify(token: String): DecodedJWT {
-        try {
-            var jwt: DecodedJWT = JWTDecoder(parser, token);
-            return verify(jwt);
-        } catch (e: JWTVerificationException){
-            throw JWTVerificationException(
-                            "Verification fail");
-        }
-        
+        var jwt: DecodedJWT = JWTDecoder(parser, token);
+        return verify(jwt);
     }
 
     /**
@@ -56,15 +50,11 @@ public class BaseJWTVerifier <: jwt.interfaces.JWTVerifier {
      */
     public func verify(jwt: DecodedJWT): DecodedJWT {
         
-        try {
-            verifyAlgorithm(jwt, algorithm);
-            algorithm.verify(jwt);
-            verifyClaims(jwt, expectedChecks);
-            return jwt;
-        } catch (e: JWTVerificationException) {
-            throw JWTVerificationException(
-                            "Verification fail");
-        }
+        verifyAlgorithm(jwt, algorithm);
+        // algorithm.verify(jwt);
+        verifyClaims(jwt, expectedChecks);
+        return jwt;
+       
     }
 
     private func verifyAlgorithm(jwt: DecodedJWT, expectedAlgorithm: Algorithm) {
@@ -75,34 +65,32 @@ public class BaseJWTVerifier <: jwt.interfaces.JWTVerifier {
         //         "The provided Algorithm doesn't match the one defined in the JWT's Header.");
         // }
         if (!expectedAlgorithm.getName().equals(jwt.getAlgorithm())) {
-        throw AlgorithmMismatchException(
+            throw AlgorithmMismatchException(
                 "The provided Algorithm doesn't match the one defined in the JWT's Header.");
         }
     }
 
     private func verifyClaims(jwt: DecodedJWT, expectedChecks: ArrayList<ExpectedCheckHolder>) {
-        
-        try {
-            for (expectedCheck in expectedChecks) {
-                var isValid: Bool;
-                var claimName: String = expectedCheck.getClaimName();
-                var claim: Claim = jwt.getClaim(claimName);
+        for (expectedCheck in expectedChecks) {
+            
+            var isValid: Bool;
+            var claimName: String = expectedCheck.getClaimName();
+            var claim: Claim = jwt.getClaim(claimName);
 
-                isValid = expectedCheck.verify(claim, jwt);
+            // if (claim.isMissing() && claimName != "exp" && claimName != "nbf" && claimName != "iat") {
+            //     println("missing")
+            //     throw MissingClaimException(claimName)
+            // }
+            isValid = expectedCheck.verify(claim, jwt);
 
-                if (!isValid) {
-                    throw IncorrectClaimException(
-                            "The Claim ${claimName} value doesn't match the required one.",
-                            claimName,
-                            claim
-                    );
-                }
+            if (!isValid) {
+                throw IncorrectClaimException(
+                        "The Claim '${claimName}' value doesn't match the required one.",
+                        claimName,
+                        claim
+                );
             }
-        } catch (e1: InvalidClaimException) {
-            throw InvalidClaimException(
-                    "The  Claim Invalid");
         }
-        
     }
 
 }
