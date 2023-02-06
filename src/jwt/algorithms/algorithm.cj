@@ -70,7 +70,7 @@ public abstract class Algorithm {
         return RSA512(filename, publicKey, privateKey)
     }
 
-    public static func HMAC256(filename: String, secret: String): Algorithm {
+    public static func HMAC256(secret: String): Algorithm {
         return HMACAlgorithm("HS256", "HmacSHA256", secret)
     }
 

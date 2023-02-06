@@ -20,7 +20,7 @@ class RSAAlgorithm <: Algorithm {
     public func verify(jwt: DecodedJWT): Unit {
         try {
             var signatureBytes: Array<UInt8> = Base64Util.urlDecode2Byte(jwt.getSignature())
-            var publicKey: Array<UInt8> = Array<UInt8>()
+            var publicKey: Array<UInt8> = keyProvider.getPublicKey()
             var valid: Bool = verifySignatureFor(getDescription(), publicKey, jwt.getHeader(), jwt.getPayload(), signatureBytes)
             if (!valid) {
                 throw SignatureGenerationException("exception func in verify")
@@ -125,7 +125,7 @@ class RSAAlgorithm <: Algorithm {
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha512(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA384_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signate, rsa)
                                     rsaFree(rsa)
                                     return (signateLen, signate)
 
@@ -155,7 +155,7 @@ class RSAAlgorithm <: Algorithm {
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha512(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA384_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signate, rsa)
                                     rsaFree(rsa)
                                     return (signateLen, signate)
 
