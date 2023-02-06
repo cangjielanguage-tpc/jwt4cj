@@ -29,7 +29,8 @@ main() {
 
     return 1
   } catch (e2: IncorrectClaimException){
-    // println(e2.getClaimName())
+    println(e2.getClaimName())
+    println(e2.getClaimValue())
     println(e2.message)
     if (e2.message == "The Claim 'String' value doesn't match the required one.") {
       return 0

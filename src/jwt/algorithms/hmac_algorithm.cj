@@ -76,7 +76,6 @@ public class HMACAlgorithm <: Algorithm {
             case _ => ()
         }
         hmac.hmacUpdate(contentBytes)
-        hmac.hmacUpdate(JWT_PART_SEPARATOR)
         hmac.hmacFinal(arr)
         return arr
     }

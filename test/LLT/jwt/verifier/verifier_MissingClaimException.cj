@@ -28,7 +28,7 @@ main() {
 
     return 1
   } catch (e2: MissingClaimException){
-    // println(e2.getClaimName())
+    println(e2.getClaimName())
     println(e2.message)
     if (e2.message == "The Claim 'String1' is not present in the JWT.") {
       return 0
