@@ -106,7 +106,7 @@ class ECDSAAlgorithm <: Algorithm {
         payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)
         var keyPri: EC_KEY = ecKeyNew()
         keyPri = pemReadEcPri(filename)
-        let buf_len = ecdsaSize(keyPri)
+        let buf_len: Int32 = ecdsaSize(keyPri)
         let sigbuf: SIN_MALLOC = SIN_MALLOC(buf_len)
         match (algorithm) { 
             case "SHA256withECDSA" => let pri_key = privateKey
@@ -127,7 +127,7 @@ class ECDSAAlgorithm <: Algorithm {
     func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, contentBytes: Array<UInt8>): Array<UInt8> {
         var keyPri: EC_KEY = ecKeyNew()
         keyPri = pemReadEcPri(filename)
-        let buf_len = ecdsaSize(keyPri)
+        let buf_len: Int32 = ecdsaSize(keyPri)
         let sigbuf: SIN_MALLOC = SIN_MALLOC(buf_len)
         match (algorithm) { 
             case "SHA256withECDSA" => let pri_key = privateKey
