@@ -51,7 +51,7 @@ public class BaseJWTVerifier <: JWTVerifier {
     public func verify(jwt: DecodedJWT): DecodedJWT {
         
         verifyAlgorithm(jwt, algorithm);
-        // algorithm.verify(jwt);
+        algorithm.verify(jwt);
         verifyClaims(jwt, expectedChecks);
         return jwt;
        
