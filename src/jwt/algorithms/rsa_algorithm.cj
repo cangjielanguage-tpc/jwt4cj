@@ -44,7 +44,7 @@ class RSAAlgorithm <: Algorithm {
                                     let pub_key = publicKey
                                     let rsa: RSA = pemReadRsaPub(filename, false, 1)
                                     sha256(contentBytes, uchash)
-                                    let ret = rsaVerify(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), signatureBytes, UInt32(signatureBytes.size), rsa)
+                                    let ret = rsaVerify(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), signatureBytes, rsa)
                                     rsaFree(rsa)
                                     if (ret != 1) {
                                         return false
@@ -55,7 +55,7 @@ class RSAAlgorithm <: Algorithm {
                                     let pub_key = publicKey
                                     let rsa: RSA = pemReadRsaPub(filename, false, 1)
                                     sha384(contentBytes, uchash)
-                                    let ret = rsaVerify(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), signatureBytes, UInt32(signatureBytes.size), rsa)
+                                    let ret = rsaVerify(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), signatureBytes, rsa)
                                     rsaFree(rsa)
                                     if (ret != 1) {
                                         return false
@@ -66,7 +66,7 @@ class RSAAlgorithm <: Algorithm {
                                     let pub_key = publicKey
                                     let rsa: RSA = pemReadRsaPub(filename, false, 1)
                                     sha512(contentBytes, uchash)
-                                    let ret = rsaVerify(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signatureBytes, UInt32(signatureBytes.size), rsa)
+                                    let ret = rsaVerify(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signatureBytes, rsa)
                                     rsaFree(rsa)
                                     if (ret != 1) {
                                         return false
@@ -80,9 +80,8 @@ class RSAAlgorithm <: Algorithm {
     public func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
         try {
             let privateKey: Array<UInt8> = keyProvider.getPrivateKey()
-            let signate: Array<UInt8> = Array<UInt8>(1024, item: 0)
-            let retSignate: (UInt32, Array<UInt8>) = createSignatureFor(getDescription(), privateKey, headerBytes, payloadBytes, signate)
-            return retSignate[1][0..Int64(retSignate[0])]
+            let retSignate: Array<UInt8> = createSignatureFor(getDescription(), privateKey, headerBytes, payloadBytes)
+            return retSignate
         } catch (e: SignatureGenerationException) {
             throw SignatureVerificationException("SignatureVerificationException..")
         }
@@ -91,15 +90,14 @@ class RSAAlgorithm <: Algorithm {
     public func sign(contentBytes: Array<UInt8>): Array<UInt8> {
         try {
             var privateKey: Array<UInt8> = keyProvider.getPrivateKey()
-            let signate: Array<UInt8> = Array<UInt8>(contentBytes.size * 3, item: 0)
-            let retSignate: (UInt32, Array<UInt8>) = createSignatureFor(getDescription(), privateKey, contentBytes, signate)
-            return retSignate[1][0..Int64(retSignate[0])]
+            let retSignate: Array<UInt8> = createSignatureFor(getDescription(), privateKey, contentBytes)
+            return retSignate
         } catch (e: SignatureGenerationException) {
             throw SignatureVerificationException("SignatureVerificationException..")
         }
     }
  
-    func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>, signate: Array<UInt8>): (UInt32, Array<UInt8>) {
+    func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
         var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
         headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
         contentBytes[headerBytes.size] = b'.'
@@ -109,57 +107,57 @@ class RSAAlgorithm <: Algorithm {
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha256(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
             case "SHA384withRSA" => var uchash = Array<UInt8>(SHA384_DIGEST_LENGTH, item: 0)
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha384(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
             case "SHA512withRSA" => var uchash = Array<UInt8>(SHA512_DIGEST_LENGTH, item: 0)
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha512(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
-            case _ => return (0, signate)
+            case _ => return Array<UInt8>()
         }
     }
 
-    func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, contentBytes: Array<UInt8>, signate: Array<UInt8>): (UInt32, Array<UInt8>) {
+    func createSignatureFor(algorithm: String, privateKey: Array<UInt8>, contentBytes: Array<UInt8>): Array<UInt8> {
         match (algorithm) { 
             case "SHA256withRSA" => var uchash = Array<UInt8>(SHA256_DIGEST_LENGTH, item: 0)
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha256(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha256, uchash, UInt32(SHA256_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
             case "SHA384withRSA" => var uchash = Array<UInt8>(SHA384_DIGEST_LENGTH, item: 0)
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha384(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha384, uchash, UInt32(SHA384_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
             case "SHA512withRSA" => var uchash = Array<UInt8>(SHA512_DIGEST_LENGTH, item: 0)
                                     let pri_key = privateKey
                                     let rsa: RSA = pemReadRsaPri(filename, false)
                                     sha512(contentBytes, uchash)
-                                    let (ret, signateLen) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), signate, rsa)
+                                    let (ret, signret) = rsaSign(RsaTypeId.NID_sha512, uchash, UInt32(SHA512_DIGEST_LENGTH), rsa)
                                     rsaFree(rsa)
-                                    return (signateLen, signate)
+                                    return signret
 
-            case _ => return (0, signate)
+            case _ => return Array<UInt8>()
         }
     }
 
