@@ -4,6 +4,7 @@
 // EXEC: ./main
 from jwt import jwt.algorithms.*
 from jwt import jwt.interfaces.*
+from jwt import jwt.impl.*
 from jwt import jwt.*
 from jwt import jwt.utils.*
 from cryptocj import rsacj.*
@@ -18,10 +19,10 @@ main() {
     var path: String = getcwd()
     let pri_key: String = "${path}/test_rsa_privateKey_02.pem"
     let pub_key: String = "${path}/test_rsa_publicKey_02.pem"
-    var rsa = Algorithm.RSA512(pri_key)
-    var rsa2 = Algorithm.RSA512(pri_key, Array<UInt8>())
+    var rsa = Algorithm.RSA512(RSAKeyProviderFileImpl(pri_key))
+    var rsa2 = Algorithm.RSA512(RSAKeyProviderFileImpl(pri_key, pub_key))
     let ret = rsa.sign(src)
-    let ret2 = rsa.sign(src_header, src_payload)
+    let ret2 = rsa2.sign(src_header, src_payload)
     if (Base64Util.urlEncode(ret) == Base64Util.urlEncode(ret2)) {
         rsa2.getSigningKeyId()
         rsa2.toString()
