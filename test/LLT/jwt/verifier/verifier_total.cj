@@ -31,6 +31,7 @@ main() {
         .withSubject("subject")
         .withJWTId("jwtId")
         .withClaimPresence("ddd")
+        .withNullClaim("null")
 
 
     require.acceptExpiresAt(111111)
@@ -47,6 +48,7 @@ main() {
     return 2
   }
    catch(e: Exception) {
+    e.printStackTrace()
     return 3
   }
    0

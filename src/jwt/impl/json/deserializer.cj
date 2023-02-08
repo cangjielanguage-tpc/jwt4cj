@@ -12,35 +12,21 @@ public open class Deserializer {
             |> map {kv: (String, JsonValue) => (kv[0], createClaim(kv[1]))}
             |> collectHashMap
     }
-
 }
 
-public func asIntList(claim: ?Claim): ?ArrayList<Int64> {
-    match (claim) {
-        case Some(v) => v.asList() |> map {a: JsonValue => a.asInt().getValue()} |> collectArrayList
-        case _ => None
-    }
+public func asIntList(claim: Claim): ArrayList<Int64> {
+    claim.asList() |> map {a: JsonValue => a.asInt().getValue()} |> collectArrayList
 }
 
-public func asFloatList(claim: ?Claim): ?ArrayList<Float64> {
-    match (claim) {
-        case Some(v) => v.asList() |> map {a: JsonValue => a.asFloat().getValue()} |> collectArrayList
-        case _ => None
-    }
-}
-
-public func asStringList(claim: ?Claim): ?ArrayList<String> {
-    match (claim) {
-        case Some(v) => v.asList() |> map {a: JsonValue => a.asString().getValue()} |> collectArrayList
-        case _ => None
-    }
+public func asStringList(claim: Claim): ArrayList<String> {
+    claim.asList() |> map {a: JsonValue => a.asString().getValue()} |> collectArrayList
 }
 
 public func getStringOrArray(key: String, map: Map<String, Claim>): ?ArrayList<String> {
     let claim = map.get(key)
     match (claim?.getValue()) {
-        case Some(v:JsonString) => Some(ArrayList([v.getValue()]))
-        case Some(v:JsonArray) => asStringList(claim)
+        case Some(v: JsonString) => ArrayList([v.getValue()])
+        case Some(v: JsonArray) => asStringList(claim.getOrThrow())
         case None => None
         case _ => throw JWTDecodeException("The claim '${key}' is not string or array.")
     }
