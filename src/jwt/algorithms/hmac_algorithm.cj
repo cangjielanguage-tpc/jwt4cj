@@ -7,12 +7,11 @@ from cryptocj import hmaccj.*
 
 public class HMACAlgorithm <: Algorithm {
 
-    private var secret: Array<UInt8> = Array<UInt8>(1024, item: 0)
-    private static let JWT_PART_SEPARATOR: Array<UInt8> = [46]
+    private var secret: Array<UInt8>
 
     init(id: String, algorithm: String, secretBytes: Array<UInt8>) {
         super(id, algorithm)
-        secretBytes.copyTo(secret, 0, 0, secretBytes.size)
+        secret = secretBytes
     }
 
     init(id: String, algorithm: String, secret: String) {
