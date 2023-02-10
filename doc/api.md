@@ -1,1 +1,954 @@
 # jwt 库
+
+## jwt入口
+
+### 介绍
+
+    jwt api入口
+
+### 主要接口
+
+#### class JWT
+
+```
+public class JWT {
+    /*
+    * 构造函数
+    */
+    public init()
+    /*
+    * jwt解码
+    * @param token jwt
+    * @return DecodedJWT 解码后的jwt
+    */
+    public func decodeJwt(token: String): DecodedJWT
+    /*
+    * jwt解码
+    * @param token jwt
+    * @return DecodedJWT 解码后的jwt
+    */
+    public static func decode(token: String): DecodedJWT
+    /*
+    * 创建校验器
+    * @param algorithm 算法对象
+    * @return Verification
+    */
+    public static func require(algorithm: Algorithm): Verification
+
+    /*
+    * 创建构造器
+    * @return Builder
+    */
+    public static func create(): Builder
+}
+```
+
+## jwt 构建
+
+### 介绍
+
+构造jwt字符串
+
+### 主要接口
+
+#### class Builder
+
+```
+public class Builder{
+    /*
+    * add header claims
+    * @param headerClaims 
+    * @return Builder
+    */
+    public func withHeader(headerClaims: Map<String, Any>): Builder
+
+    /*
+    * Add keyid ("kid") claim to the Header.
+    * @param keyId value.
+    * @return Builder
+    */
+    public func withKeyId(keyId: String): Builder
+
+    /*
+    * Add  Issuer ("iss") claim to the Payload.
+    * @param issuer Issuer value.
+    * @return Builder
+    */
+    public func withIssuer(issuer: String): Builder
+
+    /*
+    * Add Subject ("sub") claim to the Payload.
+    * @param subject Subject value.
+    * @return Builder
+    */
+    public func withSubject(subject: String): Builder
+
+    /*
+    * Add Audience ("aud") claim to the Payload.
+    * @param audience Audience value.
+    * @return Builder
+    */
+    public func withAudience(audience: Array<String>): Builder
+
+    /*
+    * Add Expires At ("exp") claim to the payload
+    * @param expiresAt the Expires At value.
+    * @return Builder
+    */
+    public func withExpiresAt(expiresAt: Time): Builder
+
+    /*
+    * Add a specific Not Before ("nbf") claim to the Payload.
+    * @param notBefore the Not Before value.
+    * @return Builder
+    */
+    public func withNotBefore(notBefore: Time): Builder
+
+    /*
+    * Add a specific Issued At ("iat") claim to the Payload.
+    * @param issuedAt the Issued At value.
+    * @return Builder
+    */
+    public func withIssuedAt(issuedAt: Time): Builder
+
+    /*
+    * Add a specific JWT Id ("jti") claim to the Payload.
+    * @param jwtId the Token Id value.
+    * @return Builder
+    */
+    public func withJWTId(jwtId: String): Builder
+
+    /*
+    * Add a custom Claim value to the Payload.
+    * @param name  the Claim's name.
+    * @param value the Claim's value.
+    * @return Builder
+    */
+    public func withClaim(name: String, value: Bool): Builder
+
+    /*
+    * Add a custom Claim value.
+    * @param name  the Claim's name.
+    * @param value the Claim's value.
+    * @return Builder
+    */
+    public func withClaim(name: String, value: Int64): Builder
+
+    /*
+    * Add a custom Claim value.
+    * @param name  the Claim's name.
+    * @param value the Claim's value.
+    * @return Builder
+    */
+    public func withClaim(name: String, value: Float64): Builder
+
+    /*
+    * Add a custom Claim value.
+    * @param name  the Claim's name.
+    * @param value the Claim's value.
+    * @return Builder
+    */
+    public func withClaim(name: String, value: String): Builder
+
+    /*
+    * Add a custom Claim value.
+    * @param name  the Claim's name.
+    * @param value the Claim's value.
+    * @return Builder
+    */
+    public func withClaim(name: String, value: Time): Builder
+
+    /*
+    * Add a custom Map Claim with the given items.
+    * @param name the Claim's name.
+    * @param map  the Claim's key-values.
+    * @return Builder
+    */
+    public func withClaim(name: String, map: Map<String, Any>): Builder
+
+    /*
+    * Add a custom List Claim with the given items.
+    * @param name the Claim's name.
+    * @param list the Claim's list of values.
+    * @return Builder
+    */
+    public func withClaim(name: String, list: ArrayList<Any>): Builder
+
+    /*
+    * Add a custom claim with null value.
+    * @param name the Claim's name.
+    * @return Builder
+    */
+    public func withNullClaim(name: String): Builder
+
+    /*
+    * Add a custom Array Claim with the given items.
+    * @param name  the Claim's name.
+    * @param items the Claim's value.
+    * @return Builder
+    */
+    public func withArrayClaim(name: String, items: Array<String>): Builder
+
+    /*
+    * Add a custom Array Claim with the given items.
+    * @param name  the Claim's name.
+    * @param items the Claim's value.
+    * @return Builder
+    */
+    public func withArrayClaim(name: String, items: Array<Int64>): Builder
+
+    /*
+    * Add specific Claims to set as the Payload.
+    * @param payloadClaims the values to use as Claims in the token's payload.
+    * @return Builder
+    */
+    public func withPayload(payloadClaims: Map<String, Any>): Builder
+
+    /*
+    * 签名
+    * @param algorithm used to sign the JWT
+    * @return a  JWT token
+    */
+    public func sign(algorithm: Algorithm): String
+}
+```
+
+### 示例
+
+```
+let jwtStr = JWT.create()
+    .withHeader(HashMap<String, Any>([("k1","v1")]))
+    .withKeyId("keyId")
+    .withIssuer("issuer")
+    .withSubject("subject")
+    .withAudience(["aud1", "aud2"])
+    .withExpiresAt(Time(3673835050,0))
+    .withNotBefore(Time(1673835050,0))
+    .withIssuedAt(Time(1673835000,0))
+    .withJWTId("jwtId")
+    .withClaim("bool", true)
+    .withClaim("ddd", "dfdddff")
+    .withClaim("int64", 64)
+    .withClaim("float64", 3.14)
+    .withClaim("String", "abaaba")
+    .withClaim("time", Time(1673850000,0))
+    .withClaim("map", HashMap<String, Any>([("mk2","mv2")]))
+    .withClaim("list", ArrayList<Any>([56.51,41.96]))
+    .withNullClaim("null")
+    .withArrayClaim("arraystring", ["astr1","astr2"])
+    .withArrayClaim("arrayint", [684,64])
+    .withPayload(HashMap<String, Any>([("pk1","pv1"),("pk2","pv2")]))
+    .sign(Algorithm.none())
+println(jwtStr)
+```
+
+## jwt 解码
+
+### 介绍
+
+jwt解码
+
+### 主要接口
+
+#### class JWTDecoder
+
+```
+public class JWTDecoder <: DecodedJWT {
+    /*
+    * 构造函数
+    * @param jwt
+    * @return 
+    */
+    public init(jwt: String)
+
+    /*
+    * get未解码jwt
+    * @return String
+    */
+    public func getToken(): String
+
+    /*
+    * get未解码header
+    * @return String
+    */
+    public func getHeader(): String
+
+    /*
+    * get未解码payload
+    * @return String
+    */
+    public func getPayload(): String
+
+    /*
+    * get未解码签名
+    * @return String
+    */
+    public func getSignature(): String
+
+    /*
+    * get header.alg
+    * @return String
+    */
+    public func getAlgorithm(): String
+
+    /*
+    * get header.typ
+    * @return String
+    */
+    public func getType(): String
+
+    /*
+    * get header.cty
+    * @return String
+    */
+    public func getContentType(): String
+
+    /*
+    * get header.kid
+    * @return String
+    */
+    public func getKeyId(): String
+
+    /*
+    * get claim from header
+    * @param name claim key
+    * @return Claim value
+    */
+    public func getHeaderClaim(name: String): Claim
+
+    /*
+    * get payload.iss
+    * @return String
+    */
+    public func getIssuer(): String
+
+    /*
+    * get payload.sub
+    * @return String
+    */
+    public func getSubject(): String
+
+    /*
+    * get payload.aud
+    * @return ArrayList<String>
+    */
+    public func getAudience(): ArrayList<String>
+
+    /*
+    * get payload.exp
+    * @return Time
+    */
+    public func getExpiresAt(): Time
+
+    /*
+    * get payload.nbf
+    * @return Time
+    */
+    public func getNotBefore(): Time
+
+    /*
+    * get payload.iat
+    * @return Time
+    */
+    public func getIssuedAt(): Time
+
+    /*
+    * get payload.jti
+    * @return String
+    */
+    public func getId(): String
+
+    /*
+    * get payload claim
+    * @param name claim key
+    * @return Claim value
+    */
+    public func getClaim(name: String): Claim
+
+    /*
+    * get all payload claims
+    * @return Map<String, Claim>
+    */
+    public func getClaims(): Map<String, Claim>
+}
+```
+
+### 示例
+
+```
+let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ."
+let decoder = JWT.decode(token)
+let header = decoder.getHeader() // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+let myclaim = decoder.getClaim("name").asString() // John Doe
+```
+
+## jwt 校验
+
+### 介绍
+
+    jwt完整性
+    payload业务校验
+
+### 主要接口
+
+#### class BaseJWTVerifier
+
+```
+public class BaseJWTVerifier <: JWTVerifier {
+    /*
+    * 校验
+    * @param token jwt string
+    * @return DecodedJWT
+    */
+    public func verify(token: String): DecodedJWT
+    /*
+    * 校验
+    * @param jwt DecodedJWT
+    * @return DecodedJWT
+    */
+    public func verify(jwt: DecodedJWT): DecodedJWT
+}
+```
+
+#### class BaseVerification
+
+```
+public class BaseVerification <: Verification {
+    /*
+     * 校验部分接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAnyOfAudience(audience: Array<String>): Verification
+    /*
+     * 校验全部接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAudience(audience: Array<String>): Verification
+    /*
+     * 校验部分接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAnyOfAudience(audience: ArrayList<String>): Verification 
+    /*
+     * 校验全部接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAudience(audience: ArrayList<String>): Verification 
+    /*
+     * verify claim String Array
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withArrayClaim(name: String, items: Array<String>): Verification
+    /*
+     * verify claim Int64 Array
+     * @param Claim name
+     * @param Claim value 
+     * @return Verification
+     */
+    public func withArrayClaim(name: String, items: Array<Int64>): Verification 
+    /*
+     * verify Issuer Array
+     * @param 发布者名字
+     * @return Verification
+     */
+    public func withIssuer(issuer: Array<String>): Verification 
+    /*
+     * verify Issuer String
+     * @param 发布者名字
+     * @return Verification
+     */
+    public func withIssuer(issuer: String): Verification 
+    /*
+     * verify Subject String
+     * @param Subject name 通用
+     * @return Verification
+     */
+    public func withSubject(subject: String): Verification 
+    /*
+     * 修改默认的时间间隔
+     * @param 时间间隔
+     * @return Verification
+     */
+    public func acceptLeeway(leeway: Int64): Verification
+    /*
+     * 设置超时的时间间隔 "exp"
+     * @param 时间间隔
+     * @return Verification
+     */
+    public func acceptExpiresAt(leeway: Int64): Verification 
+    /*
+     * 设置不能超过的时间间隔 "nbf" 
+     * @param 时间间隔
+     * @return Verification
+     */
+    public func acceptNotBefore(leeway: Int64): Verification 
+    /*
+     * 设置发布的时间间隔 "iss"
+     * @param 时间间隔
+     * @return Verification
+     */
+    public func acceptIssuedAt(leeway: Int64): Verification 
+    /*
+     * 设置是否进行发布时间的校验
+     * @return Verification
+     */
+    public func ignoreIssuedAt(): Verification 
+    /*
+     * verify jwtId
+     * @param jwtId jwt唯一标识
+     * @return Verification
+     */
+    public func withJWTId(jwtId: String): Verification 
+    /*
+     * verify ClaimPresence (always true)
+     * @param name 
+     * @return Verification
+     */
+    public func withClaimPresence(name: String): Verification
+    /*
+     * 判断claim是否为null
+     * @param name
+     * @return Verification
+     */
+    public func withNullClaim(name: String): Verification 
+    /*
+     * verify Claim bool
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withClaim(name: String, value: Bool): Verification 
+    /*
+     * verify Claim Int64 
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withClaim(name: String, value: Int64): Verification 
+    /*
+     * verify Claim Float64 
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withClaim(name: String, value: Float64): Verification 
+    /*
+     * verify Claim String
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withClaim(name: String, value: String): Verification
+    /*
+     * verify Claim Time
+     * @param Claim name
+     * @param Claim value
+     * @return Verification
+     */
+    public func withClaim(name: String, value: Time): Verification
+    /*
+     * 自定义校验规则
+     * @param Claim name
+     * @param predicate 比较器 
+     * @return Verification
+     */
+    public func withClaim(name: String, predicate: (Claim, DecodedJWT)->Bool): Verification 
+    /*
+     * verify Claim String ArrayList
+     * @param Claim name
+     * @param Claim value 
+     * @return Verification
+     */
+    public func withArrayClaim(name: String, items: ArrayList<String>): Verification 
+    /*
+     * verify Claim Int64 ArrayList
+     * @param Claim name
+     * @param Claim value 
+     * @return Verification
+     */
+    public func withArrayClaim(name: String, items: ArrayList<Int64>): Verification 
+    /*
+     * 创建校验器
+     * @return JWTVerifier
+     */
+    public func build(): JWTVerifier 
+    /*
+     * 创建校验器
+     * @param time
+     * @return JWTVerifier
+     */
+    public func build(time: Time): JWTVerifier 
+    /*
+     * 获得具体分类的时间间隔包括(exp，nbf, iss)
+     * @param name
+     * @return Int64
+     */
+    public func getLeewayFor(name: String): Int64 
+}
+```
+
+### 示例
+
+```
+let token = "ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJub25lIiwKICAidHlwIjogIkpXVCIKfQ.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDUwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiZGRkIjogImRmZGRkZmYiLAogICJpbnQ2NCI6IDY0LAogICJmbG9hdDY0IjogMy4xNDAwMDAsCiAgIlN0cmluZyI6ICJhYmFhYmEiLAogICJ0aW1lIjogMTY3Mzg1MDAwMCwKICAibWFwIjogewogICAgIm1rMiI6ICJtdjIiCiAgfSwKICAibGlzdCI6IFsKICAgIDU2LjUxMDAwMCwKICAgIDQxLjk2MDAwMAogIF0sCiAgIm51bGwiOiBudWxsLAogICJhcnJheXN0cmluZyI6IFsKICAgICJhc3RyMSIsCiAgICAiYXN0cjIiCiAgXSwKICAiYXJyYXlpbnQiOiBbCiAgICA2ODQsCiAgICA2NAogIF0sCiAgInBrMSI6ICJwdjEiLAogICJwazIiOiAicHYyIgp9."
+main() {
+   
+  let require = JWT.require(Algorithm.none());
+  try {
+    require.withClaim("String","abaaba")
+           .withArrayClaim("arraystring",["astr1","astr2"])
+           .withArrayClaim("arrayint", [684,64])
+    require.withClaim("time", Time(1673850000,0))
+        .withClaim("bool", true)
+        .withClaim("int64", 64)
+        .withClaim("float64", 3.14)
+        .withIssuer("issuer") // 签发对象
+        .withAudience(["aud1"]) // 接收全部对象   // ["aud1", "aud3"] false
+        .withAnyOfAudience(["aud1", "aud3"]) //接收部分对象
+        .withSubject("subject")
+        .withJWTId("jwtId")
+        .withClaimPresence("ddd")
+
+
+    require.acceptExpiresAt(111111)
+    require.acceptLeeway(111111) // 设置默认时间
+
+
+    let builder: JWTVerifier = require.build()
+    builder.verify(token)
+
+    // require.build().verify(token);
+    return 0
+  } catch (e: TokenExpiredException){
+    println(e.message)
+    return 2
+  }
+   catch(e: Exception) {
+    return 3
+  }
+   0
+}
+```
+
+## algorithm 算法构建
+
+### 介绍
+
+    以 cryptocj 三方库的 hmac、rsa、ecdsa 算法逻辑为基础，提供 jwt 的抽象入口类 algorithm ，使其能用于调用其他具体的算法
+
+### 主要接口
+
+#### class Algorithm
+
+```
+public abstract class Algorithm {
+
+    /*
+     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA256 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func RSA256(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 RSA256 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func RSA256(publicKey: String, privateKey: String): Algorithm
+    
+    /*
+     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA384 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func RSA384(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 RSA384 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func RSA384(publicKey: String, privateKey: String): Algorithm
+    
+    /*
+     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA512 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func RSA512(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 RSA512 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func RSA512(publicKey: String, privateKey: String): Algorithm
+    
+    /*
+     * 通过秘钥创建 HMAC256 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC256(secret: String): Algorithm
+    
+    /*
+     * 通过秘钥创建 HMAC384 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC384(secret: String): Algorithm
+    
+    /*
+     * 通过秘钥创建 HMAC512 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC512(secret: String): Algorithm
+    
+    /*
+     * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA256 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA256(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 ECDSA256 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA256(publicKey: String, privateKey: String): Algorithm
+    
+    /*
+     * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA384 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA384(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 ECDSA384 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA384(publicKey: String, privateKey: String): Algorithm
+    
+    /*
+     * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA512 算法对象
+     * @param keyProvider
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA512(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
+    
+    /*
+     * 通过 公私钥创建 ECDSA512 算法对象
+     * @param publicKey 公钥
+     * @param privateKey 私钥
+     * @return Algorithm 实例
+     */    
+    public static func ECDSA512(publicKey: String, privateKey: String): Algorithm
+    
+    
+    /*
+     * 创建 none 算法对象
+     * @param 
+     * @return Algorithm 
+     */
+    public static func none(): Algorithm
+}
+
+```
+
+### 示例
+
+#### Hmac256 算法签名示例
+
+```
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+from std import collection.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.utils.*
+from cryptocj import hmaccj.*
+
+main() {
+    let hmac1 = Algorithm.HMAC256("pri_key")
+    let hmac2 = Algorithm.HMAC384("")
+    let hmac3 = Algorithm.HMAC512("pri")
+    let header: Array<UInt8> = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9".toUtf8Array()
+    let payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ".toUtf8Array()
+    var ret: Array<UInt8> = hmac1.sign(header, payload)
+    hmac2.sign(header, payload)
+    hmac3.sign(header, payload)
+    println(Base64Util.urlEncode(ret))
+    0
+}
+```
+
+```cangjie
+iUZfpck062AL-KPiKW7IxZZ1mE9eKQsdHfRf0wgPyI8
+```
+
+#### Hmac256 算法验签示例
+
+```cangjie
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+from std import collection.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.utils.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.*
+from cryptocj import hmaccj.*
+
+main() {
+    let hmac = Algorithm.HMAC256("pri_key")
+    let token = "eyJrMSI6InYxIiwia2lkIjoia2V5SWQiLCJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJpc3N1ZXIiLCJzdWIiOiJzdWJqZWN0IiwiYXVkIjpbImF1ZDEiLCJhdWQyIl0sImV4cCI6MzY3MzgzNTA1MCwibmJmIjoxNjczODM1MDUwLCJpYXQiOjE2NzM4MzUwMDAsImp0aSI6Imp3dElkIiwiYm9vbCI6dHJ1ZSwiZGRkIjoiZGZkZGRmZiIsImludDY0Ijo2NCwiZmxvYXQ2NCI6My4xNCwiU3RyaW5nIjoiYWJhYWJhIiwidGltZSI6MTY3Mzg1MDAwMCwibWFwIjp7Im1rMiI6Im12MiJ9LCJsaXN0IjpbNTYuNTEsNDEuOTZdLCJudWxsIjpudWxsLCJhcnJheXN0cmluZyI6WyJhc3RyMSIsImFzdHIyIl0sImFycmF5aW50IjpbNjg0LDY0XSwicGsxIjoicHYxIiwicGsyIjoicHYyIn0.6PjJHq98jIlmEFroRHh-E2BeGPH6QRPs6sBvNPx3JTw"
+    let jd = JWTDecoder(token)
+    hmac.verify(jd)
+    println("verify success")
+    0
+}
+```
+
+```cangjie
+verify success
+```
+
+#### Rsa384 算法签名示例
+
+```cangjie
+// DEPENDENCE: test_rsa_privateKey_02.pem
+// DEPENDENCE: test_rsa_publicKey_02.pem
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+from jwt import jwt.algorithms.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.impl.*
+from jwt import jwt.*
+from jwt import jwt.utils.*
+from cryptocj import rsacj.*
+from std import os.posix.*
+from std import fs.*
+
+main() {
+
+    let src: Array<UInt8> = "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let src_header: Array<UInt8> = "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9".toUtf8Array()
+    let src_payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    var path: String = getcwd()
+    let pri_key: String = "${path}/test_rsa_privateKey_02.pem"
+    let pub_key: String = "${path}/test_rsa_publicKey_02.pem"
+    var rsa = Algorithm.RSA384(RSAKeyProviderFileImpl(pri_key))
+    var rsa2 = Algorithm.RSA384(RSAKeyProviderFileImpl(pri_key, pub_key))
+    let ret = rsa.sign(src)
+    let ret2 = rsa2.sign(src_header, src_payload)
+    if (Base64Util.urlEncode(ret) == Base64Util.urlEncode(ret2)) {
+        println("签名后的值为:" + "${Base64Util.urlEncode(ret)}")
+        println("两种方式的签名结果是一致的..")
+        return 0
+    }
+    return 1
+}
+```
+
+```cangjie
+签名后的值为:Rypv9wnvE1-mDBkogHAwRZR1V2fHzOQZUyOrT5IgyrknUyK5kEs8gHBvIA5RqJkmsoUJAn8CQi5rC0dTaLU7pf_bDYUdsGc1GIDNAhEGAT6RCsZWCwkRxofHHVNet116Pv5gO9pBztLJWJfLy1a6k4Dfn-72EM0uLtRTXizWzT8
+
+两种方式的签名结果是一致的..
+```
+
+#### Rsa384 算法验签示例
+
+```cangjie
+// DEPENDENCE: test_rsa_privateKey_02.pem
+// DEPENDENCE: test_rsa_publicKey_02.pem
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+from std import fs.*
+from std import os.posix.*
+from cryptocj import rsacj.*
+from cryptocj import sha256cj.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.impl.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.utils.*
+from jwt import jwt.*
+
+main() {
+
+    let path: String = getcwd()
+    let pri_key: String = "${path}/test_rsa_privateKey_02.pem"
+    let pub_key: String = "${path}/test_rsa_publicKey_02.pem"
+    let token = "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.Rypv9wnvE1-mDBkogHAwRZR1V2fHzOQZUyOrT5IgyrknUyK5kEs8gHBvIA5RqJkmsoUJAn8CQi5rC0dTaLU7pf_bDYUdsGc1GIDNAhEGAT6RCsZWCwkRxofHHVNet116Pv5gO9pBztLJWJfLy1a6k4Dfn-72EM0uLtRTXizWzT8"
+    let rsa = Algorithm.RSA384(RSAKeyProviderFileImpl(pub_key))
+    var jd = JWTDecoder(token)
+    rsa.verify(jd)
+    println("verify success")
+    return 0
+}
+```
+
+```cangjie
+verify success
+```
+
+#### Ecdsa512 算法签名验签示例
+
+```cangjie
+// DEPENDENCE: test_ecdsa_privateKey.pem
+// DEPENDENCE: test_ecdsa_publicKey.pem
+// EXEC: cjc %import-path %L %l %f
+// EXEC: ./main
+
+from cryptocj import eccj.*
+from std import os.posix.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.impl.*
+from jwt import jwt.*
+from jwt import jwt.utils.*
+
+main() {  
+    var path: String = getcwd()
+    let pri_key: String = "${path}/test_ecdsa_privateKey.pem"
+    let pub_key: String = "${path}/test_ecdsa_publicKey.pem"
+    var s: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let header: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9".toUtf8Array()
+    let payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let ecdsa = Algorithm.ECDSA512(ECDSAKeyProviderFileImpl(pri_key))
+    let ec = Algorithm.ECDSA512(ECDSAKeyProviderFileImpl(pri_key, pub_key))
+    println("*****************************************************************************")
+    println("签名开始前，传入的原文数组内容是:" + "${s}")
+    let ret = ecdsa.sign(s)
+    let ret2 = ecdsa.sign(header, payload)
+    println("*****************************************************************************")
+    var str = Base64Util.urlEncode(ret)
+    println("打印生成的签名值使用Base64加密后是:" + "${str}")
+    let token = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0." + str
+    let ecdsa2 = Algorithm.ECDSA512(ECDSAKeyProviderFileImpl(pub_key))
+    var jd = JWTDecoder(token)
+    ecdsa2.verify(jd)
+    return 0
+}
+```
+
+```cangjie
+签名开始前，传入的原文数组内容是:[101, 121, 74, 104, 98, 71, 99, 105, 79, 105, 74, 70, 85, 122, 85, 120, 77, 105, 73, 115, 73, 110, 82, 53, 99, 67, 73, 54, 73, 107, 112, 88, 86, 67, 74, 57, 46, 101, 121, 74, 122, 100, 87, 73, 105, 79, 105, 73, 120, 77, 106, 77, 48, 78, 84, 89, 51, 79, 68, 107, 119, 73, 105, 119, 105, 98, 109, 70, 116, 90, 83, 73, 54, 73, 107, 112, 118, 97, 71, 52, 103, 82, 71, 57, 108, 73, 105, 119, 105, 89, 87, 82, 116, 97, 87, 52, 105, 79, 110, 82, 121, 100, 87, 85, 115, 73, 109, 108, 104, 100, 67, 73, 54, 77, 84, 85, 120, 78, 106, 73, 122, 79, 84, 65, 121, 77, 110, 48]
+
+打印生成的签名值使用Base64加密后是:MEYCIQDoY5tGvdbOWlQZOhX9NJ6RQpZ8K02maIhardMxOn5owQIhAIyZAIM_Y0o-qdLYe2ZHpb6eWw9-HfvCSMy3sgwATHXJ
+
+Verify success!
+```
