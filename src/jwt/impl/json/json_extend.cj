@@ -3,10 +3,6 @@ package jwt.impl.json
 from encoding import json.*
 
 extend JsonValue {
-    operator func ==(other: JsonValue): Bool {
-        this.toString() == other.toString()
-    }
-
     func toStr(): String {
         match (this.kind()) {
             case JsString => this.asString().getValue()
