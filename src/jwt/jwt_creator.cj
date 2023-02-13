@@ -10,6 +10,7 @@ import jwt.impl.HeaderSerializer
 import jwt.impl.HeaderClaimsHolder
 import jwt.impl.PayloadSerializer
 import jwt.impl.PayloadClaimsHolder
+import jwt.impl.json.NULL_NODE
 import jwt.utils.Base64Util
 import jwt.interfaces.NodeType
 
@@ -160,7 +161,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param value the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withClaim(name: String, value: Bool): Builder {
         addClaim(name, value)
@@ -173,7 +173,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param value the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withClaim(name: String, value: Int64): Builder {
         addClaim(name, value)
@@ -186,7 +185,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param value the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withClaim(name: String, value: Float64): Builder {
         addClaim(name, value)
@@ -199,7 +197,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param value the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withClaim(name: String, value: String): Builder {
         addClaim(name, value)
@@ -213,7 +210,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param value the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withClaim(name: String, value: Time): Builder {
         addClaim(name, value)
@@ -222,16 +218,16 @@ public class Builder {
 
     /*
      * Add a custom Map Claim with the given items.
-     * <p>
-     * Accepted nested types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
-     * {@linkplain String} and {@linkplain Time}. {@linkplain Map}s cannot contain null keys or values.
-     * {@linkplain List}s can contain null elements.
+     *
+     * Accepted nested types are Map and List with basic types
+     * Bool, Int64, Float64,
+     * String and Time. Maps cannot contain null keys or values.
+     * Lists can contain null elements.
      *
      * @param name the Claim's name.
      * @param map  the Claim's key-values.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null, or if the map contents does not validate.
+     * @throws IllegalArgumentException if the map contents does not validate.
      */
     public func withClaim(name: String, map: Map<String, Any>): Builder {
         // validate map contents
@@ -247,16 +243,16 @@ public class Builder {
 
     /*
      * Add a custom List Claim with the given items.
-     * <p>
-     * Accepted nested types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
-     * {@linkplain String} and {@linkplain Time}. {@linkplain Map}s cannot contain null keys or values.
-     * {@linkplain List}s can contain null elements.
+     *
+     * Accepted nested types are Map and List with basic types
+     * Bool, Int64, Float64,
+     * String and Time. Maps cannot contain null keys or values.
+     * Lists can contain null elements.
      *
      * @param name the Claim's name.
      * @param list the Claim's list of values.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null, or if the list contents does not validate.
+     * @throws IllegalArgumentException if the list contents does not validate.
      */
     public func withClaim(name: String, list: ArrayList<Any>): Builder {
         // validate list contents
@@ -275,10 +271,9 @@ public class Builder {
      *
      * @param name the Claim's name.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null
      */
     public func withNullClaim(name: String): Builder {
-        addClaim(name, None<Any>)
+        addClaim(name, NULL_NODE)
         return this
     }
 
@@ -288,7 +283,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param items the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withArrayClaim(name: String, items: Array<String>): Builder {
         addClaim(name, items)
@@ -301,7 +295,6 @@ public class Builder {
      * @param name  the Claim's name.
      * @param items the Claim's value.
      * @return this same Builder instance.
-     * @throws IllegalArgumentException if the name is null.
      */
     public func withArrayClaim(name: String, items: Array<Int64>): Builder {
         addClaim(name, items)
@@ -311,16 +304,13 @@ public class Builder {
     /*
      * Add specific Claims to set as the Payload. If the provided map is null then
      * nothing is changed.
-     * <p>
-     * Accepted types are {@linkplain Map} and {@linkplain List} with basic types
-     * {@linkplain Bool}, {@linkplain Int64}, {@linkplain Float64},
-     * {@linkplain String} and {@linkplain Time}.
-     * {@linkplain Map}s and {@linkplain List}s can contain null elements.
-     * </p>
      *
-     * <p>
+     * Accepted types are Map and List with basic types
+     * Bool, Int64, Float64,
+     * String and Time.
+     * Maps and Lists can contain null elements.
+     *
      * If any of the claims are invalid, none will be added.
-     * </p>
      *
      * @param payloadClaims the values to use as Claims in the token's payload.
      * @return this same Builder instance.
@@ -382,24 +372,45 @@ public class Builder {
 
     private static func isSupportedType(value: Any): Bool {
         match (value) {
-            case value: ArrayList<Any> => println("got ArrayList<Any>"); validateClaim(value)
-            case value: Map<String, Any> => println("got Map<String, Any>"); validateClaim(value)
-            case _ => println("got other"); isBasicType(value)
+            case value: ArrayList<Any> =>
+                println("got ArrayList<Any>");
+                validateClaim(value)
+            case value: Map<String, Any> =>
+                println("got Map<String, Any>");
+                validateClaim(value)
+            case _ => isBasicType(value)
         }
     }
 
     private static func isBasicType(value: Any): Bool {
         match (value) {
-            case value:Bool => true
-            case value:Int64 => true
-            case value:Float64 => true
-            case value:Time => true
-            case value:String => true
-            case value:Array<Int64> => true
-            case value:Array<String> => true
-            case value:Option<Any> => true
-            case value:NodeType => true
-            case _ => false
+            case value: Bool =>
+                println("got Bool");
+                true
+            case value: Int64 =>
+                println("got Int64");
+                true
+            case value: Float64 =>
+                println("got Float64");
+                true
+            case value: Time =>
+                println("got Time");
+                true
+            case value: String =>
+                println("got String");
+                true
+            case value: Array<Int64> =>
+                println("got Array");
+                true
+            case value: Array<String> =>
+                println("got Array");
+                true
+            case value: NodeType =>
+                println("got NodeType");
+                true
+            case _ =>
+                println("got BasicType other");
+                false
         }
     }
 
