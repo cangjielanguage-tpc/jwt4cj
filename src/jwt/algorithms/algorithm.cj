@@ -16,24 +16,12 @@ public abstract class Algorithm {
         return RSAAlgorithm("RS256", "SHA256withRSA", keyProvider)
     }
 
-    public static func RSA256(publicKey: String, privateKey: String): Algorithm {
-        return RSA256(RSAKeyProviderFileImpl(publicKey, privateKey))
-    }
-
     public static func RSA384(keyProvider: RSAKeyProviderFileImpl): Algorithm {
         return RSAAlgorithm("RS384", "SHA384withRSA", keyProvider)
     }
 
-    public static func RSA384(publicKey: String, privateKey: String): Algorithm {
-        return RSA256(RSAKeyProviderFileImpl(publicKey, privateKey))
-    }
-
     public static func RSA512(keyProvider: RSAKeyProviderFileImpl): Algorithm {
         return RSAAlgorithm("RS512", "SHA512withRSA", keyProvider)
-    }
-
-    public static func RSA512(publicKey: String, privateKey: String): Algorithm {
-        return RSA256(RSAKeyProviderFileImpl(publicKey, privateKey))
     }
 
     public static func HMAC256(secret: String): Algorithm {
@@ -64,24 +52,12 @@ public abstract class Algorithm {
         return ECDSAAlgorithm("ES256", "SHA256withECDSA", 32, keyProvider)
     }
 
-    public static func ECDSA256(publicKey: String, privateKey: String): Algorithm {
-        return ECDSA256(ECDSAKeyProviderFileImpl(publicKey, privateKey))
-    }
-
     public static func ECDSA384(keyProvider: ECDSAKeyProviderFileImpl): Algorithm {
         return ECDSAAlgorithm("ES384", "SHA384withECDSA", 32, keyProvider)
     }
 
-    public static func ECDSA384(publicKey: String, privateKey: String): Algorithm {
-        return ECDSA256(ECDSAKeyProviderFileImpl(publicKey, privateKey))
-    }
-
     public static func ECDSA512(keyProvider: ECDSAKeyProviderFileImpl): Algorithm {
         return ECDSAAlgorithm("ES512", "SHA512withECDSA", 32, keyProvider)
-    }
-
-    public static func ECDSA512(publicKey: String, privateKey: String): Algorithm {
-        return ECDSA256(ECDSAKeyProviderFileImpl(publicKey, privateKey))
     }
 
     func getDescription(): String {
