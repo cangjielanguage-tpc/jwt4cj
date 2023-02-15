@@ -1,4 +1,4 @@
-package jwt.impl
+package jwt.algorithms
 
 public class RSAKeyProviderFileImpl <: RSAKeyProvider<String, String> {
 
