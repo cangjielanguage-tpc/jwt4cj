@@ -7,7 +7,7 @@ import jwt.exception.JWTDecodeException
 import jwt.interfaces.Claim
 import jwt.interfaces.NodeType
 
-let JSON_NULL = JsonNull()
+public let NULL_NODE: JsonValue = JsonNull()
 public let MISSING_CLAIM = JsonNodeClaim()
 
 func createClaim(data: JsonValue): Claim {
@@ -22,7 +22,7 @@ public class JsonNodeClaim <: Claim {
     private var missing = false
 
     protected init() {
-        this.data = JSON_NULL
+        this.data = NULL_NODE
         this.missing = true
     }
 
@@ -81,5 +81,4 @@ public class JsonNodeClaim <: Claim {
             data.toStr()
         }
     }
-
 }

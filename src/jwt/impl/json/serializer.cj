@@ -56,7 +56,6 @@ func parse(value: Any): JsonValue {
             value |> map {kv: (String, Any) => (kv[0], parse(kv[1]))}
                 |> reduce(JsonObject(), jv2obj)
         case value: JsonValue => value
-        case value: Option<Any> => JsonNull()
         case _ => throw JWTCreationException("value type not support")
     }
 }
