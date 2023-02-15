@@ -1,7 +1,5 @@
 package jwt.algorithms
 
-import jwt.impl.*
-
 public abstract class Algorithm {
     
     private var name: String

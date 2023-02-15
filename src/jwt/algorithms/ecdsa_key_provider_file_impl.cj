@@ -1,4 +1,4 @@
-package jwt.impl
+package jwt.algorithms
 
 public class ECDSAKeyProviderFileImpl <: ECDSAKeyProvider<String, String> {
 
