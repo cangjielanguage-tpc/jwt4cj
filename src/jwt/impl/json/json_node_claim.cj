@@ -4,6 +4,7 @@ from encoding import json.*
 from std import collection.*
 from std import time.*
 import jwt.exception.JWTDecodeException
+import jwt.exception.MissingClaimException
 import jwt.interfaces.Claim
 import jwt.interfaces.NodeType
 
@@ -76,7 +77,7 @@ public class JsonNodeClaim <: Claim {
 
     public func toString(): String {
         if (missing) {
-            ""
+            throw MissingClaimException()
         } else {
             data.toStr()
         }
