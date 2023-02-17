@@ -19,7 +19,7 @@
 - 🚀 支持 HMAC 算法签名及验证
 - 🚀 支持 ECDSA 算法签名及验证
 - 🚀 支持 RSA 算法签名及验证
-- 🚀 支持 Payload 字段业务校验
+- 🚀 支持 Payload 字段校验
 
 ### 路线
 
@@ -35,19 +35,6 @@
 .
 ├── README.md
 ├── doc
-│   ├── api.md
-│   ├── assets
-│   │   ├── framework.png
-│   │   ├── logo.png
-│   │   ├── milestone.png
-│   │   ├── readme-icon-compile.png
-│   │   ├── readme-icon-contribute.png
-│   │   ├── readme-icon-framework.png
-│   │   └── readme-icon-introduction.png
-│   ├── design.md
-│   ├── framework-roadmap-logo.pptx
-│   ├── proposal.md
-│   └── xxx_lib.md
 ├── src
 │   └── jwt
 │       ├── algorithms
@@ -116,13 +103,13 @@
     └── UT
 ```
 
-- `doc`是库的设计文档、提案、库的使用文档
-- `src`是库源码目录
-- `test`是存放测试用例，包括HLT用例、LLT 用例和UT用例
+- `doc`存放库的设计文档、提案、库的使用文档
+- `src`存放库源码目录
+- `test`存放存放测试用例，包括HLT用例、LLT 用例和UT用例
 
 ### 接口说明
 
-主要是核心类和成员函数说明,详情见 [API](./doc/api.md)
+主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
@@ -137,7 +124,7 @@ cpm build
 ```shell
 # 使用ci脚本编译
 # 引入 testJekins 包,保持原目录结构
-# 地址：https://gitee.com/HW-PLLab/testJekins 将 src 下 ci_test 放入 ini 根目录下
+# 地址：https://gitee.com/HW-PLLab/testJekins 将 src 下 ci_test 放入 jwt 根目录下
 python3 ci_test/main.py build
 python3 ci_test/main.py test
 ```
