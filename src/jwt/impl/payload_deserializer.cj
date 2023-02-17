@@ -6,7 +6,7 @@ import jwt.impl.json.Deserializer
 import jwt.impl.json.getStringOrArray
 
 public class PayloadDeserializer <: Deserializer {
-    public func doDeserialize(jsonStr: String): Payload {
+    func doDeserialize(jsonStr: String): Payload {
         let map = super.deserialize(jsonStr)
         let issuer: ?String = map.get(RegisteredClaims.ISSUER)?.asString()
         let subject: ?String = map.get(RegisteredClaims.SUBJECT)?.asString()

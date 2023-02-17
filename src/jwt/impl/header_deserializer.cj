@@ -4,7 +4,7 @@ import jwt.common.HeaderParams
 import jwt.impl.json.Deserializer
 
 public class HeaderDeserializer <: Deserializer {
-    public func doDeserialize(jsonStr: String): Header {
+    func doDeserialize(jsonStr: String): Header {
         let map = super.deserialize(jsonStr)
         let algorithm: ?String = map.get(HeaderParams.ALGORITHM)?.asString()
         let typ: ?String = map.get(HeaderParams.TYPE)?.asString()
