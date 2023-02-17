@@ -6,7 +6,7 @@ import jwt.interfaces.Claim
 import jwt.interfaces.Header
 import jwt.impl.json.MISSING_CLAIM
 
-public class BasePayload <: Payload {
+class BasePayload <: Payload {
     private let issuer: ?String
     private let subject: ?String
     private let audience: ?ArrayList<String>
@@ -16,7 +16,7 @@ public class BasePayload <: Payload {
     private let jwtId: ?String
     private let tree: Map<String, Claim>
 
-    public init(
+    init(
         issuer: ?String,
         subject: ?String,
         audience: ?ArrayList<String>,

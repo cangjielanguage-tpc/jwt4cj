@@ -14,7 +14,7 @@ import jwt.impl.json.NULL_NODE
 import jwt.utils.Base64Util
 import jwt.interfaces.NodeType
 
-public class JWTCreator {
+class JWTCreator {
     private let algorithm: Algorithm
     private let headerJson: String
     private let payloadJson: String

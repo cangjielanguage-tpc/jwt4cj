@@ -6,7 +6,7 @@ import jwt.exception.JWTCreationException
 public open class Serializer <: ToString {
     private let data: JsonObject = JsonObject()
 
-    public func put(key: String, value: Any) {
+    protected func put(key: String, value: Any) {
         let jv = parse(value)
         data.put(key, jv)
     }
