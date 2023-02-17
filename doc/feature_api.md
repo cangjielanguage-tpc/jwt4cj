@@ -1,16 +1,16 @@
-# jwt 库
+# jwt库
 
 ## jwt入口
 
 ### 介绍
 
-    jwt api入口
+    jwt开放api入口
 
 ### 主要接口
 
 #### class JWT
 
-```
+```cangjie
 public class JWT {
     /*
     * 构造函数
@@ -43,7 +43,7 @@ public class JWT {
 }
 ```
 
-## jwt 构建
+## jwt构建
 
 ### 介绍
 
@@ -54,152 +54,157 @@ public class JWT {
 #### class Builder
 
 ```
+/*
+ * 构造header/payload内容
+ * value支持String/Bool/Time/Int64/Float64/JsonValue/Array<String>/Array<Int64>/Map<String,Any>/ArrayList<Any>
+ * 可嵌套 Any只支持以上类型
+ */
 public class Builder{
     /*
-    * add header claims
+    * 批量添加值到header
     * @param headerClaims 
     * @return Builder
     */
     public func withHeader(headerClaims: Map<String, Any>): Builder
 
     /*
-    * Add keyid ("kid") claim to the Header.
-    * @param keyId value.
+    * 添加keyid到Header
+    * @param keyId value
     * @return Builder
     */
     public func withKeyId(keyId: String): Builder
 
     /*
-    * Add  Issuer ("iss") claim to the Payload.
-    * @param issuer Issuer value.
+    * 添加发布者到Payload
+    * @param issuer Issuer value
     * @return Builder
     */
     public func withIssuer(issuer: String): Builder
 
     /*
-    * Add Subject ("sub") claim to the Payload.
-    * @param subject Subject value.
+    * 添加主题到Payload
+    * @param subject Subject value
     * @return Builder
     */
     public func withSubject(subject: String): Builder
 
     /*
-    * Add Audience ("aud") claim to the Payload.
-    * @param audience Audience value.
+    * 添加接受者到Payload
+    * @param audience Audience value
     * @return Builder
     */
     public func withAudience(audience: Array<String>): Builder
 
     /*
-    * Add Expires At ("exp") claim to the payload
-    * @param expiresAt the Expires At value.
+    * 添加超时到payload
+    * @param expiresAt the Expires At value
     * @return Builder
     */
     public func withExpiresAt(expiresAt: Time): Builder
 
     /*
-    * Add a specific Not Before ("nbf") claim to the Payload.
-    * @param notBefore the Not Before value.
+    * 添加Not Before ("nbf") claim到Payload
+    * @param notBefore the Not Before value
     * @return Builder
     */
     public func withNotBefore(notBefore: Time): Builder
 
     /*
-    * Add a specific Issued At ("iat") claim to the Payload.
-    * @param issuedAt the Issued At value.
+    * 添加发布时间到Payload
+    * @param issuedAt the Issued At value
     * @return Builder
     */
     public func withIssuedAt(issuedAt: Time): Builder
 
     /*
-    * Add a specific JWT Id ("jti") claim to the Payload.
-    * @param jwtId the Token Id value.
+    * 添加JWT Id ("jti") claim到Payload
+    * @param jwtId the Token Id value
     * @return Builder
     */
     public func withJWTId(jwtId: String): Builder
 
     /*
-    * Add a custom Claim value to the Payload.
-    * @param name  the Claim's name.
-    * @param value the Claim's value.
+    * 添加自定义Bool值到Payload
+    * @param name  the Claim's name
+    * @param value the Claim's value
     * @return Builder
     */
     public func withClaim(name: String, value: Bool): Builder
 
     /*
-    * Add a custom Claim value.
-    * @param name  the Claim's name.
-    * @param value the Claim's value.
+    * 添加自定义Int64值到Payload
+    * @param name  the Claim's name
+    * @param value the Claim's value
     * @return Builder
     */
     public func withClaim(name: String, value: Int64): Builder
 
     /*
-    * Add a custom Claim value.
-    * @param name  the Claim's name.
-    * @param value the Claim's value.
+    * 添加自定义Float64值到Payload
+    * @param name  the Claim's name
+    * @param value the Claim's value
     * @return Builder
     */
     public func withClaim(name: String, value: Float64): Builder
 
     /*
-    * Add a custom Claim value.
-    * @param name  the Claim's name.
-    * @param value the Claim's value.
+    * 添加自定义String值到Payload
+    * @param name  the Claim's name
+    * @param value the Claim's value
     * @return Builder
     */
     public func withClaim(name: String, value: String): Builder
 
     /*
-    * Add a custom Claim value.
-    * @param name  the Claim's name.
-    * @param value the Claim's value.
+    * 添加自定义Time值到Payload
+    * @param name  the Claim's name
+    * @param value the Claim's value
     * @return Builder
     */
     public func withClaim(name: String, value: Time): Builder
 
     /*
-    * Add a custom Map Claim with the given items.
-    * @param name the Claim's name.
-    * @param map  the Claim's key-values.
+    * 添加自定义Map值到Payload
+    * @param name the Claim's name
+    * @param map  the Claim's key-values
     * @return Builder
     */
     public func withClaim(name: String, map: Map<String, Any>): Builder
 
     /*
-    * Add a custom List Claim with the given items.
-    * @param name the Claim's name.
-    * @param list the Claim's list of values.
+    * 添加自定义ArrayList值到Payload
+    * @param name the Claim's name
+    * @param list the Claim's list of values
     * @return Builder
     */
     public func withClaim(name: String, list: ArrayList<Any>): Builder
 
     /*
-    * Add a custom claim with null value.
-    * @param name the Claim's name.
+    * 添加自定义null值到Payload
+    * @param name the Claim's name
     * @return Builder
     */
     public func withNullClaim(name: String): Builder
 
     /*
-    * Add a custom Array Claim with the given items.
-    * @param name  the Claim's name.
-    * @param items the Claim's value.
+    * 添加自定义Array值到Payload
+    * @param name  the Claim's name
+    * @param items the Claim's value
     * @return Builder
     */
     public func withArrayClaim(name: String, items: Array<String>): Builder
 
     /*
-    * Add a custom Array Claim with the given items.
-    * @param name  the Claim's name.
-    * @param items the Claim's value.
+    * 添加自定义Array值到Payload
+    * @param name  the Claim's name
+    * @param items the Claim's value
     * @return Builder
     */
     public func withArrayClaim(name: String, items: Array<Int64>): Builder
 
     /*
-    * Add specific Claims to set as the Payload.
-    * @param payloadClaims the values to use as Claims in the token's payload.
+    * 批量添加值到Payload
+    * @param payloadClaims the values to use as Claims in the token's payload
     * @return Builder
     */
     public func withPayload(payloadClaims: Map<String, Any>): Builder
@@ -215,7 +220,7 @@ public class Builder{
 
 ### 示例
 
-```
+```cangjie
 let jwtStr = JWT.create()
     .withHeader(HashMap<String, Any>([("k1","v1")]))
     .withKeyId("keyId")
@@ -242,7 +247,7 @@ let jwtStr = JWT.create()
 println(jwtStr)
 ```
 
-## jwt 解码
+## jwt解码
 
 ### 介绍
 
@@ -252,7 +257,7 @@ jwt解码
 
 #### class JWTDecoder
 
-```
+```cangjie
 public class JWTDecoder <: DecodedJWT {
     /*
     * 构造函数
@@ -375,14 +380,14 @@ public class JWTDecoder <: DecodedJWT {
 
 ### 示例
 
-```
+```cangjie
 let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ."
 let decoder = JWT.decode(token)
 let header = decoder.getHeader() // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 let myclaim = decoder.getClaim("name").asString() // John Doe
 ```
 
-## jwt 校验
+## jwt校验
 
 ### 介绍
 
@@ -393,7 +398,7 @@ let myclaim = decoder.getClaim("name").asString() // John Doe
 
 #### class BaseJWTVerifier
 
-```
+```cangjie
 public class BaseJWTVerifier <: JWTVerifier {
     /*
     * 校验
@@ -412,7 +417,7 @@ public class BaseJWTVerifier <: JWTVerifier {
 
 #### class BaseVerification
 
-```
+```cangjie
 public class BaseVerification <: Verification {
     /*
      * 校验部分接受者 Audience官方字段
@@ -501,7 +506,7 @@ public class BaseVerification <: Verification {
     public func ignoreIssuedAt(): Verification 
     /*
      * verify jwtId
-     * @param jwtId jwt唯一标识
+     * @param jwtId jwt标识
      * @return Verification
      */
     public func withJWTId(jwtId: String): Verification 
@@ -595,7 +600,7 @@ public class BaseVerification <: Verification {
 
 ### 示例
 
-```
+```cangjie
 let token = "ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJub25lIiwKICAidHlwIjogIkpXVCIKfQ.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDUwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiZGRkIjogImRmZGRkZmYiLAogICJpbnQ2NCI6IDY0LAogICJmbG9hdDY0IjogMy4xNDAwMDAsCiAgIlN0cmluZyI6ICJhYmFhYmEiLAogICJ0aW1lIjogMTY3Mzg1MDAwMCwKICAibWFwIjogewogICAgIm1rMiI6ICJtdjIiCiAgfSwKICAibGlzdCI6IFsKICAgIDU2LjUxMDAwMCwKICAgIDQxLjk2MDAwMAogIF0sCiAgIm51bGwiOiBudWxsLAogICJhcnJheXN0cmluZyI6IFsKICAgICJhc3RyMSIsCiAgICAiYXN0cjIiCiAgXSwKICAiYXJyYXlpbnQiOiBbCiAgICA2ODQsCiAgICA2NAogIF0sCiAgInBrMSI6ICJwdjEiLAogICJwazIiOiAicHYyIgp9."
 main() {
    
@@ -636,7 +641,7 @@ main() {
 }
 ```
 
-## algorithm 算法构建
+## 签名算法
 
 ### 介绍
 
@@ -646,7 +651,7 @@ main() {
 
 #### class Algorithm
 
-```
+```cangjie
 public abstract class Algorithm {
 
     /*
@@ -775,7 +780,7 @@ public abstract class Algorithm {
 
 #### Hmac256 算法签名示例
 
-```
+```cangjie
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 from std import collection.*
@@ -951,4 +956,408 @@ main() {
 打印生成的签名值使用Base64加密后是:MEYCIQDoY5tGvdbOWlQZOhX9NJ6RQpZ8K02maIhardMxOn5owQIhAIyZAIM_Y0o-qdLYe2ZHpb6eWw9-HfvCSMy3sgwATHXJ
 
 Verify success!
+```
+
+## 其他接口
+
+### 介绍
+
+    因为需要跨包引用, 一些接口的作用域为public. 
+    但是这些接口属于内部流程, 无需调用者操作, 也很有可能修改.
+    在此列举, 无需测试.
+
+### 主要接口
+
+#### Base64Util
+
+```cangjie
+/*
+ * base64urlsafe转换
+ */
+public class Base64Util {
+    /*
+     * 转成base64
+     * @param content 原文字节
+     * @return String base64
+     */
+    public static func urlEncode(content: Array<UInt8>): String
+    /*
+     * 转成base64
+     * @param content 原文
+     * @return String base64
+     */
+    public static func urlEncode(content: String): String
+    /*
+     * 转成原文字节
+     * @param content base64
+     * @return String 原文字节
+     */
+    public static func urlDecode2Byte(content: String): Array<UInt8>
+    /*
+     * 转成原文
+     * @param content base64
+     * @return String 原文
+     */
+    public static func urlDecode(content: String): String
+}
+```
+
+#### Header
+
+```cangjie
+/*
+ * jwt解码时构建header
+ */
+public interface Header {
+    /*
+     * 获取算法
+     * @return String
+     */
+    func getAlgorithm(): String
+    /*
+     * 获取type
+     * @return String
+     */
+    func getType(): String
+    /*
+     * 获取 Content Type
+     * @return String
+     */
+    func getContentType(): String
+    /*
+     * 获取keyid
+     * @return String
+     */
+    func getKeyId(): String
+    /*
+     * 获取指定字段
+     * @param name 字段名
+     * @return Claim
+     */
+    func getHeaderClaim(name: String): Claim
+}
+```
+
+#### Payload
+
+```cangjie
+/*
+ * jwt解码时构建Payload
+ */
+public interface Payload {
+    /*
+     * 获取发布者
+     * @return String
+     */
+    func getIssuer(): String
+    /*
+     * 获取主题
+     * @return String
+     */
+    func getSubject(): String
+    /*
+     * 获取接收者
+     * @return ArrayList<String>
+     */
+    func getAudience(): ArrayList<String>
+    /*
+     * 获取超时
+     * @return Time
+     */
+    func getExpiresAt(): Time
+    /*
+     * 获取Not Before
+     * @return Time
+     */
+    func getNotBefore(): Time
+    /*
+     * 获取发布时间
+     * @return Time
+     */
+    func getIssuedAt(): Time
+    /*
+     * 获取jwtid
+     * @return String
+     */
+    func getId(): String
+    /*
+     * 获取指定字段
+     * @param name 字段名
+     * @return Claim
+     */
+    func getClaim(name: String): Claim
+    /*
+     * 获取所有字段
+     * @return Map<String, Claim>
+     */
+    func getClaims(): Map<String, Claim>
+}
+```
+
+#### Claim
+
+```cangjie
+/*
+ * 包装值 可转成其他类型
+ */
+public interface Claim <: ToString {
+    /*
+     * 是否null
+     * @return true是 false否
+     */
+    func isNull(): Bool
+    /*
+     * 是否存在
+     * @return true是 false否
+     */
+    func isMissing(): Bool
+    /*
+     * 转成Bool
+     * @return Bool
+     */
+    func asBool(): Bool
+    /*
+     * 转成Int64
+     * @return Int64
+     */
+    func asInt(): Int64
+    /*
+     * 转成Float64
+     * @return Float64
+     */
+    func asFloat(): Float64
+    /*
+     * 转成String
+     * @return String
+     */
+    func asString(): String
+    /*
+     * 转成Time
+     * @return Time
+     */
+    func asTime(): Time
+    /*
+     * 转成Array
+     * @return Array<NodeType>
+     */
+    func asArray(): Array<NodeType>
+    /*
+     * 转成List
+     * @return ArrayList<NodeType>
+     */
+    func asList(): ArrayList<NodeType>
+    /*
+     * 转成Map
+     * @return Map<String, NodeType>
+     */
+    func asMap(): Map<String, NodeType>
+    /*
+     * 获取值
+     * @return NodeType
+     */
+    func getValue(): NodeType
+}
+```
+
+#### JWTParser
+
+```cangjie
+/*
+ * header/payload解析
+ */
+public class JWTParser <: JWTPartsParser {
+    /*
+     * 构造函数
+     */
+    public init() {}
+    /*
+     * 解析header
+     * @param jsons 未解码header
+     * @return Header
+     */
+    public override func parseHeader(jsons: String): Header
+    /*
+     * 解析Payload
+     * @param jsons 未解码Payload
+     * @return Payload
+     */
+    public override func parsePayload(jsons: String): Payload
+}
+```
+
+#### HeaderClaimsHolder
+
+```cangjie
+/*
+ * header容器 用以编码
+ * @param 
+ * @return 
+ */
+public class HeaderClaimsHolder <: ClaimsHolder {
+    /*
+     * 构造函数
+     * @param claims header内容
+     */
+    public init(claims: Map<String, Any>)
+}
+```
+
+#### PayloadClaimsHolder
+
+```cangjie
+/*
+ * payload容器 用以编码
+ * @param 
+ * @return 
+ */
+public class PayloadClaimsHolder <: ClaimsHolder {
+    /*
+     * 构造函数
+     * @param claims header内容
+     */
+    public init(claims: Map<String, Any>)
+}
+```
+
+#### ClaimsSerializer
+
+```cangjie
+/*
+ * claims序列化
+ * @param 
+ * @return 
+ */
+public open class ClaimsSerializer <: Serializer {
+    /*
+     * json序列化holder中的值
+     * @param holder 值容器
+     * @return jsonString
+     */
+    public func serialize(holder: ClaimsHolder): String
+}
+```
+
+#### Serializer
+
+```cangjie
+/*
+ * json序列化
+ * @param 
+ * @return 
+ */
+public open class Serializer <: ToString {
+    /*
+     * 获取json
+     * @return json String
+     */
+    public func toString(): String
+}
+```
+
+#### 反序列化工具方法
+
+```cangjie
+/*
+ * claim转ArrayList<Int64>
+ * @param claim
+ * @return ArrayList<Int64>
+ */
+public func asIntList(claim: Claim): ArrayList<Int64>
+/*
+ * claim转ArrayList<String>
+ * @param claim
+ * @return ArrayList<String>
+ */
+public func asStringList(claim: Claim): ArrayList<String>
+/*
+ * 指定claim转ArrayList<String>
+ * @param key 名
+ * @param map 值map
+ * @return Option<ArrayList<Int64>>
+ */
+public func getStringOrArray(key: String, map: Map<String, Claim>): ?ArrayList<String>
+```
+
+#### ExpectedCheckHolderImpl
+
+```cangjie
+/*
+ * lambda校验规则包装
+ */
+public class ExpectedCheckHolderImpl <: ExpectedCheckHolder {
+    /**
+     * 构造函数
+     * @param climeName 待校验claim名
+     * @param predicate 校验方法
+     */
+    public init(climeName: String, predicate: (Claim, DecodedJWT)->Bool)
+    /**
+     * 获取校验值名称
+     * @return String
+     */
+    func getClaimName(): String
+    /**
+     * 校验
+     * @param claim 待校验claim
+     * @param decodedJWT 已解码jwt
+     * @return true校验成功 false校验失败
+     */
+    func verify(claim: Claim, decodedJWT: DecodedJWT): Bool
+}
+```
+
+#### RSAKeyProviderFileImpl
+
+```cangjie
+public class RSAKeyProviderFileImpl <: RSAKeyProvider<String, String> {
+    /*
+     * 构造函数
+     * @param file 密钥文件路径
+     */
+    public init(file: String)
+    /*
+     * 构造函数
+     * @param privateKeyFile 私钥文件路径
+     * @param publicKeyFile 公钥文件路径
+     */
+    public init(privateKeyFile: String, publicKeyFile: String)
+    /*
+     * 获取公钥
+     * @return 公钥文件路径
+     */
+    public func getPublicKey(): String
+    /*
+     * 获取私钥
+     * @return 私钥文件路径
+     */
+    public func getPrivateKey(): String
+}
+```
+
+#### ECDSAKeyProviderFileImpl
+
+```cangjie
+public class ECDSAKeyProviderFileImpl <: ECDSAKeyProvider<String, String> {
+    /*
+     * 构造函数
+     * @param file 密钥文件路径
+     */
+    public init(file: String)
+    /*
+     * 构造函数
+     * @param privateKeyFile 私钥文件路径
+     * @param publicKeyFile 公钥文件路径
+     */
+    public init(privateKeyFile: String, publicKeyFile: String)
+    /*
+     * 获取公钥
+     * @return 公钥文件路径
+     */
+    public func getPublicKey(): String
+    /*
+     * 获取私钥
+     * @return 私钥文件路径
+     */
+    public func getPrivateKey(): String
+}
 ```
