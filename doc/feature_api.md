@@ -662,27 +662,11 @@ public abstract class Algorithm {
     public static func RSA256(keyProvider: RSAKeyProviderFileImpl): Algorithm
     
     /*
-     * 通过 公私钥创建 RSA256 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func RSA256(publicKey: String, privateKey: String): Algorithm
-    
-    /*
      * 通过 RSAKeyProviderFileImpl 实现类创建 RSA384 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
     public static func RSA384(keyProvider: RSAKeyProviderFileImpl): Algorithm
-    
-    /*
-     * 通过 公私钥创建 RSA384 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func RSA384(publicKey: String, privateKey: String): Algorithm
     
     /*
      * 通过 RSAKeyProviderFileImpl 实现类创建 RSA512 算法对象
@@ -692,19 +676,20 @@ public abstract class Algorithm {
     public static func RSA512(keyProvider: RSAKeyProviderFileImpl): Algorithm
     
     /*
-     * 通过 公私钥创建 RSA512 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func RSA512(publicKey: String, privateKey: String): Algorithm
-    
-    /*
      * 通过秘钥创建 HMAC256 算法对象
      * @param secret 秘钥
      * @return Algorithm 实例
      */    
     public static func HMAC256(secret: String): Algorithm
+
+    /*
+     * 通过秘钥内容创建 HMAC256 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC256(secret: Array<UInt8>): Algorithm {
+        return HMACAlgorithm("HS256", "HmacSHA256", secret)
+    }
     
     /*
      * 通过秘钥创建 HMAC384 算法对象
@@ -712,6 +697,13 @@ public abstract class Algorithm {
      * @return Algorithm 实例
      */    
     public static func HMAC384(secret: String): Algorithm
+
+    /*
+     * 通过秘钥内容创建 HMAC384 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC384(secret: Array<UInt8>): Algorithm
     
     /*
      * 通过秘钥创建 HMAC512 算法对象
@@ -719,21 +711,20 @@ public abstract class Algorithm {
      * @return Algorithm 实例
      */    
     public static func HMAC512(secret: String): Algorithm
-    
+
+    /*
+     * 通过秘钥内容创建 HMAC512 算法对象
+     * @param secret 秘钥
+     * @return Algorithm 实例
+     */    
+    public static func HMAC512(secret: Array<UInt8>): Algorithm
+
     /*
      * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA256 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
     public static func ECDSA256(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
-    
-    /*
-     * 通过 公私钥创建 ECDSA256 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func ECDSA256(publicKey: String, privateKey: String): Algorithm
     
     /*
      * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA384 算法对象
@@ -743,28 +734,11 @@ public abstract class Algorithm {
     public static func ECDSA384(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
     
     /*
-     * 通过 公私钥创建 ECDSA384 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func ECDSA384(publicKey: String, privateKey: String): Algorithm
-    
-    /*
      * 通过 ECDSAKeyProviderFileImpl 实现类创建 ECDSA512 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
     public static func ECDSA512(keyProvider: ECDSAKeyProviderFileImpl): Algorithm
-    
-    /*
-     * 通过 公私钥创建 ECDSA512 算法对象
-     * @param publicKey 公钥
-     * @param privateKey 私钥
-     * @return Algorithm 实例
-     */    
-    public static func ECDSA512(publicKey: String, privateKey: String): Algorithm
-    
     
     /*
      * 创建 none 算法对象
