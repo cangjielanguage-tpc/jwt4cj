@@ -420,29 +420,16 @@ public class BaseJWTVerifier <: JWTVerifier {
 ```cangjie
 public class BaseVerification <: Verification {
     /*
+     * 返回异常数组
+     * @return ArrayList<ExpectedCheckHolder>
+     */
+    public func getExpectedChecks(): ArrayList<ExpectedCheckHolder>
+    /*
      * 校验部分接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
      */
     public func withAnyOfAudience(audience: Array<String>): Verification
-    /*
-     * 校验全部接受者 Audience官方字段
-     * @param audience 接受者名字
-     * @return Verification
-     */
-    public func withAudience(audience: Array<String>): Verification
-    /*
-     * 校验部分接受者 Audience官方字段
-     * @param audience 接受者名字
-     * @return Verification
-     */
-    public func withAnyOfAudience(audience: ArrayList<String>): Verification 
-    /*
-     * 校验全部接受者 Audience官方字段
-     * @param audience 接受者名字
-     * @return Verification
-     */
-    public func withAudience(audience: ArrayList<String>): Verification 
     /*
      * verify claim String Array
      * @param Claim name
@@ -450,6 +437,12 @@ public class BaseVerification <: Verification {
      * @return Verification
      */
     public func withArrayClaim(name: String, items: Array<String>): Verification
+    /*
+     * 校验全部接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAudience(audience: Array<String>): Verification
     /*
      * verify claim Int64 Array
      * @param Claim name
@@ -475,6 +468,18 @@ public class BaseVerification <: Verification {
      * @return Verification
      */
     public func withSubject(subject: String): Verification 
+    /*
+     * 校验全部接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAudience(audience: ArrayList<String>): Verification
+    /*
+     * 校验部分接受者 Audience官方字段
+     * @param audience 接受者名字
+     * @return Verification
+     */
+    public func withAnyOfAudience(audience: ArrayList<String>): Verification 
     /*
      * 修改默认的时间间隔
      * @param 时间间隔
