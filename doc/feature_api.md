@@ -1248,13 +1248,6 @@ public func asIntList(claim: Claim): ArrayList<Int64>
  * @return ArrayList<String>
  */
 public func asStringList(claim: Claim): ArrayList<String>
-/*
- * 指定claim转ArrayList<String>
- * @param key 名
- * @param map 值map
- * @return Option<ArrayList<Int64>>
- */
-public func getStringOrArray(key: String, map: Map<String, Claim>): ?ArrayList<String>
 ```
 
 #### ExpectedCheckHolderImpl
