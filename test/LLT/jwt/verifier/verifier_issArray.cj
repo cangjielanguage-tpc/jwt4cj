@@ -18,28 +18,8 @@ main() {
    
   let require = JWT.require(Algorithm.none());
   try {
-    require.withClaim("String","abaaba")
-           .withArrayClaim("arraystring",["astr1","astr2"])
-           .withArrayClaim("arrayint", [684,64])
-    require.withClaim("time", Time(1673850000,0))
-        .withClaim("bool", true)
-        .withClaim("int64", 64)
-        .withClaim("float64", 3.14)
-        .withIssuer("issuer") // 签发对象
-        .withAudience(["aud1"]) // 接收全部对象   // ["aud1", "aud3"] false
-        // .withAnyOfAudience(["aud1", "aud3"]) //接收部分对象
-        .withSubject("subject")
-        .withJWTId("jwtId")
-        .withClaimPresence("ddd")
-        .withNullClaim("null")
-
-        let strArrL:ArrayList<String> = ArrayList<String>(["aud1","aud3"])
-        require.withAnyOfAudience(strArrL) // 合法子集  调用编译报错
-
-
-    require.acceptExpiresAt(111111)
-    require.acceptLeeway(111111) // 设置默认时间
-
+    require.withIssuer(["issuer", "trttt"]) // 签发对象
+      
 
     let builder: JWTVerifier = require.build()
     builder.verify(token)
