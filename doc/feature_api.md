@@ -779,8 +779,6 @@ public abstract class Algorithm {
 #### Hmac256 算法签名示例
 
 ```cangjie
-// EXEC: cjc %import-path %L %l %f
-// EXEC: ./main
 from std import collection.*
 from jwt import jwt.algorithms.*
 from jwt import jwt.utils.*
@@ -807,8 +805,6 @@ iUZfpck062AL-KPiKW7IxZZ1mE9eKQsdHfRf0wgPyI8
 #### Hmac256 算法验签示例
 
 ```cangjie
-// EXEC: cjc %import-path %L %l %f
-// EXEC: ./main
 from std import collection.*
 from jwt import jwt.algorithms.*
 from jwt import jwt.utils.*
@@ -833,10 +829,6 @@ verify success
 #### Rsa384 算法签名示例
 
 ```cangjie
-// DEPENDENCE: test_rsa_privateKey_02.pem
-// DEPENDENCE: test_rsa_publicKey_02.pem
-// EXEC: cjc %import-path %L %l %f
-// EXEC: ./main
 from jwt import jwt.algorithms.*
 from jwt import jwt.interfaces.*
 from jwt import jwt.impl.*
@@ -876,10 +868,6 @@ main() {
 #### Rsa384 算法验签示例
 
 ```cangjie
-// DEPENDENCE: test_rsa_privateKey_02.pem
-// DEPENDENCE: test_rsa_publicKey_02.pem
-// EXEC: cjc %import-path %L %l %f
-// EXEC: ./main
 from std import fs.*
 from std import os.posix.*
 from cryptocj import rsacj.*
@@ -911,11 +899,6 @@ verify success
 #### Ecdsa512 算法签名验签示例
 
 ```cangjie
-// DEPENDENCE: test_ecdsa_privateKey.pem
-// DEPENDENCE: test_ecdsa_publicKey.pem
-// EXEC: cjc %import-path %L %l %f
-// EXEC: ./main
-
 from cryptocj import eccj.*
 from std import os.posix.*
 from jwt import jwt.algorithms.*
