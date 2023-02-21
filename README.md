@@ -12,7 +12,7 @@
 
 ## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/>介绍
 
-一个基于RFC 7519 的 JSON Web Token 和 JSON Web Signature的仓颉库。
+一个基于[RFC 7519](https://www.rfc-editor.org/rfc/rfc7519) 的 JSON Web Token 和 JSON Web Signature的仓颉库。
 
 ### 特性
 
@@ -38,65 +38,12 @@
 ├── src
 │   └── jwt
 │       ├── algorithms
-│       │   ├── algorithm.cj
-│       │   ├── ecdsa_algorithm.cj
-│       │   ├── hmac_algorithm.cj
-│       │   ├── none_algorithm.cj
-│       │   └── rsa_algorithm.cj
 │       ├── common
-│       │   ├── header_params.cj
-│       │   └── registered_claims.cj
 │       ├── exception
-│       │   ├── TokenExpiredException.cj
-│       │   ├── algorithm_mismatch_exception.cj
-│       │   ├── incorrect_claim_exception.cj
-│       │   ├── invalid_claim_exception.cj
-│       │   ├── jwt_creation_exception.cj
-│       │   ├── jwt_decode_exception.cj
-│       │   ├── jwt_validation_exception.cj
-│       │   ├── jwt_verification_exception.cj
-│       │   ├── missing_claim_exception.cj
-│       │   ├── signature_generation_exception.cj
-│       │   └── signature_verification_exception.cj
 │       ├── impl
-│       │   ├── json
-│       │   │   ├── deserializer.cj
-│       │   │   ├── json_extend.cj
-│       │   │   ├── json_node_claim.cj
-│       │   │   └── serializer.cj
-│       │   ├── base_header.cj
-│       │   ├── base_payload.cj
-│       │   ├── claims_holder.cj
-│       │   ├── claims_serializer.cj
-│       │   ├── expected_check_holder_impl.cj
-│       │   ├── header_claims_holder.cj
-│       │   ├── header_deserializer.cj
-│       │   ├── header_serializer.cj
-│       │   ├── jwt_parser.cj
-│       │   ├── payload_claims_holder.cj
-│       │   ├── payload_deserializer.cj
-│       │   └── payload_serializer.cj
+│       │   └── json
 │       ├── interfaces
-│       │   ├── claim.cj
-│       │   ├── decoded_jwt.cj
-│       │   ├── ecdsa_key_provider.cj
-│       │   ├── expected_check_holder.cj
-│       │   ├── header.cj
-│       │   ├── jwt_parts_parser.cj
-│       │   ├── jwt_verifier.cj
-│       │   ├── key_provider.cj
-│       │   ├── node_type.cj
-│       │   ├── payload.cj
-│       │   ├── rsa_key_provider.cj
-│       │   └── verification.cj
-│       ├── utils
-│       │   └── base64_util.cj
-│       ├── base_verification.cj
-│       ├── jwt.cj
-│       ├── jwt_creator.cj
-│       ├── jwt_decoder.cj
-│       ├── jwt_verifier.cj
-│       └── token_utils.cj
+│       └── utils
 └── test   
     ├── HLT
     ├── LLT
@@ -170,6 +117,10 @@ main(){
 }
 ```
 
+```
+ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJIUzI1NiIsCiAgInR5cCI6ICJKV1QiCn0.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDUwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiZGRkIjogImRmZGRkZmYiLAogICJpbnQ2NCI6IDY0LAogICJmbG9hdDY0IjogMy4xNDAwMDAsCiAgIlN0cmluZyI6ICJhYmFhYmEiLAogICJ0aW1lIjogMTY3Mzg1MDAwMCwKICAibWFwIjogewogICAgIm1rMiI6ICJtdjIiCiAgfSwKICAibGlzdCI6IFsKICAgIDU2LjUxMDAwMCwKICAgIDQxLjk2MDAwMAogIF0sCiAgIm51bGwiOiBudWxsLAogICJhcnJheXN0cmluZyI6IFsKICAgICJhc3RyMSIsCiAgICAiYXN0cjIiCiAgXSwKICAiYXJyYXlpbnQiOiBbCiAgICA2ODQsCiAgICA2NAogIF0sCiAgInBrMSI6ICJwdjEiLAogICJwazIiOiAicHYyIgp9.V1UenPvLJGuM8-y7TSZXN5miDSLYXWsxwVQq7RRzY-w
+```
+
 #### jwt解析功能示例
 ```
 from jwt import jwt.*
@@ -182,7 +133,6 @@ main() {
     println(decoder.getAlgorithm())             // none
     println(decoder.getType())                  // JWT
     println(decoder.getContentType())           // JWT
-    println(decoder.getKeyId())                 // algorithm.getSigningKeyId()
     println(decoder.getHeaderClaim("k1").asString()) // v1
     println(decoder.getIssuer())                // issuer
     println(decoder.getSubject())               // subject
@@ -195,6 +145,22 @@ main() {
     println(decoder.getClaims().size)           // 19
     0
 }
+```
+
+```
+none
+JWT
+JWT
+v1
+issuer
+subject
+2
+2023-01-16T10:11:30+08:00
+2023-01-16T10:10:50+08:00
+2023-01-16T10:10:00+08:00
+jwtId
+true
+19
 ```
 
 #### jwt校验功能示例
@@ -235,10 +201,5 @@ main() {
 ```
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
-
-[@shawnzhao19](https://gitee.com/shawnzhao19)
-[@heimudan](https://gitee.com/heimudan)
-[@yangtao242](https://gitee.com/yangtao242)
-
 
 欢迎给我们提交PR，欢迎给我们提交Issue，欢迎参与任何形式的贡献。

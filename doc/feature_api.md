@@ -168,6 +168,7 @@ public class Builder{
     * @param name the Claim's name
     * @param map  the Claim's key-values
     * @return Builder
+    * @throw IllegalArgumentException 参数类型不支持
     */
     public func withClaim(name: String, map: Map<String, Any>): Builder
 
@@ -176,6 +177,7 @@ public class Builder{
     * @param name the Claim's name
     * @param list the Claim's list of values
     * @return Builder
+    * @throw IllegalArgumentException 参数类型不支持
     */
     public func withClaim(name: String, list: ArrayList<Any>): Builder
 
@@ -206,6 +208,7 @@ public class Builder{
     * 批量添加值到Payload
     * @param payloadClaims the values to use as Claims in the token's payload
     * @return Builder
+    * @throw IllegalArgumentException 参数类型不支持
     */
     public func withPayload(payloadClaims: Map<String, Any>): Builder
 
@@ -213,6 +216,7 @@ public class Builder{
     * 签名
     * @param algorithm used to sign the JWT
     * @return a  JWT token
+    * @throw SignatureGenerationException 签名失败
     */
     public func sign(algorithm: Algorithm): String
 }
@@ -221,30 +225,44 @@ public class Builder{
 ### 示例
 
 ```cangjie
-let jwtStr = JWT.create()
-    .withHeader(HashMap<String, Any>([("k1","v1")]))
-    .withKeyId("keyId")
-    .withIssuer("issuer")
-    .withSubject("subject")
-    .withAudience(["aud1", "aud2"])
-    .withExpiresAt(Time(3673835050,0))
-    .withNotBefore(Time(1673835050,0))
-    .withIssuedAt(Time(1673835000,0))
-    .withJWTId("jwtId")
-    .withClaim("bool", true)
-    .withClaim("ddd", "dfdddff")
-    .withClaim("int64", 64)
-    .withClaim("float64", 3.14)
-    .withClaim("String", "abaaba")
-    .withClaim("time", Time(1673850000,0))
-    .withClaim("map", HashMap<String, Any>([("mk2","mv2")]))
-    .withClaim("list", ArrayList<Any>([56.51,41.96]))
-    .withNullClaim("null")
-    .withArrayClaim("arraystring", ["astr1","astr2"])
-    .withArrayClaim("arrayint", [684,64])
-    .withPayload(HashMap<String, Any>([("pk1","pv1"),("pk2","pv2")]))
-    .sign(Algorithm.none())
-println(jwtStr)
+from std import collection.*
+from std import time.*
+from encoding import json.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.impl.*
+from jwt import jwt.*
+
+main(){
+    let jwtStr = JWT.create()
+        .withHeader(HashMap<String, Any>([("k1","v1")]))
+        .withKeyId("keyId")
+        .withIssuer("issuer")
+        .withSubject("subject")
+        .withAudience(["aud1", "aud2"])
+        .withExpiresAt(Time(3673835050,0))
+        .withNotBefore(Time(1673835050,0))
+        .withIssuedAt(Time(1673835000,0))
+        .withJWTId("jwtId")
+        .withClaim("bool", true)
+        .withClaim("ddd", "dfdddff")
+        .withClaim("int64", 64)
+        .withClaim("float64", 3.14)
+        .withClaim("String", "abaaba")
+        .withClaim("time", Time(1673850000,0))
+        .withClaim("map", HashMap<String, Any>([("mk2","mv2")]))
+        .withClaim("list", ArrayList<Any>([56.51,41.96]))
+        .withNullClaim("null")
+        .withArrayClaim("arraystring", ["astr1","astr2"])
+        .withArrayClaim("arrayint", [684,64])
+        .withPayload(HashMap<String, Any>([("pk1","pv1"),("pk2","pv2")]))
+        .sign(Algorithm.HMAC256("admin"))
+    println(jwtStr)
+    0
+}
+```
+
+```
+ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJIUzI1NiIsCiAgInR5cCI6ICJKV1QiCn0.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDUwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiZGRkIjogImRmZGRkZmYiLAogICJpbnQ2NCI6IDY0LAogICJmbG9hdDY0IjogMy4xNDAwMDAsCiAgIlN0cmluZyI6ICJhYmFhYmEiLAogICJ0aW1lIjogMTY3Mzg1MDAwMCwKICAibWFwIjogewogICAgIm1rMiI6ICJtdjIiCiAgfSwKICAibGlzdCI6IFsKICAgIDU2LjUxMDAwMCwKICAgIDQxLjk2MDAwMAogIF0sCiAgIm51bGwiOiBudWxsLAogICJhcnJheXN0cmluZyI6IFsKICAgICJhc3RyMSIsCiAgICAiYXN0cjIiCiAgXSwKICAiYXJyYXlpbnQiOiBbCiAgICA2ODQsCiAgICA2NAogIF0sCiAgInBrMSI6ICJwdjEiLAogICJwazIiOiAicHYyIgp9.V1UenPvLJGuM8-y7TSZXN5miDSLYXWsxwVQq7RRzY-w
 ```
 
 ## jwt解码
@@ -262,7 +280,7 @@ public class JWTDecoder <: DecodedJWT {
     /*
     * 构造函数
     * @param jwt
-    * @return 
+    * @throw JWTDecodeException 解码失败
     */
     public init(jwt: String)
 
@@ -381,10 +399,22 @@ public class JWTDecoder <: DecodedJWT {
 ### 示例
 
 ```cangjie
-let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ."
-let decoder = JWT.decode(token)
-let header = decoder.getHeader() // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-let myclaim = decoder.getClaim("name").asString() // John Doe
+from jwt import jwt.impl.*
+from jwt import jwt.*
+
+main() {
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ."
+    let decoder = JWT.decode(token)
+    let header = decoder.getHeader() // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+    println(header)
+    let myclaim = decoder.getClaim("name").asString() // John Doe
+    println(myclaim)
+}
+```
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+John Doe
 ```
 
 ## jwt校验
@@ -926,6 +956,86 @@ main() {
 Verify success!
 ```
 
+## 通用接口
+
+### 介绍
+
+主要API间数据流转的接口, 一般为开放API的`参数类型`或`返回值类型`.
+    
+### 主要接口
+
+#### Claim
+
+```cangjie
+/*
+ * 包装值 可转成其他类型
+ */
+public interface Claim <: ToString {
+    /*
+     * 是否null
+     * @return true是 false否
+     */
+    func isNull(): Bool
+    /*
+     * 是否存在
+     * @return true是 false否
+     */
+    func isMissing(): Bool
+    /*
+     * 转成Bool
+     * @return Bool
+     */
+    func asBool(): Bool
+    /*
+     * 转成Int64
+     * @return Int64
+     */
+    func asInt(): Int64
+    /*
+     * 转成Float64
+     * @return Float64
+     */
+    func asFloat(): Float64
+    /*
+     * 转成String
+     * @return String
+     */
+    func asString(): String
+    /*
+     * 转成Time
+     * @return Time
+     */
+    func asTime(): Time
+    /*
+     * 转成Array
+     * @return Array<NodeType>
+     */
+    func asArray(): Array<NodeType>
+    /*
+     * 转成List
+     * @return ArrayList<NodeType>
+     */
+    func asList(): ArrayList<NodeType>
+    /*
+     * 转成Map
+     * @return Map<String, NodeType>
+     */
+    func asMap(): Map<String, NodeType>
+    /*
+     * 获取值
+     * @return NodeType
+     */
+    func getValue(): NodeType
+}
+```
+
+#### NodeType
+    NodeType是标准库JsonValue的别名
+    Claim使用JsonValue作为其内部value, 依靠JsonValue转成其他类型输出.
+```cangjie
+public type NodeType = JsonValue
+```
+
 ## 其他接口
 
 ### 介绍
@@ -1059,71 +1169,6 @@ public interface Payload {
      * @return Map<String, Claim>
      */
     func getClaims(): Map<String, Claim>
-}
-```
-
-#### Claim
-
-```cangjie
-/*
- * 包装值 可转成其他类型
- */
-public interface Claim <: ToString {
-    /*
-     * 是否null
-     * @return true是 false否
-     */
-    func isNull(): Bool
-    /*
-     * 是否存在
-     * @return true是 false否
-     */
-    func isMissing(): Bool
-    /*
-     * 转成Bool
-     * @return Bool
-     */
-    func asBool(): Bool
-    /*
-     * 转成Int64
-     * @return Int64
-     */
-    func asInt(): Int64
-    /*
-     * 转成Float64
-     * @return Float64
-     */
-    func asFloat(): Float64
-    /*
-     * 转成String
-     * @return String
-     */
-    func asString(): String
-    /*
-     * 转成Time
-     * @return Time
-     */
-    func asTime(): Time
-    /*
-     * 转成Array
-     * @return Array<NodeType>
-     */
-    func asArray(): Array<NodeType>
-    /*
-     * 转成List
-     * @return ArrayList<NodeType>
-     */
-    func asList(): ArrayList<NodeType>
-    /*
-     * 转成Map
-     * @return Map<String, NodeType>
-     */
-    func asMap(): Map<String, NodeType>
-    /*
-     * 获取值
-     * @return NodeType
-     */
-    func getValue(): NodeType
 }
 ```
 
