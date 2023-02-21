@@ -588,18 +588,7 @@ public class BaseVerification <: Verification {
      * @return JWTVerifier
      */
     public func build(): JWTVerifier 
-    /*
-     * 创建校验器
-     * @param time
-     * @return JWTVerifier
-     */
-    public func build(time: Time): JWTVerifier 
-    /*
-     * 获得具体分类的时间间隔包括(exp，nbf, iss)
-     * @param name
-     * @return Int64
-     */
-    public func getLeewayFor(name: String): Int64 
+    
 }
 ```
 

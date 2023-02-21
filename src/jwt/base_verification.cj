@@ -228,8 +228,9 @@ public class BaseVerification <: Verification {
     }
 
     public func withClaim(name: String, predicate: (Claim, DecodedJWT) -> Bool): Verification {
-        let fun = {claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT)}
-        addCheck(name, fun);
+        // let fun = {claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT)}
+        // addCheck(name, fun);
+        expectedChecks.append(constructExpectedCheck(name, predicate));
         return this
     }
 
@@ -249,13 +250,13 @@ public class BaseVerification <: Verification {
         return this.build(Time.now());
     }
 
-    public func build(time: Time): JWTVerifier {
+    private func build(time: Time): JWTVerifier {
         this.time = time
         addMandatoryClaimChecks();
         return BaseJWTVerifier(algorithm, expectedChecks);
     }
 
-    public func getLeewayFor(name: String): Int64 {
+    private func getLeewayFor(name: String): Int64 {
         if (customLeeways.contains(name)) {
             return customLeeways.get(name).getOrThrow();
         } else {

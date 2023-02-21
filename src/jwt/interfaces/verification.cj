@@ -52,6 +52,15 @@ public interface Verification {
     func withAnyOfAudience(audience: Array<String>): Verification
 
     /*
+     * Verifies whether the JWT contains an Audience ("aud") claim contain at least one of the specified audiences.
+     * This check is case-sensitive. An empty array is considered as a None.
+     *
+     * @param audience the required Audience value for which the "aud" claim must contain at least one value.
+     * @return this same Verification instance.
+     */
+    func withAnyOfAudience(audience: ArrayList<String>): Verification
+
+    /*
      * Define the default window in seconds in which the Not Before, Issued At and Expires At Claims
      * will still be valid. Setting a specific leeway value on a given Claim will override this value for that Claim.
      *
@@ -133,6 +142,8 @@ public interface Verification {
      * @throws IllegalArgumentException the name is None.
      */
     func withClaim(name: String, value: Bool): Verification
+
+    func withClaim(name: String, predicate: (Claim, DecodedJWT) -> Bool): Verification
 
     /*
      * Verifies whether the claim is equal to the given value:Int64.
