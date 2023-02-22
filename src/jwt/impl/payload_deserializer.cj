@@ -3,18 +3,17 @@ package jwt.impl
 import jwt.common.RegisteredClaims
 import jwt.interfaces.Payload
 import jwt.impl.json.Deserializer
-import jwt.impl.json.getStringOrArray
 
 public class PayloadDeserializer <: Deserializer {
     func doDeserialize(jsonStr: String): Payload {
         let map = super.deserialize(jsonStr)
-        let issuer: ?String = map.get(RegisteredClaims.ISSUER)?.asString()
-        let subject: ?String = map.get(RegisteredClaims.SUBJECT)?.asString()
+        let issuer: ?String = asString(RegisteredClaims.ISSUER, map)
+        let subject: ?String = asString(RegisteredClaims.SUBJECT, map)
         let audience: ?ArrayList<String> = getStringOrArray(RegisteredClaims.AUDIENCE, map)
-        let expiresAt: ?Time = map.get(RegisteredClaims.EXPIRES_AT)?.asTime()
-        let notBefore: ?Time = map.get(RegisteredClaims.NOT_BEFORE)?.asTime()
-        let issuedAt: ?Time = map.get(RegisteredClaims.ISSUED_AT)?.asTime()
-        let jwtId: ?String = map.get(RegisteredClaims.JWT_ID)?.asString()
+        let expiresAt: ?Time = asTime(RegisteredClaims.EXPIRES_AT, map)
+        let notBefore: ?Time = asTime(RegisteredClaims.NOT_BEFORE, map)
+        let issuedAt: ?Time = asTime(RegisteredClaims.ISSUED_AT, map)
+        let jwtId: ?String = asString(RegisteredClaims.JWT_ID, map)
         BasePayload(issuer, subject, audience, expiresAt, notBefore, issuedAt, jwtId, map)
     }
 }
