@@ -399,6 +399,10 @@ let myclaim = decoder.getClaim("name").asString() // John Doe
 #### class BaseJWTVerifier
 
 ```cangjie
+/*
+ * 基础校验类，校验方法的入口
+ *
+ */
 public class BaseJWTVerifier <: JWTVerifier {
     /*
     * 校验
@@ -410,6 +414,8 @@ public class BaseJWTVerifier <: JWTVerifier {
     * 校验
     * @param jwt DecodedJWT
     * @return DecodedJWT
+    * @throw AlgorithmMismatchException 算法不匹配
+    * @throw IncorrectClaimException claim不匹配
     */
     public func verify(jwt: DecodedJWT): DecodedJWT
 }
@@ -418,6 +424,10 @@ public class BaseJWTVerifier <: JWTVerifier {
 #### class BaseVerification
 
 ```cangjie
+/*
+ * 具体各种校验方法的实现类，负责主要的功能
+ * 
+ */
 public class BaseVerification <: Verification {
     /*
      * 返回异常数组
@@ -428,6 +438,7 @@ public class BaseVerification <: Verification {
      * 校验部分接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withAnyOfAudience(audience: Array<String>): Verification
     /*
@@ -435,12 +446,14 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withArrayClaim(name: String, items: Array<String>): Verification
     /*
      * 校验全部接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withAudience(audience: Array<String>): Verification
     /*
@@ -448,59 +461,69 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value 
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withArrayClaim(name: String, items: Array<Int64>): Verification 
     /*
      * verify Issuer Array
      * @param 发布者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withIssuer(issuer: Array<String>): Verification 
     /*
      * verify Issuer String
      * @param 发布者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withIssuer(issuer: String): Verification 
     /*
      * verify Subject String
      * @param Subject name 通用
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withSubject(subject: String): Verification 
     /*
      * 校验全部接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withAudience(audience: ArrayList<String>): Verification
     /*
      * 校验部分接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
+     * @throw IncorrectClaimException claim不匹配
      */
     public func withAnyOfAudience(audience: ArrayList<String>): Verification 
     /*
      * 修改默认的时间间隔
      * @param 时间间隔
      * @return Verification
+     * @throw IllegalArgumentException 时间不能为负值异常
      */
     public func acceptLeeway(leeway: Int64): Verification
     /*
      * 设置超时的时间间隔 "exp"
      * @param 时间间隔
      * @return Verification
+     * @throw IllegalArgumentException 时间不能为负值异常
      */
     public func acceptExpiresAt(leeway: Int64): Verification 
     /*
      * 设置不能超过的时间间隔 "nbf" 
      * @param 时间间隔
      * @return Verification
+     * @throw IllegalArgumentException 时间不能为负值异常
      */
     public func acceptNotBefore(leeway: Int64): Verification 
     /*
      * 设置发布的时间间隔 "iss"
      * @param 时间间隔
+     * @throw IllegalArgumentException 时间不能为负值异常
      * @return Verification
      */
     public func acceptIssuedAt(leeway: Int64): Verification 
@@ -513,6 +536,7 @@ public class BaseVerification <: Verification {
      * verify jwtId
      * @param jwtId jwt标识
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withJWTId(jwtId: String): Verification 
     /*
@@ -532,6 +556,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withClaim(name: String, value: Bool): Verification 
     /*
@@ -539,6 +564,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withClaim(name: String, value: Int64): Verification 
     /*
@@ -546,6 +572,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withClaim(name: String, value: Float64): Verification 
     /*
@@ -553,6 +580,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withClaim(name: String, value: String): Verification
     /*
@@ -560,6 +588,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withClaim(name: String, value: Time): Verification
     /*
@@ -574,6 +603,7 @@ public class BaseVerification <: Verification {
      * @param Claim name
      * @param Claim value 
      * @return Verification
+     * @throw MissingClaimException claim不存在异常
      */
     public func withArrayClaim(name: String, items: ArrayList<String>): Verification 
     /*
@@ -595,7 +625,17 @@ public class BaseVerification <: Verification {
 ### 示例
 
 ```cangjie
+from std import collection.*
+from std import time.*
+from encoding import json.*
+from jwt import jwt.algorithms.*
+from jwt import jwt.impl.*
+from jwt import jwt.exception.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.*
+
 let token = "ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJub25lIiwKICAidHlwIjogIkpXVCIKfQ.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDUwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiZGRkIjogImRmZGRkZmYiLAogICJpbnQ2NCI6IDY0LAogICJmbG9hdDY0IjogMy4xNDAwMDAsCiAgIlN0cmluZyI6ICJhYmFhYmEiLAogICJ0aW1lIjogMTY3Mzg1MDAwMCwKICAibWFwIjogewogICAgIm1rMiI6ICJtdjIiCiAgfSwKICAibGlzdCI6IFsKICAgIDU2LjUxMDAwMCwKICAgIDQxLjk2MDAwMAogIF0sCiAgIm51bGwiOiBudWxsLAogICJhcnJheXN0cmluZyI6IFsKICAgICJhc3RyMSIsCiAgICAiYXN0cjIiCiAgXSwKICAiYXJyYXlpbnQiOiBbCiAgICA2ODQsCiAgICA2NAogIF0sCiAgInBrMSI6ICJwdjEiLAogICJwazIiOiAicHYyIgp9."
+
 main() {
    
   let require = JWT.require(Algorithm.none());
@@ -621,8 +661,6 @@ main() {
 
     let builder: JWTVerifier = require.build()
     builder.verify(token)
-
-    // require.build().verify(token);
     return 0
   } catch (e: TokenExpiredException){
     println(e.message)
