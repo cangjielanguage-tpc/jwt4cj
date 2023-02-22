@@ -7,7 +7,6 @@ from cryptocj import sha384cj.*
 from cryptocj import sha512cj.*
 
 class ECDSAAlgorithm <: Algorithm {
-
     private let keyProviderFile: ECDSAKeyProviderFileImpl
     private let ecNumberSize: Int64
 
@@ -18,11 +17,10 @@ class ECDSAAlgorithm <: Algorithm {
     }
 
     public func verify(jwt: DecodedJWT): Unit {
-
         try {
-            var signatureBytes: Array<UInt8> = Base64Util.urlDecode2Byte(jwt.getSignature())
-            var sinStr: SINSTR = SINSTR(signatureBytes, Int32(signatureBytes.size))
-            var valid: Bool = verifySignatureFor(getDescription(), keyProviderFile, jwt.getHeader(), jwt.getPayload(), sinStr)
+            let content = buildContent(jwt.getHeader(), jwt.getPayload())
+            let signature = Base64Util.urlDecode2Byte(jwt.getSignature())
+            let valid = verify(content, signature)
             if (!valid) {
                 throw SignatureGenerationException("SignatureGenerationException..")
             }
@@ -31,110 +29,49 @@ class ECDSAAlgorithm <: Algorithm {
         }
     }
 
-    func verifySignatureFor(algorithm: String, keyProviderFile: ECDSAKeyProviderFileImpl, header: String, payload: String, sinStr: SINSTR): Bool {
-        return verifySignatureFor(algorithm, keyProviderFile, header.toUtf8Array(), payload.toUtf8Array(), sinStr)
-    }
-
-    func verifySignatureFor(algorithm: String, keyProviderFile: ECDSAKeyProviderFileImpl, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>, sinStr: SINSTR): Bool {
-        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
-        headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
-        contentBytes[headerBytes.size] = b'.'
-        payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)
-        match (algorithm) { 
-            case "SHA256withECDSA" => var keyPub: EC_KEY = ecKeyNew()
-                                    keyPub = pemReadEcPub(keyProviderFile.getPublicKey())
-                                    let ret = ecdsaVerify(contentBytes, sinStr, keyPub)
-                                    ecKeyFree(keyPub)
-                                    if (ret != 1) {
-                                        return false
-                                    }
-                                    return true
-
-            case "SHA384withECDSA" => var keyPub: EC_KEY = ecKeyNew()
-                                    keyPub = pemReadEcPub(keyProviderFile.getPublicKey())
-                                    let ret = ecdsaVerify(contentBytes, sinStr, keyPub)
-                                    ecKeyFree(keyPub)
-                                    if (ret != 1) {
-                                        return false
-                                    }
-                                    return true
-
-            case "SHA512withECDSA" => var keyPub: EC_KEY = ecKeyNew()
-                                    keyPub = pemReadEcPub(keyProviderFile.getPublicKey())
-                                    let ret = ecdsaVerify(contentBytes, sinStr, keyPub)
-                                    ecKeyFree(keyPub)
-                                    if (ret != 1) {
-                                        return false
-                                    }
-                                    return true
-
-            case _ => return false
+    func verify(content: Array<UInt8>, signature: Array<UInt8>): Bool {
+        match (getDescription()) {
+            case "SHA256withECDSA" => verify(content, signature, sha256Func)
+            case "SHA384withECDSA" => verify(content, signature, sha384Func)
+            case "SHA512withECDSA" => verify(content, signature, sha512Func)
+            case _ => false
         }
     }
 
-    public func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
+    private func verify(
+        content: Array<UInt8>,
+        signature: Array<UInt8>,
+        shaFunc: (Array<UInt8>) -> Array<UInt8>
+    ): Bool {
+        let uchash = shaFunc(content)
+        var keyPub: EC_KEY = ecKeyNew()
+        keyPub = pemReadEcPub(keyProviderFile.getPublicKey())
+        let sinStr: SINSTR = SINSTR(signature, Int32(signature.size))
+        let ret = ecdsaVerify(uchash, sinStr, keyPub)
+        ecKeyFree(keyPub)
+        ret == 1
+    }
 
+    public func sign(content: Array<UInt8>): Array<UInt8> {
         try {
-            var signature: Array<UInt8> = createSignatureFor(getDescription(), keyProviderFile, headerBytes, payloadBytes)
-            return signature
+            match (getDescription()) {
+                case "SHA256withECDSA" => sign(content, sha256Func)
+                case "SHA384withECDSA" => sign(content, sha384Func)
+                case "SHA512withECDSA" => sign(content, sha512Func)
+                case _ => return Array<UInt8>()
+            }
         } catch (e: SignatureGenerationException) {
             throw SignatureGenerationException("SignatureGenerationException..")
         }
     }
 
-    public func sign(contentBytes: Array<UInt8>): Array<UInt8> {
-        try {
-            var signature: Array<UInt8> = createSignatureFor(getDescription(), keyProviderFile, contentBytes)
-            return signature
-        } catch (e: SignatureGenerationException) {
-            throw SignatureGenerationException("SignatureGenerationException..")
-        }
-    }
-
-    func createSignatureFor(algorithm: String, keyProviderFile: ECDSAKeyProviderFileImpl, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
-        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
-        headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
-        contentBytes[headerBytes.size] = b'.'
-        payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)
+    private func sign(content: Array<UInt8>, shaFunc: (Array<UInt8>) -> Array<UInt8>): Array<UInt8> {
+        let uchash = shaFunc(content)
         var keyPri: EC_KEY = ecKeyNew()
         keyPri = pemReadEcPri(keyProviderFile.getPrivateKey())
         let buf_len: Int32 = ecdsaSize(keyPri)
         let sigbuf: SIN_MALLOC = SIN_MALLOC(buf_len)
-        match (algorithm) { 
-            case "SHA256withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-
-            case "SHA384withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-
-            case "SHA512withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-            case _ => return Array<UInt8>()
-        }
+        let sin: SINSTR = ecdsaSign(uchash, sigbuf, keyPri)
+        sin.getSinStr()
     }
-
-    func createSignatureFor(algorithm: String, keyProviderFile: ECDSAKeyProviderFileImpl, contentBytes: Array<UInt8>): Array<UInt8> {
-        var keyPri: EC_KEY = ecKeyNew()
-        keyPri = pemReadEcPri(keyProviderFile.getPrivateKey())
-        let buf_len: Int32 = ecdsaSize(keyPri)
-        let sigbuf: SIN_MALLOC = SIN_MALLOC(buf_len)
-        match (algorithm) { 
-            case "SHA256withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-
-            case "SHA384withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-
-            case "SHA512withECDSA" => 
-                                      let sin: SINSTR = ecdsaSign(contentBytes, sigbuf, keyPri)
-                                      return sin.getSinStr()
-            case _ => return Array<UInt8>()
-        }
-    }
-
 }
