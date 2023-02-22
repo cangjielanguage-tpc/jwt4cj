@@ -6,10 +6,10 @@ import jwt.impl.json.Deserializer
 public class HeaderDeserializer <: Deserializer {
     func doDeserialize(jsonStr: String): Header {
         let map = super.deserialize(jsonStr)
-        let algorithm: ?String = map.get(HeaderParams.ALGORITHM)?.asString()
-        let typ: ?String = map.get(HeaderParams.TYPE)?.asString()
-        let contentType: ?String = map.get(HeaderParams.CONTENT_TYPE)?.asString()
-        let keyId: ?String = map.get(HeaderParams.KEY_ID)?.asString()
+        let algorithm: ?String = asString(HeaderParams.ALGORITHM, map)
+        let typ: ?String = asString(HeaderParams.TYPE, map)
+        let contentType: ?String = asString(HeaderParams.CONTENT_TYPE, map)
+        let keyId: ?String = asString(HeaderParams.KEY_ID, map)
         BaseHeader(algorithm, typ, contentType, keyId, map)
     }
 }
