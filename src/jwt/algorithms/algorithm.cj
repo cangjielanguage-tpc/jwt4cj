@@ -1,7 +1,6 @@
 package jwt.algorithms
 
 public abstract class Algorithm {
-    
     private var name: String
     private var description: String
 
@@ -81,14 +80,41 @@ public abstract class Algorithm {
     public func verify(jwt: DecodedJWT): Unit
 
     public open func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
-        
-        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
-        headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
-        contentBytes[headerBytes.size] = b'.'
-        payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)
-        return sign(contentBytes)
+        return sign(buildContent(headerBytes, payloadBytes))
     }
 
     public func sign(contentBytes: Array<UInt8>): Array<UInt8>
+}
 
+func buildContent(header: String, payload: String): Array<UInt8> {
+    "${header}.${payload}".toUtf8Array()
+}
+
+func buildContent(header: Array<UInt8>, payload: Array<UInt8>): Array<UInt8> {
+    let content: Array<UInt8> = Array<UInt8>((header.size + payload.size + 1), item: 0)
+    header.copyTo(content, 0, 0, header.size)
+    content[header.size] = b'.'
+    payload.copyTo(content, 0, (header.size + 1), payload.size)
+    content
+}
+
+let sha256Func = {
+    content: Array<UInt8> =>
+    let uchash = Array<UInt8>(SHA256_DIGEST_LENGTH, item: 0)
+    sha256(content, uchash)
+    uchash
+}
+
+let sha384Func = {
+    content: Array<UInt8> =>
+    let uchash = Array<UInt8>(SHA384_DIGEST_LENGTH, item: 0)
+    sha384(content, uchash)
+    uchash
+}
+
+let sha512Func = {
+    content: Array<UInt8> =>
+    let uchash = Array<UInt8>(SHA512_DIGEST_LENGTH, item: 0)
+    sha512(content, uchash)
+    uchash
 }
