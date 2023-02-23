@@ -1,0 +1,136 @@
+// 3rd_party_lib:jwt/build/jwt
+// 3rd_party_lib:jwt/ci_lib/cryptocj
+//dependence:../utils_test/createsourcedata.cj
+
+from jwt import jwt.algorithms.*
+from jwt import jwt.utils.*
+from jwt import jwt.interfaces.*
+from jwt import jwt.impl.*
+from jwt import jwt.common.*
+from jwt import jwt.*
+from cryptocj import hmaccj.*
+from cryptocj import eccj.*
+from cryptocj import rsacj.*
+
+from std import unittest.*
+from std import collection.*
+from std import time.*
+from encoding import json.*
+from std import os.posix.*
+from std import fs.*
+
+/**
+  public static func create(): Builder
+  public func withNotBefore(notBefore: Time): Builder
+  public func sign(algorithm: Algorithm): String
+  public func getToken(): String
+  public func getType(): String
+  public func getAlgorithm(): String
+  public func getSignature(): String
+  public func getNotBefore(): Time
+  public init() ::class JWT
+  public func decodeJwt(token: String): DecodedJWT
+  public static func decode(token: String): DecodedJWT
+*/
+
+@Test
+public class JWTTest {
+    var returnTag: Int64 = -1
+    var jwtStr:String = ""
+    var strActual:String = ""
+    let ins_1:SourceData = SourceData()
+    let map_String:HashMap<String, Any> = ins_1.generateSourceDataWithString()[2]
+    let arr_Str1:Array<Any> = ins_1.generateSourceDataWithString()[0]
+    let map_Bool:HashMap<String, Any> = ins_1.generateSourceDataWithBool()[2]
+    let entry:(ArrayList<String>,ArrayList<Any>) = ins_1.getMapEntry(map_String)
+
+    var token = ""
+    var t1:Time = Time.now()
+    var t2 = Time(2023, Month.August, 5)
+    var customPtn = "yyyy/MM/dd HH:mm:ss ZZZZ"
+    var t3 = Time.parse("2021-08-05T21:08:04+08:00")
+    var t4 = Time.parse("2022/02/16 21:08:04 +08:00", customPtn)
+
+    @TestCase
+    func testWithNotBefore_001():Unit{
+      returnTag = -1
+      let jwtBuilder :Builder = JWT.create()
+      jwtBuilder.withKeyId(entry[0][1])//中文字符
+      jwtBuilder.withHeader(HashMap<String, Any>([("map_Int64_1",-2654648)])) 
+      jwtBuilder.withAudience(ins_1.convertArrAnyToArrString(arr_Str1))
+      // public func withNotBefore(notBefore: Time): Builder
+      jwtBuilder.withNotBefore(t2) // 2023-08-05T00:00:00+08:00
+      jwtStr = jwtBuilder.sign(Algorithm.none()) 
+      let jwtDecoder = JWTDecoder(jwtStr)
+      token = jwtDecoder.getToken() 
+      // public func getType(): String
+      strActual = jwtDecoder.getType() 
+      @Assert(strActual, "JWT")
+      // public func getAlgorithm(): String
+      strActual = jwtDecoder.getAlgorithm() 
+      @Assert(strActual, "none")
+      @Assert(token,jwtStr)
+      // public func getSignature(): String
+      strActual = jwtDecoder.getSignature() 
+      @Assert(strActual, "")
+      // public func getNotBefore(): Time
+      strActual = jwtDecoder.getNotBefore().toString()
+      @Assert(strActual, t2.toString() )
+      try{
+        // public func getContentType(): String
+        strActual = jwtDecoder.getContentType()
+      }catch(e1:Exception){
+        println("e1 : ${e1}")
+        returnTag = 0
+      }
+      /* ################################################ */
+      // println("token : ${token}")
+      jwtBuilder.withHeader(HashMap<String, Any>([(HeaderParams.CONTENT_TYPE,"content_type:jwt")])) //设置CONTENT_TYPE
+      jwtStr = jwtBuilder.sign(Algorithm.none()) 
+      let jwtDecoder2 = JWTDecoder(jwtStr)
+      try{
+        strActual = jwtDecoder2.getContentType()
+      }catch(e2:Exception){
+        // e2.printStackTrace()
+        returnTag = 1
+      }
+      @Assert(strActual, "content_type:jwt") 
+      @Assert(returnTag, 0) 
+
+    }
+
+    @TestCase
+    func testWithNotBefore_002():Unit{ 
+      returnTag = -1
+      let jwtBuilder :Builder = JWT.create()
+      jwtBuilder.withHeader(map_Bool)
+      jwtBuilder.withAudience(Array<String>(["2021-08-05T21:08:04+08:00"]))
+      jwtBuilder.withNotBefore(t3)
+      jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin")) 
+      let jwtDecoder = JWTDecoder(jwtStr)
+      token = jwtDecoder.getToken() 
+      @Assert(token,jwtStr)
+      try{
+          strActual = jwtDecoder.getIssuedAt().toString()  //未设置 获取抛异常
+      }catch(e1:Exception){
+        // println("e1 : ${e1}")
+        @Assert(e1.toString(), "NoneValueException")
+        returnTag = 0
+      }
+      strActual = jwtDecoder.getNotBefore().toString()
+      @Assert(strActual, t3.toString() )
+      
+      /* ################################################ */
+      token = "CnsKICAiazEiOiAidjEiLAogICJraWQiOiAiYWxnb3JpdGhtLmdldFNpZ25pbmdLZXlJZCgpIiwKICAiYWxnIjogIm5vbmUiLAogICJ0eXAiOiAiSldUIiwKICAiY3R5IjogIkpXVCIKfQo.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAxNjczODM1MDkwLAogICJuYmYiOiAxNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiaW50NjQiOiA2NCwKICAiZmxvYXQ2NCI6IDMuMTQwMDAwLAogICJTdHJpbmciOiAiYWJhYWJhIiwKICAidGltZSI6IDE2NzM4NTAwMDAsCiAgIm1hcCI6IHsKICAgICJtazIiOiAibXYyIgogIH0sCiAgImxpc3QiOiBbCiAgICA1Ni41MTAwMDAsCiAgICA0MS45NjAwMDAKICBdLAogICJudWxsIjogbnVsbCwKICAiYXJyYXlzdHJpbmciOiBbCiAgICAiYXN0cjEiLAogICAgImFzdHIyIgogIF0sCiAgImFycmF5aW50IjogWwogICAgNjg0LAogICAgNjQKICBdLAogICJwazEiOiAicHYxIiwKICAicGsyIjogInB2MiIKfQ==."
+      let jwtDecoder2 = JWT.decode(token)// public static func decode(token: String): DecodedJWT
+      try{
+        strActual = jwtDecoder2.getContentType()
+      }catch(e2:Exception){
+        // println("e2 : ${e2}")
+        returnTag = 1
+      }
+      @Assert(strActual, "JWT") 
+      @Assert(returnTag, 0) 
+    }
+
+}
