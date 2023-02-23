@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.36.4-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-89.6%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-91.1%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -64,7 +64,7 @@
 
 ```shell
 # 使用cpm编译
-# jwt依赖cryptocj, 需要在module.json中requires项配置cryptocj目录(需预编译cryptocj)
+# jwt依赖cryptocj, 需要在module.json中requires项配置cryptocj源码目录
 # 然后在jwt目录build
 cpm build
 ```
