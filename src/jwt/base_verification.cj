@@ -23,7 +23,7 @@ public class BaseVerification <: Verification {
         this.time = Time(0, 0)
     }
 
-    public func getExpectedChecks(): ArrayList<ExpectedCheckHolder> {
+    private func getExpectedChecks(): ArrayList<ExpectedCheckHolder> {
         return expectedChecks
     }
 

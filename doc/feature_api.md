@@ -460,11 +460,6 @@ public class BaseJWTVerifier <: JWTVerifier {
  */
 public class BaseVerification <: Verification {
     /*
-     * 返回异常数组
-     * @return ArrayList<ExpectedCheckHolder>
-     */
-    public func getExpectedChecks(): ArrayList<ExpectedCheckHolder>
-    /*
      * 校验部分接受者 Audience官方字段
      * @param audience 接受者名字
      * @return Verification
@@ -749,9 +744,7 @@ public abstract class Algorithm {
      * @param secret 秘钥
      * @return Algorithm 实例
      */    
-    public static func HMAC256(secret: Array<UInt8>): Algorithm {
-        return HMACAlgorithm("HS256", "HmacSHA256", secret)
-    }
+    public static func HMAC256(secret: Array<UInt8>): Algorithm 
     
     /*
      * 通过秘钥创建 HMAC384 算法对象
@@ -1063,7 +1056,7 @@ public type NodeType = JsonValue
 
     这些接口在内部流程中使用, 无需调用者操作, 也有可能随迭代修改其实现，请按需谨慎使用。
 
-### 主要接口
+### 接口
 
 #### Base64Util
 
