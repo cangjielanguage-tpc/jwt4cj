@@ -64,17 +64,11 @@
 
 ```shell
 # 使用cpm编译
-# jwt依赖cryptocj, 需要在module.json中requires项配置cryptocj源码目录
+# jwt依赖cryptocj, 需要在module.json中requires项配置cryptocj目录(cryptocj需要预编译)
 # 然后在jwt目录build
 cpm build
 ```
-```shell
-# 使用ci脚本编译
-# 引入 testJekins 包,保持原目录结构
-# 地址：https://gitee.com/HW-PLLab/testJekins 将 src 下 ci_test 放入 jwt 根目录下
-python3 ci_test/main.py build
-python3 ci_test/main.py test
-```
+
 ### 功能示例
 <p align="center">
 <img src="./doc/assets/jwtProcess.png" width="100%" >
