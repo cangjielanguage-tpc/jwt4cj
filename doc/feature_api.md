@@ -1092,6 +1092,241 @@ public class Base64Util {
 }
 ```
 
+#### Algorithm
+
+```cangjie
+
+public abstract class Algorithm {
+    /*
+     * 获取签名键的id
+     * @param 
+     * @return String 字符串
+     */
+    public open func getSigningKeyId(): String
+
+    /*
+     * 获取 name
+     * @param 
+     * @return String 字符串
+     */
+    public func getName(): String
+
+    /*
+     * toString 方法
+     * @param 
+     * @return String 字符串
+     */
+    public func toString(): String
+
+    /*
+     * 抽象类的抽象验证方法
+     * @param 传入一个 jwt 解析器
+     * @return
+     */
+    public func verify(jwt: DecodedJWT): Unit
+
+    /*
+     * 抽象类的抽象签名方法
+     * @param 传入header部分与payload部分
+     * @return 签名值
+     */
+    public open func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8>
+
+    /*
+     * 抽象类的抽象签名方法
+     * @param 传入明文部分
+     * @return 签名值
+     */
+    public func sign(contentBytes: Array<UInt8>): Array<UInt8>
+}
+```
+
+#### AlgorithmMismatchException
+
+```cangjie
+
+public class AlgorithmMismatchException {
+
+    /*
+     * AlgorithmMismatchException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### AlgorithmMismatchException
+
+```cangjie
+
+public class IncorrectClaimException {
+
+    /*
+     * IncorrectClaimException 的有参构造
+     * @param message String 类型字符串
+     * @param claimName String 类型字符串
+     * @param claim Claim 类对象
+     */
+    public init(message: String, claimName: String, claim: Claim)
+
+    /*
+     * 获取 getClaimName
+     * @return String 类型字符串
+     */
+    public func getClaimName(): String
+
+    /*
+     * 获取 getClaimValue
+     * @return Claim 类型
+     */
+    public func getClaimValue(): Claim
+}
+```
+
+#### InvalidClaimException
+
+```cangjie
+
+public class InvalidClaimException {
+
+    /*
+     * InvalidClaimException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### JWTCreationException
+
+```cangjie
+
+public class JWTCreationException {
+
+    /*
+     * JWTCreationException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### JWTDecodeException
+
+```cangjie
+
+public class JWTDecodeException {
+
+    /*
+     * JWTDecodeException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### JWTValidationException
+
+```cangjie
+
+public class JWTValidationException {
+
+    /*
+     * JWTValidationException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### JWTVerificationException
+
+```cangjie
+
+public class JWTVerificationException {
+
+    /*
+     * JWTVerificationException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### MissingClaimException
+
+```cangjie
+
+public class MissingClaimException {
+
+    /*
+     * MissingClaimException 的无参构造
+     */
+    public init()
+
+    /*
+     * MissingClaimException 的有参构造
+     * @param claimName String 类型字符串
+     */
+    public init(claimName: String)
+
+    /*
+     * 获取 getClaimName
+     * @return String 类型字符串
+     */
+    public func getClaimName(): String
+}
+```
+
+#### SignatureGenerationException
+
+```cangjie
+
+public class SignatureGenerationException {
+
+    /*
+     * SignatureGenerationException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### SignatureVerificationException
+
+```cangjie
+
+public class SignatureVerificationException {
+
+    /*
+     * SignatureVerificationException 的有参构造
+     * @param message String 类型字符串
+     */
+    public init(message: String)
+}
+```
+
+#### TokenExpiredException
+
+```cangjie
+
+public class TokenExpiredException {
+
+    /*
+     * TokenExpiredException 的有参构造
+     * @param message String 类型字符串
+     * @param time Time 类对象
+     */
+    public init(message: String, time: Time)
+
+    /*
+     * getExpiredOn 方法
+     * @return Time 类对象
+     */
+    public func getExpiredOn(): Time
+}
+```
+
 #### Header
 
 ```cangjie
