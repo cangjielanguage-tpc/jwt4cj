@@ -25,9 +25,9 @@ main(){
     
     println(Algorithm.none().getName())
     let rsaKey = RSAKeyProviderFileImpl("rsa_pri_key", "rsa_pub_key")
-    println(rsaKey.getPrivateKey())
-    println(rsaKey.getPublicKey())
-    let ecKey = RSAKeyProviderFileImpl("ec_pri_key", "ec_pub_key")
+    println(rsaKey.getPrivateKey().getKeyFilePath())
+    println(rsaKey.getPublicKey().getKeyFilePath())
+    let ecKey = ECDSAKeyProviderFileImpl("ec_pri_key", "ec_pub_key")
     println(ecKey.getPrivateKey())
     println(ecKey.getPublicKey())
     0

@@ -9,15 +9,15 @@ public abstract class Algorithm {
         this.description = description
     }
 
-    public static func RSA256(keyProvider: RSAKeyProviderFileImpl): Algorithm {
+    public static func RSA256(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
         return RSAAlgorithm("RS256", "SHA256withRSA", keyProvider)
     }
 
-    public static func RSA384(keyProvider: RSAKeyProviderFileImpl): Algorithm {
+    public static func RSA384(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
         return RSAAlgorithm("RS384", "SHA384withRSA", keyProvider)
     }
 
-    public static func RSA512(keyProvider: RSAKeyProviderFileImpl): Algorithm {
+    public static func RSA512(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
         return RSAAlgorithm("RS512", "SHA512withRSA", keyProvider)
     }
 
