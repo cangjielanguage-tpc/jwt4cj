@@ -712,25 +712,25 @@ main() {
 public abstract class Algorithm {
 
     /*
-     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA256 算法对象
+     * 通过 KeyProvider 实现类创建 RSA256 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
-    public static func RSA256(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    public static func RSA256(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm
     
     /*
-     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA384 算法对象
+     * 通过 KeyProvider 实现类创建 RSA384 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
-    public static func RSA384(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    public static func RSA384(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm
     
     /*
-     * 通过 RSAKeyProviderFileImpl 实现类创建 RSA512 算法对象
+     * 通过 KeyProvider 实现类创建 RSA512 算法对象
      * @param keyProvider
      * @return Algorithm 实例
      */    
-    public static func RSA512(keyProvider: RSAKeyProviderFileImpl): Algorithm
+    public static func RSA512(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm
     
     /*
      * 通过秘钥创建 HMAC256 算法对象

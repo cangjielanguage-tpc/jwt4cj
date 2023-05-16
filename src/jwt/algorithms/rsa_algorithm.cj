@@ -7,9 +7,9 @@ from cryptocj import sha384cj.*
 from cryptocj import sha512cj.*
 
 class RSAAlgorithm <: Algorithm {
-    private let keyProviderFile: RSAKeyProviderFileImpl
+    private let keyProviderFile: KeyProvider<KeyType,KeyType>
 
-    init(id: String, algorithm: String, keyProviderFile: RSAKeyProviderFileImpl) {
+    init(id: String, algorithm: String, keyProviderFile: KeyProvider<KeyType,KeyType>) {
         super(id, algorithm)
         this.keyProviderFile = keyProviderFile
     }
@@ -61,7 +61,7 @@ class RSAAlgorithm <: Algorithm {
         rsaTypeId: RsaTypeId
     ): Bool {
         var uchash = shaFunc(content)
-        let rsa: RSA = pemReadRsaPub(keyProviderFile.getPublicKey(), false, 1)
+        let rsa: RSA = pemReadRsaPub(keyProviderFile.getPublicKey().getKeyFilePath(), false, 1)
         let ret = rsaVerify(rsaTypeId, uchash, UInt32(uchash.size), signature, rsa)
         rsaFree(rsa)
         ret == 1
@@ -86,7 +86,7 @@ class RSAAlgorithm <: Algorithm {
         rsaTypeId: RsaTypeId
     ): Array<UInt8> {
         let uchash = shaFunc(content)
-        let rsa: RSA = pemReadRsaPri(keyProviderFile.getPrivateKey(), false)
+        let rsa: RSA = pemReadRsaPri(keyProviderFile.getPrivateKey().getKeyFilePath(), false)
         let (ret, signret) = rsaSign(rsaTypeId, uchash, UInt32(uchash.size), rsa)
         rsaFree(rsa)
         signret

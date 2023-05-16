@@ -23,5 +23,15 @@ public interface KeyProvider<U, R> {
      * @return the Private Key instance
      */
     func getPrivateKey(): R
+}
 
+public open class KeyType {
+    protected var keyFilePath: ?String = None
+    protected init() {}
+    public init(keyFilePath: String) {
+        this.keyFilePath = keyFilePath
+    }
+    public open func getKeyFilePath(): String {
+        return keyFilePath.getOrThrow()
+    }
 }
