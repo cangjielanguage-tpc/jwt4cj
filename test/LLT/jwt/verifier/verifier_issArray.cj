@@ -3,11 +3,11 @@
 from std import collection.*
 from std import time.*
 from encoding import json.*
-from jwt import jwt.algorithms.*
-from jwt import jwt.impl.*
-from jwt import jwt.interfaces.*
-from jwt import jwt.exception.*
-from jwt import jwt.*
+from jwt4cj import jwt.algorithms.*
+from jwt4cj import jwt.impl.*
+from jwt4cj import jwt.interfaces.*
+from jwt4cj import jwt.exception.*
+from jwt4cj import jwt.*
 
 
 // withExpiresAt 2023-01-16T13:44:50+08:00

@@ -3,7 +3,7 @@
 from std import collection.*
 from std import time.*
 from encoding import json.*
-from jwt import jwt.impl.*
+from jwt4cj import jwt.impl.*
 
 main(){
     let map = HashMap<String, Any>()

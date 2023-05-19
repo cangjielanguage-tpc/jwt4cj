@@ -2,7 +2,7 @@
 // EXEC: ./main
 from std import collection.*
 from encoding import json.*
-from jwt import jwt.impl.*
+from jwt4cj import jwt.impl.*
 
 main(){
 //     let jsonStr = ###"{
