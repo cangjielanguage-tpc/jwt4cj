@@ -1,11 +1,11 @@
-// 3rd_party_lib:jwt/build/jwt
-// 3rd_party_lib:jwt/ci_lib/cryptocj
+// 3rd_party_lib:jwt4cj/build/jwt4cj
+// 3rd_party_lib:jwt4cj/ci_lib/cryptocj
 
-from jwt import jwt.algorithms.*
-from jwt import jwt.utils.*
-from jwt import jwt.interfaces.*
-from jwt import jwt.impl.*
-from jwt import jwt.*
+from jwt4cj import jwt.algorithms.*
+from jwt4cj import jwt.utils.*
+from jwt4cj import jwt.interfaces.*
+from jwt4cj import jwt.impl.*
+from jwt4cj import jwt.*
 
 from std import collection.*
 from std import time.*

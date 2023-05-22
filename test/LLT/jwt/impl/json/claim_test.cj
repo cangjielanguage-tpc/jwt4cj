@@ -2,8 +2,8 @@
 // EXEC: ./main
 from std import collection.*
 from encoding import json.*
-from jwt import jwt.impl.json.*
-from jwt import jwt.exception.*
+from jwt4cj import jwt.impl.json.*
+from jwt4cj import jwt.exception.*
 
 main() {
     try {

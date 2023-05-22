@@ -3,9 +3,9 @@
 from std import collection.*
 from std import time.*
 from encoding import json.*
-from jwt import jwt.algorithms.*
-from jwt import jwt.impl.*
-from jwt import jwt.*
+from jwt4cj import jwt.algorithms.*
+from jwt4cj import jwt.impl.*
+from jwt4cj import jwt.*
 
 main() {
     if (!f1()) {

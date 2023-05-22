@@ -1,6 +1,6 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from jwt import jwt.utils.*
+from jwt4cj import jwt.utils.*
 
 main() {
     let header = ###"

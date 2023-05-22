@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 from std import collection.*
-from jwt import jwt.algorithms.*
+from jwt4cj import jwt.algorithms.*
 from encoding import hex.*
 from cryptocj import hmaccj.*
 
