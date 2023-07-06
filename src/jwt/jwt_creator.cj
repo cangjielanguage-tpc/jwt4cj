@@ -115,7 +115,7 @@ public class Builder {
      * @param expiresAt the Expires At value.
      * @return this same Builder instance.
      */
-    public func withExpiresAt(expiresAt: Time): Builder {
+    public func withExpiresAt(expiresAt: DateTime): Builder {
         addClaim(RegisteredClaims.EXPIRES_AT, expiresAt)
         return this
     }
@@ -127,7 +127,7 @@ public class Builder {
      * @param notBefore the Not Before value.
      * @return this same Builder instance.
      */
-    public func withNotBefore(notBefore: Time): Builder {
+    public func withNotBefore(notBefore: DateTime): Builder {
         addClaim(RegisteredClaims.NOT_BEFORE, notBefore)
         return this
     }
@@ -139,7 +139,7 @@ public class Builder {
      * @param issuedAt the Issued At value.
      * @return this same Builder instance.
      */
-    public func withIssuedAt(issuedAt: Time): Builder {
+    public func withIssuedAt(issuedAt: DateTime): Builder {
         addClaim(RegisteredClaims.ISSUED_AT, issuedAt)
         return this
     }
@@ -211,7 +211,7 @@ public class Builder {
      * @param value the Claim's value.
      * @return this same Builder instance.
      */
-    public func withClaim(name: String, value: Time): Builder {
+    public func withClaim(name: String, value: DateTime): Builder {
         addClaim(name, value)
         return this
     }
@@ -393,7 +393,7 @@ public class Builder {
             case value: Float64 =>
                 println("got Float64");
                 true
-            case value: Time =>
+            case value: DateTime =>
                 println("got Time");
                 true
             case value: String =>

@@ -55,8 +55,8 @@ public class JsonNodeClaim <: Claim {
         data.asString().getValue()
     }
 
-    public func asTime(): Time {
-        Time(data.asInt().getValue(), 0)
+    public func asTime(): DateTime {
+        DateTime.ofEpoch(second: data.asInt().getValue(), nanosecond: 0)
     }
 
     public func asArray(): Array<JsonValue> {

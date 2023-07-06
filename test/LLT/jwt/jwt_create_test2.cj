@@ -24,7 +24,7 @@ func f1() {
     let map: HashMap<String, Any> = HashMap()
     map.put("any", C())
     try {
-        let token = JWT.create().withClaim("map", map).sign(Algorithm.none())
+        JWT.create().withClaim("map", map).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {
         return true
     }
@@ -34,7 +34,7 @@ func f2() {
     let arr: ArrayList<Any> = ArrayList()
     arr.append(C())
     try {
-        let token = JWT.create().withClaim("arr", arr).sign(Algorithm.none())
+        JWT.create().withClaim("arr", arr).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {
         return true
     }
@@ -44,7 +44,7 @@ func f3() {
     let map: HashMap<String, Any> = HashMap()
     map.put("any", C())
     try {
-        let token = JWT.create().withPayload(map).sign(Algorithm.none())
+        JWT.create().withPayload(map).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {
         return true
     }

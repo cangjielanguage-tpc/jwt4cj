@@ -100,21 +100,21 @@ public class Builder{
     * @param expiresAt the Expires At value
     * @return Builder
     */
-    public func withExpiresAt(expiresAt: Time): Builder
+    public func withExpiresAt(expiresAt: DateTime): Builder
 
     /*
     * 添加Not Before ("nbf") claim到Payload
     * @param notBefore the Not Before value
     * @return Builder
     */
-    public func withNotBefore(notBefore: Time): Builder
+    public func withNotBefore(notBefore: DateTime): Builder
 
     /*
     * 添加发布时间到Payload
     * @param issuedAt the Issued At value
     * @return Builder
     */
-    public func withIssuedAt(issuedAt: Time): Builder
+    public func withIssuedAt(issuedAt: DateTime): Builder
 
     /*
     * 添加JWT Id ("jti") claim到Payload
@@ -161,7 +161,7 @@ public class Builder{
     * @param value the Claim's value
     * @return Builder
     */
-    public func withClaim(name: String, value: Time): Builder
+    public func withClaim(name: String, value: DateTime): Builder
 
     /*
     * 添加自定义Map值到Payload
@@ -239,16 +239,16 @@ main(){
         .withIssuer("issuer")
         .withSubject("subject")
         .withAudience(["aud1", "aud2"])
-        .withExpiresAt(Time(3673835050,0))
-        .withNotBefore(Time(1673835050,0))
-        .withIssuedAt(Time(1673835000,0))
+        .withExpiresAt(DateTime.ofEpoch(second: 3673835050, nanosecond: 0))
+        .withNotBefore(DateTime.ofEpoch(second: 1673835050, nanosecond: 0))
+        .withIssuedAt(DateTime.ofEpoch(second: 1673835050, nanosecond: 0))
         .withJWTId("jwtId")
         .withClaim("bool", true)
         .withClaim("ddd", "dfdddff")
         .withClaim("int64", 64)
         .withClaim("float64", 3.14)
         .withClaim("String", "abaaba")
-        .withClaim("time", Time(1673850000,0))
+        .withClaim("time", DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
         .withClaim("map", HashMap<String, Any>([("mk2","mv2")]))
         .withClaim("list", ArrayList<Any>([56.51,41.96]))
         .withNullClaim("null")
@@ -359,21 +359,21 @@ public class JWTDecoder <: DecodedJWT {
 
     /*
     * get payload.exp
-    * @return Time
+    * @return DateTime
     */
-    public func getExpiresAt(): Time
+    public func getExpiresAt(): DateTime
 
     /*
     * get payload.nbf
-    * @return Time
+    * @return DateTime
     */
-    public func getNotBefore(): Time
+    public func getNotBefore(): DateTime
 
     /*
     * get payload.iat
-    * @return Time
+    * @return DateTime
     */
-    public func getIssuedAt(): Time
+    public func getIssuedAt(): DateTime
 
     /*
     * get payload.jti
@@ -609,13 +609,13 @@ public class BaseVerification <: Verification {
      */
     public func withClaim(name: String, value: String): Verification
     /*
-     * verify Claim Time
+     * verify Claim DateTime
      * @param Claim name
      * @param Claim value
      * @return Verification
      * @throw MissingClaimException claim不存在异常
      */
-    public func withClaim(name: String, value: Time): Verification
+    public func withClaim(name: String, value: DateTime): Verification
     /*
      * 自定义校验规则
      * @param Claim name
@@ -668,7 +668,7 @@ main() {
     require.withClaim("String","abaaba")
            .withArrayClaim("arraystring",["astr1","astr2"])
            .withArrayClaim("arrayint", [684,64])
-    require.withClaim("time", Time(1673850000,0))
+    require.withClaim("time", DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
         .withClaim("bool", true)
         .withClaim("int64", 64)
         .withClaim("float64", 3.14)
@@ -1016,10 +1016,10 @@ public interface Claim <: ToString {
      */
     func asString(): String
     /*
-     * 转成Time
-     * @return Time
+     * DateTime
+     * @return DateTime
      */
-    func asTime(): Time
+    func asTime(): DateTime
     /*
      * 转成Array
      * @return Array<NodeType>
@@ -1315,15 +1315,15 @@ public class TokenExpiredException {
     /*
      * TokenExpiredException 的有参构造
      * @param message String 类型字符串
-     * @param time Time 类对象
+     * @param time DateTime 类对象
      */
-    public init(message: String, time: Time)
+    public init(message: String, time: DateTime)
 
     /*
      * getExpiredOn 方法
-     * @return Time 类对象
+     * @return DateTime 类对象
      */
-    public func getExpiredOn(): Time
+    public func getExpiredOn(): DateTime
 }
 ```
 
@@ -1387,19 +1387,19 @@ public interface Payload {
     func getAudience(): ArrayList<String>
     /*
      * 获取超时
-     * @return Time
+     * @return DateTime
      */
-    func getExpiresAt(): Time
+    func getExpiresAt(): DateTime
     /*
      * 获取Not Before
-     * @return Time
+     * @return DateTime
      */
-    func getNotBefore(): Time
+    func getNotBefore(): DateTime
     /*
      * 获取发布时间
-     * @return Time
+     * @return DateTime
      */
-    func getIssuedAt(): Time
+    func getIssuedAt(): DateTime
     /*
      * 获取jwtid
      * @return String

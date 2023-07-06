@@ -186,7 +186,7 @@ public interface Verification {
      * @return this same Verification instance.
      * @throws IllegalArgumentException the name is None.
      */
-    func withClaim(name: String, value: Time): Verification
+    func withClaim(name: String, value: DateTime): Verification
 
     /*
      * Verifies whether the claim contain at least the given String items.

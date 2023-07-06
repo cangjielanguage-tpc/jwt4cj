@@ -13,7 +13,7 @@ let token =
 
 main() {
     try {
-        let decoder = JWT.decode(token)
+        JWT.decode(token)
     } catch (e: JWTDecodeException) {
         if (e.message == "The input is not a valid base 64 encoded string.") {
             return 0

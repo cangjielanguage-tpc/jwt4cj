@@ -61,7 +61,7 @@ public interface Claim <: ToString {
      *
      * @return the value as a Date or None.
      */
-    func asTime(): Time
+    func asTime(): DateTime
 
     /*
      * Get this Claim as an Array .

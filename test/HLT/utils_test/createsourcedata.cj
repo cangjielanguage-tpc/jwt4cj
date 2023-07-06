@@ -27,11 +27,11 @@ public class SourceData{
     let b1:Bool = true
     let b2:Bool = 1 > 3
 
-    var t1:Time = Time.now()
-    var t2 = Time(2023, Month.August, 5)
+    var t1:DateTime = DateTime.now()
+    var t2 = DateTime.of(year: 2023, month: Month.August, dayOfMonth: 5)
     var customPtn = "yyyy/MM/dd HH:mm:ss ZZZZ"
-    var t3 = Time.parse("2021-08-05T21:08:04+08:00")
-    var t4 = Time.parse("2021/08/05 21:08:04 +10:00", customPtn)
+    var t3 = DateTime.parse("2021-08-05T21:08:04+08:00")
+    var t4 = DateTime.parse("2021/08/05 21:08:04 +10:00", customPtn)
 
     var jsonStr1 = ##"[true,"kjjjke\"eed",{"sdfd":"ggggg","eeeee":[341,false,
                     {"nnnn":55.87}]},3422,22.341,false,[22,22.22,true,"ddd"],43]"##

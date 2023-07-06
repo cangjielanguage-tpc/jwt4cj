@@ -56,15 +56,6 @@ main(){
 //     if(payload.getAudience() != ArrayList(["Audience1"])){
 //         return 9
 //     }
-//     if(payload.getExpiresAt() != Time(1673835090,0)){
-//         return 10
-//     }
-//     if(payload.getNotBefore() != Time(1673830000,0)){
-//         return 11
-//     }
-//     if(payload.getIssuedAt() != Time(1673820000,0)){
-//         return 12
-//     }
 //     if(payload.getId() != "jwtid1"){
 //         return 13
 //     }

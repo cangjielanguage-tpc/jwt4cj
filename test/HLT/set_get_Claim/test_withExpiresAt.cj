@@ -20,10 +20,10 @@ from std import fs.*
 
 /**
   public static func create(): Builder
-  public func withExpiresAt(expiresAt: Time): Builder
+  public func withExpiresAt(expiresAt: DateTime): Builder
   public func sign(algorithm: Algorithm): String
   public func getToken(): String
-  public func getExpiresAt(): Time
+  public func getExpiresAt(): DateTime
 */
 
 @Test
@@ -38,12 +38,12 @@ public class JWTTest {
     let entry:(ArrayList<String>,ArrayList<Any>) = ins_1.getMapEntry(map_String)
 
     var token = ""
-    var t1:Time = Time.now()
-    var t2 = Time(2023, Month.August, 5)
+    var t1:DateTime = DateTime.now()
+    var t2 = DateTime.of(year: 2023, month: Month.August, dayOfMonth: 5)
     // var customPtn = "yyyy/MM/dd HH:mm:ss ZZZZ"
     var customPtn = "yyyy/MM/dd HH:mm:ss ZZZZ"
-    var t3 = Time.parse("2021-08-05T21:08:04+08:00")
-    var t4 = Time.parse("2023/08/05 21:08:04 +08:00", customPtn)
+    var t3 = DateTime.parse("2021-08-05T21:08:04+08:00")
+    var t4 = DateTime.parse("2023/08/05 21:08:04 +08:00", customPtn)
 
     @TestCase
     func testWithExpiresAt_001():Unit{
@@ -51,7 +51,7 @@ public class JWTTest {
       let jwtBuilder :Builder = JWT.create()
       jwtBuilder.withKeyId(entry[0][1])//中文字符
       jwtBuilder.withAudience(ins_1.convertArrAnyToArrString(arr_Str1))
-      // public func withExpiresAt(expiresAt: Time): Builder
+      // public func withExpiresAt(expiresAt: DateTime): Builder
       jwtBuilder.withExpiresAt(t2) // 2023-08-05T00:00:00+08:00
       jwtStr = jwtBuilder.sign(Algorithm.none()) 
       let jwtDecoder = JWTDecoder(jwtStr)
@@ -59,7 +59,7 @@ public class JWTTest {
       if(token != jwtStr){
         returnTag = 1
       }
-      // public func getExpiresAt(): Time
+      // public func getExpiresAt(): DateTime
       strActual = jwtDecoder.getExpiresAt().toString()
       // println("strActual : ${strActual}")
       @Assert(strActual, t2.toString() )

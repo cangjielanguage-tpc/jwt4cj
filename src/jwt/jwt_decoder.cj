@@ -78,15 +78,15 @@ public class JWTDecoder <: DecodedJWT {
         payload.getAudience()
     }
 
-    public func getExpiresAt(): Time {
+    public func getExpiresAt(): DateTime {
         payload.getExpiresAt()
     }
 
-    public func getNotBefore(): Time {
+    public func getNotBefore(): DateTime {
         payload.getNotBefore()
     }
 
-    public func getIssuedAt(): Time {
+    public func getIssuedAt(): DateTime {
         payload.getIssuedAt()
     }
 

@@ -20,7 +20,7 @@ let str2jv: (String) -> JsonValue = {value => JsonString(value)}
 let bool2jv: (Bool) -> JsonValue = {value => JsonBool(value)}
 let int2jv: (Int64) -> JsonValue = {value => JsonInt(value)}
 let float2jv: (Float64) -> JsonValue = {value => JsonFloat(value)}
-let time2jv: (Time) -> JsonValue = {value => JsonInt(value.unixTimeStamp().seconds())}
+let time2jv: (DateTime) -> JsonValue = {value => JsonInt(value.toUnixTimeStamp().toSeconds())}
 
 let jv2arr = {
     value: JsonValue, arr: JsonArray =>
@@ -39,18 +39,18 @@ func parse(value: Any): JsonValue {
         case value: Int64 => int2jv(value)
         case value: Float64 => float2jv(value)
         case value: String => str2jv(value)
-        case value: Time => time2jv(value)
+        case value: DateTime => time2jv(value)
         case value: Array<Bool> => value |> map(bool2jv) |> reduce(JsonArray(), jv2arr)
         case value: Array<Int64> => value |> map(int2jv) |> reduce(JsonArray(), jv2arr)
         case value: Array<Float64> => value |> map(float2jv) |> reduce(JsonArray(), jv2arr)
         case value: Array<String> => value |> map(str2jv) |> reduce(JsonArray(), jv2arr)
-        case value: Array<Time> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
+        case value: Array<DateTime> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
         case value: Array<Any> => value |> map(parse) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Bool> => value |> map(bool2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Int64> => value |> map(int2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Float64> => value |> map(float2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<String> => value |> map(str2jv) |> reduce(JsonArray(), jv2arr)
-        case value: ArrayList<Time> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
+        case value: ArrayList<DateTime> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Any> => value |> map(parse) |> reduce(JsonArray(), jv2arr)
         case value: Map<String, Any> =>
             value |> map {kv: (String, Any) => (kv[0], parse(kv[1]))}

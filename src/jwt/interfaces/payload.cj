@@ -2,7 +2,7 @@ package jwt.interfaces
 
 from std import collection.ArrayList
 from std import collection.Map
-from std import time.Time
+from std import time.*
 
 /*
  * The Payload class represents the 2nd part of the JWT, where the Payload value is held.
@@ -34,21 +34,21 @@ public interface Payload {
      *
      * @return the Expiration Time value or None.
      */
-    func getExpiresAt(): Time
+    func getExpiresAt(): DateTime
 
     /*
      * Get the value of the "nbf" claim, or None if it's not available.
      *
      * @return the Not Before value or None.
      */
-    func getNotBefore(): Time
+    func getNotBefore(): DateTime
 
     /*
      * Get the value of the "iat" claim, or None if it's not available.
      *
      * @return the Issued At value or None.
      */
-    func getIssuedAt(): Time
+    func getIssuedAt(): DateTime
 
     /*
      * Get the value of the "jti" claim, or None if it's not available.

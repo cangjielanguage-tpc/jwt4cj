@@ -31,7 +31,7 @@ public open class Deserializer {
         }
     }
 
-    protected func asTime(key: String, map: Map<String, Claim>): ?Time {
+    protected func asTime(key: String, map: Map<String, Claim>): ?DateTime {
         try {
             map.get(key)?.asTime()
         } catch (e: JsonException) {

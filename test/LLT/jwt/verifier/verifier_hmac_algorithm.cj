@@ -42,5 +42,4 @@ main() {
   } catch (e: Exception){
     return 1
   } 
-  0
 }
