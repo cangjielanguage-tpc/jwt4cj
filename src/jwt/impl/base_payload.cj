@@ -1,6 +1,6 @@
 package jwt.impl
 
-from std import time.Time
+from std import time.*
 from std import collection.ArrayList
 import jwt.interfaces.Claim
 import jwt.interfaces.Header
@@ -10,9 +10,9 @@ class BasePayload <: Payload {
     private let issuer: ?String
     private let subject: ?String
     private let audience: ?ArrayList<String>
-    private let expiresAt: ?Time
-    private let notBefore: ?Time
-    private let issuedAt: ?Time
+    private let expiresAt: ?DateTime
+    private let notBefore: ?DateTime
+    private let issuedAt: ?DateTime
     private let jwtId: ?String
     private let tree: Map<String, Claim>
 
@@ -20,9 +20,9 @@ class BasePayload <: Payload {
         issuer: ?String,
         subject: ?String,
         audience: ?ArrayList<String>,
-        expiresAt: ?Time,
-        notBefore: ?Time,
-        issuedAt: ?Time,
+        expiresAt: ?DateTime,
+        notBefore: ?DateTime,
+        issuedAt: ?DateTime,
         jwtId: ?String,
         tree: Map<String, Claim>
     ) {
@@ -48,15 +48,15 @@ class BasePayload <: Payload {
         audience.getOrThrow()
     }
 
-    public func getExpiresAt(): Time {
+    public func getExpiresAt(): DateTime {
         expiresAt.getOrThrow()
     }
 
-    public func getNotBefore(): Time {
+    public func getNotBefore(): DateTime {
         notBefore.getOrThrow()
     }
 
-    public func getIssuedAt(): Time {
+    public func getIssuedAt(): DateTime {
         issuedAt.getOrThrow()
     }
 

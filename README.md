@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.37.2-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.39.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-91.1%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -89,16 +89,16 @@ main(){
         .withIssuer("issuer")
         .withSubject("subject")
         .withAudience(["aud1", "aud2"])
-        .withExpiresAt(Time(3673835050,0))
-        .withNotBefore(Time(1673835050,0))
-        .withIssuedAt(Time(1673835000,0))
+        .withExpiresAt(DateTime.ofEpoch(second: 3673835050, nanosecond: 0))
+        .withNotBefore(DateTime.ofEpoch(second: 1673835050, nanosecond: 0))
+        .withIssuedAt(DateTime.ofEpoch(second: 1673835050, nanosecond: 0))
         .withJWTId("jwtId")
         .withClaim("bool", true)
         .withClaim("ddd", "dfdddff")
         .withClaim("int64", 64)
         .withClaim("float64", 3.14)
         .withClaim("String", "abaaba")
-        .withClaim("time", Time(1673850000,0))
+        .withClaim("time", DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
         .withClaim("map", HashMap<String, Any>([("mk2","mv2")]))
         .withClaim("list", ArrayList<Any>([56.51,41.96]))
         .withNullClaim("null")
@@ -131,9 +131,9 @@ main() {
     println(decoder.getIssuer())                // issuer
     println(decoder.getSubject())               // subject
     println(decoder.getAudience().size)         // 2
-    println(decoder.getExpiresAt())             // Time(1673835090,0))
-    println(decoder.getNotBefore())             // Time(1673835050,0))
-    println(decoder.getIssuedAt())              // Time(1673835000,0))
+    println(decoder.getExpiresAt())             // 
+    println(decoder.getNotBefore())             // 
+    println(decoder.getIssuedAt())              // 
     println(decoder.getId())                    // jwtId
     println(decoder.getClaim("bool").asBool())  // true
     println(decoder.getClaims().size)           // 19
@@ -169,7 +169,7 @@ main() {
         require.withClaim("String","abaaba")
             .withArrayClaim("arraystring",["astr1","astr2"])
             .withArrayClaim("arrayint", [684,64])
-            .withClaim("time", Time(1673850000,0))
+            .withClaim("time", DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
             .withClaim("bool", true)
             .withClaim("int64", 64)
             .withClaim("float64", 3.14)

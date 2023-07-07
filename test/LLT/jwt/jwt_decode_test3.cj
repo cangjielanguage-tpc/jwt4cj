@@ -18,7 +18,7 @@ main() {
     let payloadB64 = Base64Util.urlEncode(payload)
     let token = "${headerB64}.${payloadB64}."
     try {
-        let decoder = JWT.decode(token)
+        JWT.decode(token)
     } catch (e: JWTDecodeException) {
         println(e.message)
         if (e.message == "The string '${wrong}' doesn't have a valid JSON format.") {

@@ -13,14 +13,14 @@ public class BaseVerification <: Verification {
     private var defaultLeeway: Int64
     private var customLeeways: HashMap<String, Int64>
     private var ignoreIssuedAt1: Bool = false;
-    private var time: Time
+    private var time: DateTime
 
     init(algorithm: Algorithm) {
         this.algorithm = algorithm
         this.expectedChecks = ArrayList()
         this.customLeeways = HashMap()
         this.defaultLeeway = 0
-        this.time = Time(0, 0)
+        this.time = DateTime.ofEpoch(second: 0, nanosecond: 0)
     }
 
     private func getExpectedChecks(): ArrayList<ExpectedCheckHolder> {
@@ -219,7 +219,7 @@ public class BaseVerification <: Verification {
         return this
     }
 
-    public func withClaim(name: String, value: Time): Verification { // 比较时间
+    public func withClaim(name: String, value: DateTime): Verification { // 比较时间
         // Since date-time claims are serialized as epoch seconds,
         // we need to compare them with only seconds-granularity
         let fun = extractFun({claim: Claim => value == claim.asTime()})
@@ -247,10 +247,10 @@ public class BaseVerification <: Verification {
     }
 
     public func build(): JWTVerifier {
-        return this.build(Time.now());
+        return this.build(DateTime.now());
     }
 
-    private func build(time: Time): JWTVerifier {
+    private func build(time: DateTime): JWTVerifier {
         this.time = time
         addMandatoryClaimChecks();
         return BaseJWTVerifier(algorithm, expectedChecks);
@@ -332,8 +332,8 @@ public class BaseVerification <: Verification {
             return true
         }
 
-        var claimVal: Time = claim.asTime();
-        var now: Time = time
+        var claimVal: DateTime = claim.asTime();
+        var now: DateTime = time
         var isValid: Bool
         if (shouldBeFuture) {
             isValid = assertInstantIsFuture(claimVal, leeway, now)
@@ -351,13 +351,13 @@ public class BaseVerification <: Verification {
         return true;
     }
 
-    private func assertInstantIsFuture(claimVal: Time, leeway: Int64, now: Time): Bool {
-        var between = Duration.second(leeway)
+    private func assertInstantIsFuture(claimVal: DateTime, leeway: Int64, now: DateTime): Bool {
+        var between = Duration.second * leeway
         return !((now - between) > claimVal)
     }
 
-    private func assertInstantIsPast(claimVal: Time, leeway: Int64, now: Time): Bool {
-        var between = Duration.second(leeway)
+    private func assertInstantIsPast(claimVal: DateTime, leeway: Int64, now: DateTime): Bool {
+        var between = Duration.second * leeway
         return !((now + between) < claimVal)
     }
 

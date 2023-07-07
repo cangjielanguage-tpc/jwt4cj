@@ -98,13 +98,13 @@ main() {
     if (decoder.getAudience().size != 2) {
         return 11
     }
-    if (decoder.getExpiresAt() != Time(1673835090,0)) {
+    if (decoder.getExpiresAt() != DateTime.ofEpoch(second: 1673835090, nanosecond: 0)) {
         return 12
     }
-    if (decoder.getNotBefore() != Time(1673835050,0)) {
+    if (decoder.getNotBefore() != DateTime.ofEpoch(second: 1673835050, nanosecond: 0)) {
         return 13
     }
-    if (decoder.getIssuedAt() != Time(1673835000,0)) {
+    if (decoder.getIssuedAt() != DateTime.ofEpoch(second: 1673835000, nanosecond: 0)) {
         return 14
     }
     if (decoder.getId() != "jwtId") {

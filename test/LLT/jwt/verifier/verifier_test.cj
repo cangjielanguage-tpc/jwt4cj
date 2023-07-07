@@ -19,7 +19,7 @@ main() {
     require.withClaim("String","abaaba")
            .withArrayClaim("arraystring",["astr1","astr2"])
            .withArrayClaim("arrayint", [684,64])
-    require.withClaim("time", Time(1673850000,0))
+    require.withClaim("time", DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
         .withClaim("bool", true)
         .withClaim("int64", 64)
         .withClaim("float64", 3.14)
@@ -45,5 +45,4 @@ main() {
    catch(e: Exception) {
     return 3
   }
-   0
 }

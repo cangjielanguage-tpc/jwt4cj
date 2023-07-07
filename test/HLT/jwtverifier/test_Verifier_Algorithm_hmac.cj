@@ -87,7 +87,7 @@ public class JWTTest {
         returnTag = 0
       }
       /* ############################################## */
-      jwtBuilder.withExpiresAt(Time(2022, Month.August, 5)) // 已过期
+      jwtBuilder.withExpiresAt(DateTime.of(year: 2022, month: Month.August, dayOfMonth: 5)) // 已过期
       jwtStr = jwtBuilder.sign(Algorithm.HMAC256("Algorithm.HMAC256"))
       try{
         require256.acceptExpiresAt(10)
@@ -146,7 +146,7 @@ public class JWTTest {
         jwtBuilder.withClaim("aud",ArrayList<Any>(["aud_1","aud_2","aud_3"]))
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")
-        jwtBuilder.withIssuedAt(Time.parse("2023-04-05T21:08:04+08:00"))
+        jwtBuilder.withIssuedAt(DateTime.parse("2023-04-05T21:08:04+08:00"))
         jwtStr = jwtBuilder.sign(Algorithm.HMAC512("Algorithm.HMAC384")) //签名算法与验签解密算法不一致
         /* ########################JWTVerifier########################### */
         try{

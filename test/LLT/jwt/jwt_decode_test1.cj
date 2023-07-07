@@ -13,7 +13,7 @@ let token =
 
 main() {
     try {
-        let decoder = JWT.decode(token)
+        JWT.decode(token)
     } catch (e: JWTDecodeException) {
         if (e.message == "The token was expected to have 3 parts, but got 2.") {
             return 0

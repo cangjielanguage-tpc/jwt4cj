@@ -34,5 +34,4 @@ main() {
     e.printStackTrace()
     return 3
   }
-   0
 }

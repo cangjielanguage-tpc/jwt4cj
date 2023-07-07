@@ -11,7 +11,7 @@ main(){
     map.put("Bool", true)
     map.put("Int64", 64)
     map.put("Float64", 3.14)
-    map.put("Time", Time(1673820000,0))
+    map.put("Time", DateTime.ofEpoch(second: 1673820000, nanosecond: 0))
     map.put("Array", JsonValue.fromStr("[true]"))
     map.put("Object", JsonValue.fromStr(##"{"k":"v"}"##))
 

@@ -31,7 +31,7 @@ main() {
   } catch (e2: TokenExpiredException){
     println(e2.getExpiredOn())
     println(e2.message)
-    if (e2.message == "The Token has expired on 2023-02-07T14:13:58+08:00.") {
+    if (e2.message == "The Token has expired on 2023-02-07T06:13:58Z.") {
       return 0
     }
   } 

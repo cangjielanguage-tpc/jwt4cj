@@ -57,7 +57,7 @@ public class JWTTest {
     func testVerifier_Algorithm_none_001():Unit{ 
         returnTag = 0
         let jwtBuilder :Builder = JWT.create()
-        var t1 = Time(2023, Month.August, 5)
+        var t1 = DateTime.of(year: 2023, month: Month.August, dayOfMonth: 5)
         ins_1.createClaim(jwtBuilder,arrStr_header,arrStr_payload)
         jwtBuilder.withClaim("k_Bool",true)
         jwtBuilder.withClaim("k_Int64",1265)
@@ -74,7 +74,7 @@ public class JWTTest {
         require.withClaim("k_Bool",true) // public func withClaim(name: String, value: Bool): Verification
         require.withClaim("k_Int64",1265) // public func withClaim(name: String, value: Int64): Verification
         require.withClaim("k_float64",-12.365) // public func withClaim(name: String, value: Float64): Verification 
-        require.withClaim("k_Time",t1) // public func withClaim(name: String, value: Time): Verification
+        require.withClaim("k_Time",t1)
         require.withAnyOfAudience(["aud1","\"Hello Cangjie Lang\"","你好仓颉！【】"]) // 合法子集
         require.withAudience(["\"Hello Cangjie Lang\"","你好仓颉！【】"]) // 合法子集
         require.withJWTId("withJWTId") // withJWTId

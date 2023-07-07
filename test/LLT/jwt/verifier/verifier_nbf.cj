@@ -25,10 +25,10 @@ main() {
 
     let builder: JWTVerifier = require.build()
     builder.verify(token)
-
+    
     return 1
   } catch (e: IncorrectClaimException){
-    if(e.message == "The Token can't be used before 2086-06-02T13:44:10+08:00."){
+    if(e.message == "The Token can't be used before 2086-06-02T05:44:10Z."){
       return 0
     }
   } 
