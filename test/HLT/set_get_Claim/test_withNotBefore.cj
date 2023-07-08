@@ -46,10 +46,10 @@ public class JWTTest {
 
     var token = ""
     var t1:DateTime = DateTime.now()
-    var t2 = DateTime.of(year: 2023, month: Month.August, dayOfMonth: 5)
-    var customPtn = "yyyy/MM/dd HH:mm:ss ZZZZ"
-    var t3 = DateTime.parse("2021-08-05T21:08:04+08:00")
-    var t4 = DateTime.parse("2022/02/16 21:08:04 +08:00", customPtn)
+    var t2 = DateTime.ofUTC(year: 2023, month: Month.August, dayOfMonth: 5)
+    var customPtn = "yyyy/MM/dd HH:mm:ss OO"
+    var t3 = DateTime.parse("2021-08-05T21:08:04Z")
+    var t4 = DateTime.parse("2022/02/16 21:08:04 +08:00", customPtn).inUTC()
 
     @TestCase
     func testWithNotBefore_001():Unit{
@@ -104,7 +104,7 @@ public class JWTTest {
       returnTag = -1
       let jwtBuilder :Builder = JWT.create()
       jwtBuilder.withHeader(map_Bool)
-      jwtBuilder.withAudience(Array<String>(["2021-08-05T21:08:04+08:00"]))
+      jwtBuilder.withAudience(Array<String>(["2021-08-05T21:08:04Z"]))
       jwtBuilder.withNotBefore(t3)
       jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin")) 
       let jwtDecoder = JWTDecoder(jwtStr)

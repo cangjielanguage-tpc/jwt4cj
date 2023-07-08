@@ -40,7 +40,6 @@ public class JWTTest {
     var jwtStr:String = ""
     var strActual:String = ""
     let ins_1:SourceData = SourceData()
-    let map_String:HashMap<String, Any> = ins_1.generateSourceDataWithString()[2]
 
     var arrStr_header = Array<String>(["k_header_1","v_header_1","kid","keyId","alg","none","typ","JWT","cty","JWT"]) 
     var arrStr_payload = Array<String>(["iss","iss_payload","sub","subject_payload","jti","jwtId_payload","k_String","abaaba"]) 
@@ -57,7 +56,7 @@ public class JWTTest {
     func testVerifier_Algorithm_none_001():Unit{ 
         returnTag = 0
         let jwtBuilder :Builder = JWT.create()
-        var t1 = DateTime.of(year: 2023, month: Month.August, dayOfMonth: 5)
+        var t1 = DateTime.ofUTC(year: 2023, month: Month.August, dayOfMonth: 5)
         ins_1.createClaim(jwtBuilder,arrStr_header,arrStr_payload)
         jwtBuilder.withClaim("k_Bool",true)
         jwtBuilder.withClaim("k_Int64",1265)
@@ -142,7 +141,6 @@ public class JWTTest {
     @TestCase
     func testVerifier_Algorithm_none_003():Unit{ 
         returnTag = -1
-        let jwtBuilder :Builder = JWT.create()
          let require = JWT.require(Algorithm.none())
         // withNotBefore 2086-06-02T13:44:50+08:00
         let token = "ewogICJrMSI6ICJ2MSIsCiAgImtpZCI6ICJrZXlJZCIsCiAgImFsZyI6ICJub25lIiwKICAidHlwIjogIkpXVCIKfQ.ewogICJpc3MiOiAiaXNzdWVyIiwKICAic3ViIjogInN1YmplY3QiLAogICJhdWQiOiBbCiAgICAiYXVkMSIsCiAgICAiYXVkMiIKICBdLAogICJleHAiOiAzNjczODM1MDkwLAogICJuYmYiOiAzNjczODM1MDUwLAogICJpYXQiOiAxNjczODM1MDAwLAogICJqdGkiOiAiand0SWQiLAogICJib29sIjogdHJ1ZSwKICAiaW50NjQiOiA2NCwKICAiZmxvYXQ2NCI6IDMuMTQwMDAwLAogICJTdHJpbmciOiAiYWJhYWJhIiwKICAidGltZSI6IDE2NzM4NTAwMDAsCiAgIm1hcCI6IHsKICAgICJtazIiOiAibXYyIgogIH0sCiAgImxpc3QiOiBbCiAgICA1Ni41MTAwMDAsCiAgICA0MS45NjAwMDAKICBdLAogICJudWxsIjogbnVsbCwKICAiYXJyYXlzdHJpbmciOiBbCiAgICAiYXN0cjEiLAogICAgImFzdHIyIgogIF0sCiAgImFycmF5aW50IjogWwogICAgNjg0LAogICAgNjQKICBdLAogICJwazEiOiAicHYxIiwKICAicGsyIjogInB2MiIKfQ."
@@ -155,7 +153,7 @@ public class JWTTest {
        try{
           let jwtDecoder:DecodedJWT = builder.verify(token)
       }catch(e1:Exception){
-       @Assert(e1.toString(), "Exception: The Token can't be used before 2086-06-02T13:44:10+08:00.") 
+       @Assert(e1.toString(), "Exception: The Token can't be used before 2086-06-02T05:44:10Z.") 
         returnTag = 0
       }
 		    @Assert(returnTag, 0) 
