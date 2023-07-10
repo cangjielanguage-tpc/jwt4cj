@@ -42,8 +42,8 @@ public class JWTTest {
     let arrStr:Array<String> = Array<String>([ins_1.s3,ins_1.s4,ins_1.s5,ins_1.s6,ins_1.s7,ins_1.s8,ins_1.s9,ins_1.s10])
 
     var token = ""
-    var t1:DateTime = DateTime.now()
-    var t2 = DateTime.parse("2021-08-05T21:08:04+08:00")
+    var t1:DateTime = DateTime.now().inUTC()
+    var t2 = DateTime.parse("2021-08-05T21:08:04Z")
 
     @TestCase
     func testWithClaimViaSingleType_Bool():Unit{ 

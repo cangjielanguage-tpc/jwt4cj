@@ -87,7 +87,7 @@ public class JWTTest {
         returnTag = 0
       }
       /* ############################################## */
-      jwtBuilder.withExpiresAt(DateTime.of(year: 2022, month: Month.August, dayOfMonth: 5)) // 已过期
+      jwtBuilder.withExpiresAt(DateTime.ofUTC(year: 2022, month: Month.August, dayOfMonth: 5)) // 已过期
       jwtStr = jwtBuilder.sign(Algorithm.HMAC256("Algorithm.HMAC256"))
       try{
         require256.acceptExpiresAt(10)
@@ -95,7 +95,7 @@ public class JWTTest {
         builder.verify(jwtStr)
         ()
       }catch(e3:Exception){
-        @Assert(e3.toString().contains("The Token has expired on 2022-08-05T00:00:00+08:00"), true)
+        @Assert(e3.toString().contains("The Token has expired on 2022-08-05T00:00:00Z."), true)
         returnTag = 0
       }
       @Assert(returnTag, 0) 
@@ -171,7 +171,7 @@ public class JWTTest {
           ()
       }catch(e1:Exception){
         // println("e1: ${e1}")
-        @Assert(e1.toString().contains("The Token can't be used before 2023-04-05T21:08:04+08:00"), true)
+        @Assert(e1.toString().contains("The Token can't be used before 2023-04-05T13:08:04Z"), true)
         returnTag = 0
       }
       @Assert(returnTag, 0) 
