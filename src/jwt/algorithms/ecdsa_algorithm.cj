@@ -1,10 +1,10 @@
 package jwt.algorithms
 
 from std import math.*
-from cryptocj import eccj.*
-from cryptocj import sha256cj.*
-from cryptocj import sha384cj.*
-from cryptocj import sha512cj.*
+from crypto4cj import eccj.*
+from crypto4cj import sha256cj.*
+from crypto4cj import sha384cj.*
+from crypto4cj import sha512cj.*
 
 class ECDSAAlgorithm <: Algorithm {
     private let keyProviderFile: ECDSAKeyProviderFileImpl

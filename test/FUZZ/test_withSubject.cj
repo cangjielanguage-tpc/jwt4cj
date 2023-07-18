@@ -1,5 +1,5 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
-// 3rd_party_lib:jwt4cj/ci_lib/cryptocj
+// 3rd_party_lib:jwt4cj/ci_lib/crypto4cj
 
 from jwt4cj import jwt.algorithms.*
 from jwt4cj import jwt.utils.*

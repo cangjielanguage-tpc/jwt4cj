@@ -702,7 +702,7 @@ main() {
 
 ### 介绍
 
-    以 cryptocj 三方库的 hmac、rsa、ecdsa 算法逻辑为基础，提供 jwt 的抽象入口类 algorithm ，使其能用于调用其他具体的算法
+    以 crypto4cj 三方库的 hmac、rsa、ecdsa 算法逻辑为基础，提供 jwt 的抽象入口类 algorithm ，使其能用于调用其他具体的算法
 
 ### 主要接口
 
@@ -813,7 +813,7 @@ public abstract class Algorithm {
 from std import collection.*
 from jwt import jwt.algorithms.*
 from jwt import jwt.utils.*
-from cryptocj import hmaccj.*
+from crypto4cj import hmaccj.*
 
 main() {
     let hmac1 = Algorithm.HMAC256("pri_key")
@@ -841,7 +841,7 @@ from jwt import jwt.algorithms.*
 from jwt import jwt.utils.*
 from jwt import jwt.interfaces.*
 from jwt import jwt.*
-from cryptocj import hmaccj.*
+from crypto4cj import hmaccj.*
 
 main() {
     let hmac = Algorithm.HMAC256("pri_key")
@@ -865,7 +865,7 @@ from jwt import jwt.interfaces.*
 from jwt import jwt.impl.*
 from jwt import jwt.*
 from jwt import jwt.utils.*
-from cryptocj import rsacj.*
+from crypto4cj import rsacj.*
 from std import os.posix.*
 from std import fs.*
 
@@ -901,8 +901,8 @@ main() {
 ```cangjie
 from std import fs.*
 from std import os.posix.*
-from cryptocj import rsacj.*
-from cryptocj import sha256cj.*
+from crypto4cj import rsacj.*
+from crypto4cj import sha256cj.*
 from jwt import jwt.algorithms.*
 from jwt import jwt.impl.*
 from jwt import jwt.interfaces.*
@@ -930,7 +930,7 @@ verify success
 #### Ecdsa512 算法签名验签示例
 
 ```cangjie
-from cryptocj import eccj.*
+from crypto4cj import eccj.*
 from std import os.posix.*
 from jwt import jwt.algorithms.*
 from jwt import jwt.interfaces.*

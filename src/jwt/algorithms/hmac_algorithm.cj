@@ -2,7 +2,7 @@ package jwt.algorithms
 
 import jwt.exception.*
 import jwt.interfaces.*
-from cryptocj import hmaccj.*
+from crypto4cj import hmaccj.*
 
 
 public class HMACAlgorithm <: Algorithm {

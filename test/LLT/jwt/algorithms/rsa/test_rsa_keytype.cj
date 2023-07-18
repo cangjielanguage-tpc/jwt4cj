@@ -7,7 +7,7 @@ from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.*
 from jwt4cj import jwt.utils.*
-from cryptocj import rsacj.*
+from crypto4cj import rsacj.*
 from std import os.posix.*
 from std import fs.*
 from std import unittest.*

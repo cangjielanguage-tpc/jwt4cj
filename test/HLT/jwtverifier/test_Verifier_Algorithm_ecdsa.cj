@@ -1,5 +1,5 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
-// 3rd_party_lib:jwt4cj/ci_lib/cryptocj
+// 3rd_party_lib:jwt4cj/ci_lib/crypto4cj
 //dependence:../utils_test/createsourcedata.cj
 //data_file:test_ecdsa_privateKey.pem
 //data_file:test_ecdsa_publicKey.pem
@@ -9,9 +9,9 @@ from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.exception.*
 from jwt4cj import jwt.*
-from cryptocj import hmaccj.*
-from cryptocj import eccj.*
-from cryptocj import rsacj.*
+from crypto4cj import hmaccj.*
+from crypto4cj import eccj.*
+from crypto4cj import rsacj.*
 from std import unittest.*
 from std import collection.*
 from std import time.*
