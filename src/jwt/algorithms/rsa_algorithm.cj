@@ -1,10 +1,10 @@
 package jwt.algorithms
 
 import jwt.utils.*
-from cryptocj import rsacj.*
-from cryptocj import sha256cj.*
-from cryptocj import sha384cj.*
-from cryptocj import sha512cj.*
+from crypto4cj import rsacj.*
+from crypto4cj import sha256cj.*
+from crypto4cj import sha384cj.*
+from crypto4cj import sha512cj.*
 
 class RSAAlgorithm <: Algorithm {
     private let keyProviderFile: KeyProvider<KeyType,KeyType>

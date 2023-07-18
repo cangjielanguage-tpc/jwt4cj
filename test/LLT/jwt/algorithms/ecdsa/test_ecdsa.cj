@@ -2,7 +2,7 @@
 // DEPENDENCE: test_ecdsa_publicKey.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from cryptocj import eccj.*
+from crypto4cj import eccj.*
 from std import os.posix.*
 from jwt4cj import jwt.algorithms.*
 from jwt4cj import jwt.interfaces.*

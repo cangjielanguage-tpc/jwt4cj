@@ -3,7 +3,7 @@
 from std import collection.*
 from jwt4cj import jwt.algorithms.*
 from jwt4cj import jwt.utils.*
-from cryptocj import hmaccj.*
+from crypto4cj import hmaccj.*
 
 main() {
     let hmac1 = Algorithm.HMAC256("pri_key")

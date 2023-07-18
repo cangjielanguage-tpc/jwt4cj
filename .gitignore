@@ -10,5 +10,8 @@ bin/
 *.gcda
 *.gcno
 output/
-cryptocj/
+crypto4cj/
 *.bc
+log/
+test/tmp
+test/report/

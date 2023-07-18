@@ -27,7 +27,7 @@
 
 ## 4 依赖分析 
     依赖
-    cangjie库：cryptocj
+    cangjie库：crypto4cj
 
 ## 5 特性设计文档
 
@@ -88,7 +88,7 @@
 #### 5.3.1 特性介绍
     使用HMAC/RSA/ECDSA加密算法和SHA256/SHA384/SHA512摘要算法
 #### 5.3.2 实现方案
-    使用cryptocj提供的签名验签api
+    使用crypto4cj提供的签名验签api
     Algorithm.hmac256() -> HMACAlgorithm    // 传入密钥信息, 创建算法对象
     Algorithm.hmac384() -> HMACAlgorithm    // 传入密钥信息, 创建算法对象
     Algorithm.hmac512() -> HMACAlgorithm    // 传入密钥信息, 创建算法对象

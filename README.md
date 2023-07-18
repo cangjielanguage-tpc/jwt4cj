@@ -64,8 +64,8 @@
 
 ```shell
 # 使用cpm编译
-# jwt依赖cryptocj, 需要在module.json中requires项配置cryptocj目录(cryptocj需要预编译)
-# 然后在jwt目录build
+# jwt4cj依赖crypto4cj, 需要在module.json中requires项配置crypto4cj目录
+# 然后在jwt4cj目录build
 cpm build
 ```
 
