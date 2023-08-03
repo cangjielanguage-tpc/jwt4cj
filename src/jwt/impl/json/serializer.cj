@@ -53,8 +53,10 @@ func parse(value: Any): JsonValue {
         case value: ArrayList<DateTime> => value |> map(time2jv) |> reduce(JsonArray(), jv2arr)
         case value: ArrayList<Any> => value |> map(parse) |> reduce(JsonArray(), jv2arr)
         case value: Map<String, Any> =>
-            value |> map {kv: (String, Any) => (kv[0], parse(kv[1]))}
-                |> reduce(JsonObject(), jv2obj)
+            value |> map {kv: (String, Any) => (kv[0], parse(kv[1]))} |> reduce(
+                JsonObject(),
+                jv2obj
+            )
         case value: JsonValue => value
         case _ => throw JWTCreationException("value type not support")
     }

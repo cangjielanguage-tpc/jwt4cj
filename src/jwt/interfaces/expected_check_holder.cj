@@ -10,7 +10,7 @@ public interface ExpectedCheckHolder {
      *
      * @return the claim name
      */
-    func getClaimName(): String;
+    func getClaimName(): String
 
     /**
      * The verification that will be run.
@@ -19,7 +19,7 @@ public interface ExpectedCheckHolder {
      * @param decodedJWT the JWT on which verification is done
      * @return whether the verification passed or not
      */
-    func verify(claim: Claim, decodedJWT: DecodedJWT): Bool;
+    func verify(claim: Claim, decodedJWT: DecodedJWT): Bool
 }
 
 

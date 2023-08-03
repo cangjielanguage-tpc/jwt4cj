@@ -13,13 +13,13 @@ public class Base64Util {
 
     public static func urlDecode2Byte(content: String): Array<UInt8> {
         var c = content.replace("-", "+").replace("_", "/")
-        for (i in 0..4 - c.size & 3) {c += '='}
+        for (_ in 0..4 - c.size & 3) {c += '='}
         return fromBase64String(c).getOrThrow()
     }
 
     public static func urlDecode(content: String): String {
         var c = content.replace("-", "+").replace("_", "/")
-        for (i in 0..4 - c.size & 3) {c += '='}
+        for (_ in 0..4 - c.size & 3) {c += '='}
         return String.fromUtf8(fromBase64String(c).getOrThrow())
     }
 }

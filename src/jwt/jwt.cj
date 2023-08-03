@@ -20,7 +20,7 @@ public class JWT {
     }
 
     public static func require(algorithm: Algorithm): Verification {
-        BaseJWTVerifier.builder(algorithm);
+        BaseJWTVerifier.builder(algorithm)
     }
 
     // public static func require(algorithm:Algorithm): Verification{}

@@ -1,5 +1,7 @@
 package jwt.algorithms
 
+from crypto4cj import digestcj.*
+
 public abstract class Algorithm {
     private var name: String
     private var description: String
@@ -9,15 +11,15 @@ public abstract class Algorithm {
         this.description = description
     }
 
-    public static func RSA256(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
+    public static func RSA256(keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>): Algorithm {
         return RSAAlgorithm("RS256", "SHA256withRSA", keyProvider)
     }
 
-    public static func RSA384(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
+    public static func RSA384(keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>): Algorithm {
         return RSAAlgorithm("RS384", "SHA384withRSA", keyProvider)
     }
 
-    public static func RSA512(keyProvider: KeyProvider<KeyType, KeyType>): Algorithm {
+    public static func RSA512(keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>): Algorithm {
         return RSAAlgorithm("RS512", "SHA512withRSA", keyProvider)
     }
 
@@ -99,22 +101,13 @@ func buildContent(header: Array<UInt8>, payload: Array<UInt8>): Array<UInt8> {
 }
 
 let sha256Func = {
-    content: Array<UInt8> =>
-    let uchash = Array<UInt8>(SHA256_DIGEST_LENGTH, item: 0)
-    sha256(content, uchash)
-    uchash
+    content: Array<UInt8> => Digest.digest(DigestType.sha256, content)
 }
 
 let sha384Func = {
-    content: Array<UInt8> =>
-    let uchash = Array<UInt8>(SHA384_DIGEST_LENGTH, item: 0)
-    sha384(content, uchash)
-    uchash
+    content: Array<UInt8> => Digest.digest(DigestType.sha384, content)
 }
 
 let sha512Func = {
-    content: Array<UInt8> =>
-    let uchash = Array<UInt8>(SHA512_DIGEST_LENGTH, item: 0)
-    sha512(content, uchash)
-    uchash
+    content: Array<UInt8> => Digest.digest(DigestType.sha512, content)
 }

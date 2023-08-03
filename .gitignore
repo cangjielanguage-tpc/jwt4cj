@@ -15,3 +15,5 @@ crypto4cj/
 log/
 test/tmp
 test/report/
+module-lock.json
+.cjpm-history

@@ -11,14 +11,11 @@ class NoneAlgorithm <: Algorithm {
         }
     }
 
-    public func sign(headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>): Array<UInt8> {
-        let headerBytesArray: Array<UInt8> = headerBytes
-        let payloadBytesArray: Array<UInt8> = payloadBytes
+    public func sign(_: Array<UInt8>, _: Array<UInt8>): Array<UInt8> {
         return Array<UInt8>()
     }
 
-    public func sign(contentBytes: Array<UInt8>): Array<UInt8> {
-        let contentBytesArray: Array<UInt8> = contentBytes
+    public func sign(_: Array<UInt8>): Array<UInt8> {
         return Array<UInt8>()
     }
 }
