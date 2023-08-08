@@ -8,16 +8,16 @@ import jwt.exception.JWTDecodeException
 
 public open class Deserializer {
     protected func deserialize(jsonStr: String): Map<String, Claim> {
-        JsonValue.fromStr(jsonStr).asObject().getFields()
-            |> map {kv: (String, JsonValue) => (kv[0], createClaim(kv[1]))}
-            |> collectHashMap
+        JsonValue.fromStr(jsonStr).asObject().getFields() |> 
+            map {kv: (String, JsonValue) => (kv[0], createClaim(kv[1]))} |>
+            collectHashMap
     }
 
     protected func getStringOrArray(key: String, map: Map<String, Claim>): ?ArrayList<String> {
         let claim = map.get(key)
         match (claim?.getValue()) {
             case Some(v: JsonString) => ArrayList([v.getValue()])
-            case Some(v: JsonArray) => asStringList(claim.getOrThrow())
+            case Some(_: JsonArray) => asStringList(claim.getOrThrow())
             case None => None
             case _ => throw JWTDecodeException("The claim '${key}' is not string or array.")
         }

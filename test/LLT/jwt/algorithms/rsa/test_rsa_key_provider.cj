@@ -28,8 +28,10 @@ main() {
     // let pubkey: KeyType = MyKeyType({ => pub_key})
     // let kp: KeyProvider<KeyType, KeyType> = RSAKeyProviderFileImpl(prikey, pubkey)
 
-    var pub: RSAPublicKey = RSA.readPubKeyfromFile(pub_key)
-    var pri: RSAPrivateKey = RSA.readPriKeyfromFile(pri_key)
+    let privatekey = RSA.readPriKeyfromFile(pri_key)
+    var pri = privatekey.getPrivateKey()
+    var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
+    @Assert(pub, privatekey.getPublicKey())
     let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
 
     let rsa = Algorithm.RSA256(kp)

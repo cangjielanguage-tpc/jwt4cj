@@ -24,7 +24,8 @@ main() {
     var jd = JWTDecoder(token)
     try {
         rsa.verify(jd)
-    } catch (e: CryptoException) {
+    } catch (e: SignatureVerificationException) {
+        println(e.message)
         return 0
     }
     return 1

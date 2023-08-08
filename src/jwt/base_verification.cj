@@ -12,7 +12,7 @@ public class BaseVerification <: Verification {
     private var expectedChecks: ArrayList<ExpectedCheckHolder>
     private var defaultLeeway: Int64
     private var customLeeways: HashMap<String, Int64>
-    private var ignoreIssuedAt1: Bool = false;
+    private var ignoreIssuedAt1: Bool = false
     private var time: DateTime
 
     init(algorithm: Algorithm) {
@@ -29,48 +29,48 @@ public class BaseVerification <: Verification {
 
     public func withAnyOfAudience(audience: Array<String>): Verification {
         let value: ArrayList<String> = ArrayList<String>(audience)
-        return withAnyOfAudience(value);
+        return withAnyOfAudience(value)
     }
 
     public func withArrayClaim(name: String, items: Array<String>): Verification {
         let value: ArrayList<String> = ArrayList<String>(items)
-        return withArrayClaim(name, value);
+        return withArrayClaim(name, value)
     }
 
     public func withAudience(audience: Array<String>): Verification {
         let value: ArrayList<String> = ArrayList<String>(audience)
-        return withAudience(value);
+        return withAudience(value)
     }
 
     public func withArrayClaim(name: String, items: Array<Int64>): Verification {
         let value: ArrayList<Int64> = ArrayList<Int64>(items)
-        return withArrayClaim(name, value);
+        return withArrayClaim(name, value)
     }
 
     public func withIssuer(issuer: Array<String>): Verification {
         let value: ArrayList<String> = ArrayList<String>(issuer)
-        
+
         let fun = {
-            claim: Claim, decodedJWT: DecodedJWT =>
+            claim: Claim, _: DecodedJWT =>
             if (claim.isMissing()) {
                 return false
             }
             try {
-                let issure: String = claim.asString()
+                let _: String = claim.asString()
             } catch (e: Exception) {
                 return false
             }
-            
+
             if (value.size == 0 || !value.contains(claim.asString())) {
                 throw IncorrectClaimException(
                     "The Claim 'iss' value doesn't match the required issuer.",
                     RegisteredClaims.ISSUER,
                     claim
-                );
+                )
             }
             return true
         }
-        addCheck(RegisteredClaims.ISSUER, fun);
+        addCheck(RegisteredClaims.ISSUER, fun)
         return this
     }
 
@@ -80,9 +80,8 @@ public class BaseVerification <: Verification {
 
     public func withSubject(subject: String): Verification {
         let fun = extractFun({claim: Claim => subject == claim.asString()})
-        
 
-        addCheck(RegisteredClaims.SUBJECT, fun);
+        addCheck(RegisteredClaims.SUBJECT, fun)
         return this
     }
 
@@ -99,12 +98,12 @@ public class BaseVerification <: Verification {
                     "The Claim 'aud' value doesn't contain the required audience.",
                     RegisteredClaims.AUDIENCE,
                     claim
-                );
+                )
             }
-            return true;
+            return true
         }
 
-        addCheck(RegisteredClaims.AUDIENCE, fun);
+        addCheck(RegisteredClaims.AUDIENCE, fun)
         return this
     }
 
@@ -122,35 +121,35 @@ public class BaseVerification <: Verification {
                     "The Claim 'aud' value doesn't contain the required audience.",
                     RegisteredClaims.AUDIENCE,
                     claim
-                );
+                )
             }
-            return true;
+            return true
         }
-        addCheck(RegisteredClaims.AUDIENCE, fun);
+        addCheck(RegisteredClaims.AUDIENCE, fun)
         return this
     }
 
     public func acceptLeeway(leeway: Int64): Verification {
-        assertPositive(leeway);
+        assertPositive(leeway)
         this.defaultLeeway = leeway
         return this
     }
 
     public func acceptExpiresAt(leeway: Int64): Verification {
-        assertPositive(leeway);
-        customLeeways.put(RegisteredClaims.EXPIRES_AT, leeway);
+        assertPositive(leeway)
+        customLeeways.put(RegisteredClaims.EXPIRES_AT, leeway)
         return this
     }
 
     public func acceptNotBefore(leeway: Int64): Verification {
-        assertPositive(leeway);
-        customLeeways.put(RegisteredClaims.NOT_BEFORE, leeway);
+        assertPositive(leeway)
+        customLeeways.put(RegisteredClaims.NOT_BEFORE, leeway)
         return this
     }
 
     public func acceptIssuedAt(leeway: Int64): Verification {
-        assertPositive(leeway);
-        customLeeways.put(RegisteredClaims.ISSUED_AT, leeway);
+        assertPositive(leeway)
+        customLeeways.put(RegisteredClaims.ISSUED_AT, leeway)
         return this
     }
 
@@ -161,34 +160,34 @@ public class BaseVerification <: Verification {
 
     public func withJWTId(jwtId: String): Verification {
         let fun = extractFun({claim: Claim => jwtId.equals(claim.asString())})
-        addCheck(RegisteredClaims.JWT_ID, fun);
+        addCheck(RegisteredClaims.JWT_ID, fun)
         return this
     }
 
     public func withClaimPresence(name: String): Verification {
         //since addCheck already checks presence, we just return true
         let fun = {
-            claim: Claim, decodedJWT: DecodedJWT => return true
+            _: Claim, _: DecodedJWT => true
         }
-        withClaim(name, fun);
+        withClaim(name, fun)
         return this
     }
 
     public func withNullClaim(name: String): Verification {
-        let fun = {claim: Claim, decodedJWT: DecodedJWT => claim.isNull()}
-        withClaim(name, fun);
+        let fun = {claim: Claim, _: DecodedJWT => claim.isNull()}
+        withClaim(name, fun)
         return this
     }
 
     public func withClaim(name: String, value: Bool): Verification {
         let fun = extractFun({claim: Claim => value == claim.asBool()})
-        addCheck(name, fun);
+        addCheck(name, fun)
         return this
     }
 
     func extractFun(fun: (Claim) -> Bool): (Claim, DecodedJWT) -> Bool {
         {
-            claim: Claim, decodedJWT: DecodedJWT =>
+            claim: Claim, _: DecodedJWT =>
             if (claim.isMissing()) {
                 return false
             }
@@ -202,20 +201,20 @@ public class BaseVerification <: Verification {
 
     public func withClaim(name: String, value: Int64): Verification {
         let fun = extractFun({claim: Claim => value == claim.asInt()})
-        addCheck(name, fun);
+        addCheck(name, fun)
         return this
     }
 
     public func withClaim(name: String, value: Float64): Verification {
         let fun = extractFun({claim: Claim => value == claim.asFloat()})
-        addCheck(name, fun);
+        addCheck(name, fun)
         return this
     }
 
     public func withClaim(name: String, value: String): Verification {
         // { a: Int64, b: Int64 => print(a-b);false }
         let fun = extractFun({claim: Claim => value.equals(claim.asString())})
-        addCheck(name, fun);
+        addCheck(name, fun)
         return this
     }
 
@@ -223,54 +222,54 @@ public class BaseVerification <: Verification {
         // Since date-time claims are serialized as epoch seconds,
         // we need to compare them with only seconds-granularity
         let fun = extractFun({claim: Claim => value == claim.asTime()})
-        addCheck(name, fun);
+        addCheck(name, fun)
         return this
     }
 
     public func withClaim(name: String, predicate: (Claim, DecodedJWT) -> Bool): Verification {
         // let fun = {claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT)}
-        // addCheck(name, fun);
-        expectedChecks.append(constructExpectedCheck(name, predicate));
+        // addCheck(name, fun)
+        expectedChecks.append(constructExpectedCheck(name, predicate))
         return this
     }
 
     public func withArrayClaim(name: String, items: ArrayList<String>): Verification {
-        let fun = {claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items)}
-        addCheck(name, fun);
+        let fun = {claim: Claim, _: DecodedJWT => assertValidCollectionClaim(claim, items)}
+        addCheck(name, fun)
         return this
     }
 
     public func withArrayClaim(name: String, items: ArrayList<Int64>): Verification {
-        let fun = {claim: Claim, decodedJWT: DecodedJWT => assertValidCollectionClaim(claim, items)}
-        addCheck(name, fun);
+        let fun = {claim: Claim, _: DecodedJWT => assertValidCollectionClaim(claim, items)}
+        addCheck(name, fun)
         return this
     }
 
     public func build(): JWTVerifier {
-        return this.build(DateTime.now());
+        return this.build(DateTime.now())
     }
 
     private func build(time: DateTime): JWTVerifier {
         this.time = time
-        addMandatoryClaimChecks();
-        return BaseJWTVerifier(algorithm, expectedChecks);
+        addMandatoryClaimChecks()
+        return BaseJWTVerifier(algorithm, expectedChecks)
     }
 
     private func getLeewayFor(name: String): Int64 {
         if (customLeeways.contains(name)) {
-            return customLeeways.get(name).getOrThrow();
+            return customLeeways.get(name).getOrThrow()
         } else {
             return defaultLeeway
         }
     }
 
     private func addMandatoryClaimChecks() {
-        let expiresAtLeeway: Int64 = getLeewayFor(RegisteredClaims.EXPIRES_AT);
-        let notBeforeLeeway: Int64 = getLeewayFor(RegisteredClaims.NOT_BEFORE);
-        let issuedAtLeeway: Int64 = getLeewayFor(RegisteredClaims.ISSUED_AT);
+        let expiresAtLeeway: Int64 = getLeewayFor(RegisteredClaims.EXPIRES_AT)
+        let notBeforeLeeway: Int64 = getLeewayFor(RegisteredClaims.NOT_BEFORE)
+        let issuedAtLeeway: Int64 = getLeewayFor(RegisteredClaims.ISSUED_AT)
 
         let fun = {
-            claim: Claim, decodedJWT: DecodedJWT => assertValidInstantClaim(
+            claim: Claim, _: DecodedJWT => assertValidInstantClaim(
                 RegisteredClaims.EXPIRES_AT,
                 claim,
                 expiresAtLeeway,
@@ -278,7 +277,7 @@ public class BaseVerification <: Verification {
             )
         }
         let fun1 = {
-            claim: Claim, decodedJWT: DecodedJWT => assertValidInstantClaim(
+            claim: Claim, _: DecodedJWT => assertValidInstantClaim(
                 RegisteredClaims.NOT_BEFORE,
                 claim,
                 notBeforeLeeway,
@@ -286,7 +285,7 @@ public class BaseVerification <: Verification {
             )
         }
         let fun2 = {
-            claim: Claim, decodedJWT: DecodedJWT => assertValidInstantClaim(
+            claim: Claim, _: DecodedJWT => assertValidInstantClaim(
                 RegisteredClaims.ISSUED_AT,
                 claim,
                 issuedAtLeeway,
@@ -294,10 +293,10 @@ public class BaseVerification <: Verification {
             )
         }
 
-        expectedChecks.append(constructExpectedCheck(RegisteredClaims.EXPIRES_AT, fun));
-        expectedChecks.append(constructExpectedCheck(RegisteredClaims.NOT_BEFORE, fun1));
+        expectedChecks.append(constructExpectedCheck(RegisteredClaims.EXPIRES_AT, fun))
+        expectedChecks.append(constructExpectedCheck(RegisteredClaims.NOT_BEFORE, fun1))
         if (!ignoreIssuedAt1) {
-            expectedChecks.append(constructExpectedCheck(RegisteredClaims.ISSUED_AT, fun2));
+            expectedChecks.append(constructExpectedCheck(RegisteredClaims.ISSUED_AT, fun2))
         }
     }
 
@@ -332,23 +331,22 @@ public class BaseVerification <: Verification {
             return true
         }
 
-        var claimVal: DateTime = claim.asTime();
+        var claimVal: DateTime = claim.asTime()
         var now: DateTime = time
         var isValid: Bool
         if (shouldBeFuture) {
             isValid = assertInstantIsFuture(claimVal, leeway, now)
             if (!isValid) {
-                println("22")
-                throw TokenExpiredException("The Token has expired on ${claimVal}.", claimVal);
+                throw TokenExpiredException("The Token has expired on ${claimVal}.", claimVal)
             }
         } else {
             isValid = assertInstantIsPast(claimVal, leeway, now)
             print(isValid)
             if (!isValid) {
-                throw IncorrectClaimException("The Token can't be used before ${claimVal}.", claimName, claim);
+                throw IncorrectClaimException("The Token can't be used before ${claimVal}.", claimName, claim)
             }
         }
-        return true;
+        return true
     }
 
     private func assertInstantIsFuture(claimVal: DateTime, leeway: Int64, now: DateTime): Bool {
@@ -382,13 +380,12 @@ public class BaseVerification <: Verification {
             }
         }
 
-        return !((shouldContainAll && !containsAll)
-            || (!shouldContainAll && disjoint))
+        return !((shouldContainAll && !containsAll) || (!shouldContainAll && disjoint))
     }
 
     private func assertPositive(leeway: Int64) {
         if (leeway < 0) {
-            throw IllegalArgumentException("Leeway value can't be negative.");
+            throw IllegalArgumentException("Leeway value can't be negative.")
         }
     }
 
@@ -398,16 +395,16 @@ public class BaseVerification <: Verification {
             if (claim.isMissing()) {
                 throw MissingClaimException(name)
             }
-            return predicate(claim, decodedJWT);
+            return predicate(claim, decodedJWT)
         }
-        expectedChecks.append(constructExpectedCheck(name, fun));
+        expectedChecks.append(constructExpectedCheck(name, fun))
     }
 
     private func constructExpectedCheck(claimName: String, check: (Claim, DecodedJWT) -> Bool): ExpectedCheckHolder {
-        return ExpectedCheckHolderImpl(claimName, check);
+        return ExpectedCheckHolderImpl(claimName, check)
     }
 
     private func isNullOrEmpty(args: ArrayList<String>): Bool {
-        return args.isEmpty();
+        return args.isEmpty()
     }
 }

@@ -2,16 +2,13 @@ package jwt.algorithms
 
 import jwt.utils.*
 from crypto4cj import rsacj.*
-from crypto4cj import sha256cj.*
-from crypto4cj import sha384cj.*
-from crypto4cj import sha512cj.*
 
 class RSAAlgorithm <: Algorithm {
-    private let keyProviderFile: KeyProvider<KeyType,KeyType>
+    private let keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>
 
-    init(id: String, algorithm: String, keyProviderFile: KeyProvider<KeyType,KeyType>) {
+    init(id: String, algorithm: String, keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>) {
         super(id, algorithm)
-        this.keyProviderFile = keyProviderFile
+        this.keyProvider = keyProvider
     }
 
     public func verify(jwt: DecodedJWT): Unit {
@@ -20,10 +17,13 @@ class RSAAlgorithm <: Algorithm {
             let signature: Array<UInt8> = Base64Util.urlDecode2Byte(jwt.getSignature())
             let valid: Bool = verify(content, signature)
             if (!valid) {
-                throw SignatureGenerationException("exception func in verify")
+                throw SignatureVerificationException("exception func in verify")
             }
-        } catch (e: SignatureGenerationException) {
-            throw SignatureVerificationException("SignatureVerificationException..")
+        } catch (e: Exception) {
+            throw match (e) {
+                case v: SignatureVerificationException => v
+                case _ => SignatureVerificationException("SignatureVerificationException..")
+            }
         }
     }
 
@@ -33,22 +33,19 @@ class RSAAlgorithm <: Algorithm {
                 verify(
                     content,
                     signature,
-                    sha256Func,
-                    RsaTypeId.NID_sha256
+                    DigestType.sha256
                 )
             case "SHA384withRSA" =>
                 verify(
                     content,
                     signature,
-                    sha384Func,
-                    RsaTypeId.NID_sha384
+                    DigestType.sha384
                 )
             case "SHA512withRSA" =>
                 verify(
                     content,
                     signature,
-                    sha512Func,
-                    RsaTypeId.NID_sha512
+                    DigestType.sha512
                 )
             case _ => false
         }
@@ -57,38 +54,32 @@ class RSAAlgorithm <: Algorithm {
     private func verify(
         content: Array<UInt8>,
         signature: Array<UInt8>,
-        shaFunc: (Array<UInt8>) -> Array<UInt8>,
-        rsaTypeId: RsaTypeId
+        digestType: DigestType
     ): Bool {
-        var uchash = shaFunc(content)
-        let rsa: RSA = pemReadRsaPub(keyProviderFile.getPublicKey().getKeyFilePath(), false, 1)
-        let ret = rsaVerify(rsaTypeId, uchash, UInt32(uchash.size), signature, rsa)
-        rsaFree(rsa)
-        ret == 1
+        try {
+            let uchash = Digest.digest(digestType, content)
+            RSA.verify(digestType, uchash, signature, keyProvider.getPublicKey())
+        } catch (_) {
+            return false
+        }
+        return true
     }
 
     public func sign(content: Array<UInt8>): Array<UInt8> {
         try {
             match (getDescription()) {
-                case "SHA256withRSA" => sign(content, sha256Func, RsaTypeId.NID_sha256)
-                case "SHA384withRSA" => sign(content, sha384Func, RsaTypeId.NID_sha384)
-                case "SHA512withRSA" => sign(content, sha512Func, RsaTypeId.NID_sha512)
+                case "SHA256withRSA" => sign(content, DigestType.sha256)
+                case "SHA384withRSA" => sign(content, DigestType.sha384)
+                case "SHA512withRSA" => sign(content, DigestType.sha512)
                 case _ => Array<UInt8>()
             }
-        } catch (e: SignatureGenerationException) {
-            throw SignatureVerificationException("SignatureVerificationException..")
+        } catch (_) {
+            throw SignatureGenerationException("SignatureGenerationException..")
         }
     }
 
-    private func sign(
-        content: Array<UInt8>,
-        shaFunc: (Array<UInt8>) -> Array<UInt8>,
-        rsaTypeId: RsaTypeId
-    ): Array<UInt8> {
-        let uchash = shaFunc(content)
-        let rsa: RSA = pemReadRsaPri(keyProviderFile.getPrivateKey().getKeyFilePath(), false)
-        let (ret, signret) = rsaSign(rsaTypeId, uchash, UInt32(uchash.size), rsa)
-        rsaFree(rsa)
-        signret
+    private func sign(content: Array<UInt8>, digestType: DigestType): Array<UInt8> {
+        let uchash = Digest.digest(digestType, content)
+        RSA.sign(digestType, uchash, keyProvider.getPrivateKey())
     }
 }

@@ -232,10 +232,7 @@ public class Builder {
     public func withClaim(name: String, map: Map<String, Any>): Builder {
         // validate map contents
         if (!validateClaim(map)) {
-            throw IllegalArgumentException(
-                "Expected map containing Map, List, Bool, Int64, "
-                    + "Float64, String and Time"
-            )
+            throw IllegalArgumentException("Expected map containing Map, List, Bool, Int64, Float64, String and Time")
         }
         addClaim(name, map)
         return this
@@ -257,10 +254,7 @@ public class Builder {
     public func withClaim(name: String, list: ArrayList<Any>): Builder {
         // validate list contents
         if (!validateClaim(list)) {
-            throw IllegalArgumentException(
-                "Expected list containing Map, List, Bool, Int64, "
-                    + "Float64, String and Time"
-            )
+            throw IllegalArgumentException("Expected list containing Map, List, Bool, Int64, Float64, String and Time")
         }
         addClaim(name, list)
         return this
@@ -320,9 +314,7 @@ public class Builder {
     public func withPayload(payloadClaims: Map<String, Any>): Builder {
         if (!validatePayload(payloadClaims)) {
             throw IllegalArgumentException(
-                "Claim values must only be of types Map, List, Bool, Int64, "
-                    + "Float64, String, Time, and Null"
-            )
+                "Claim values must only be of types Map, List, Bool, Int64, Float64, String, Time, and Null")
         }
 
         // add claims only after validating all claims so as not to corrupt the claims map of this builder
@@ -334,7 +326,7 @@ public class Builder {
     }
 
     private func validatePayload(payload: Map<String, Any>): Bool {
-        for ((key, value) in payload) {
+        for ((_, value) in payload) {
             if (value is ArrayList<Any> && !validateClaim((value as ArrayList<Any>).getOrThrow())) {
                 return false
             } else if (value is Map<String, Any> && !validateClaim((value as Map<String, Any>).getOrThrow())) {
@@ -348,12 +340,8 @@ public class Builder {
 
     private static func validateClaim(map: Map<String, Any>): Bool {
         // do not accept null values in maps
-        for ((key, value) in map) {
+        for ((_, value) in map) {
             if (!isSupportedType(value)) {
-                return false
-            }
-
-            if (!(key is String)) {
                 return false
             }
         }
@@ -372,45 +360,23 @@ public class Builder {
 
     private static func isSupportedType(value: Any): Bool {
         match (value) {
-            case value: ArrayList<Any> =>
-                println("got ArrayList<Any>");
-                validateClaim(value)
-            case value: Map<String, Any> =>
-                println("got Map<String, Any>");
-                validateClaim(value)
+            case value: ArrayList<Any> => validateClaim(value)
+            case value: Map<String, Any> => validateClaim(value)
             case _ => isBasicType(value)
         }
     }
 
     private static func isBasicType(value: Any): Bool {
         match (value) {
-            case value: Bool =>
-                println("got Bool");
-                true
-            case value: Int64 =>
-                println("got Int64");
-                true
-            case value: Float64 =>
-                println("got Float64");
-                true
-            case value: DateTime =>
-                println("got Time");
-                true
-            case value: String =>
-                println("got String");
-                true
-            case value: Array<Int64> =>
-                println("got Array");
-                true
-            case value: Array<String> =>
-                println("got Array");
-                true
-            case value: NodeType =>
-                println("got NodeType");
-                true
-            case _ =>
-                println("got BasicType other");
-                false
+            case value: Bool => true
+            case value: Int64 => true
+            case value: Float64 => true
+            case value: DateTime => true
+            case value: String => true
+            case value: Array<Int64> => true
+            case value: Array<String> => true
+            case value: NodeType => true
+            case _ => false
         }
     }
 

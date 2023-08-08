@@ -5,14 +5,14 @@ import jwt.interfaces.*
 public class ExpectedCheckHolderImpl <: ExpectedCheckHolder {
 
 
-    private var claimName: String;
+    private var claimName: String
 
-    private var predicate: (Claim, DecodedJWT)->Bool;
+    private var predicate: (Claim, DecodedJWT)->Bool
 
     public init(climeName: String, predicate: (Claim, DecodedJWT)->Bool){
 
-        this.claimName = climeName;
-        this.predicate = predicate;
+        this.claimName = climeName
+        this.predicate = predicate
     }
 
     /**
@@ -21,8 +21,8 @@ public class ExpectedCheckHolderImpl <: ExpectedCheckHolder {
      * @return the claim name
      */
     public func getClaimName(): String {
-        return claimName;
-    };
+        return claimName
+    }
 
 
 
@@ -38,7 +38,7 @@ public class ExpectedCheckHolderImpl <: ExpectedCheckHolder {
 
          predicate(claim, decodedJWT)
 
-    };
+    }
 }
 
 

@@ -1,13 +1,13 @@
 {
-  "cjc_version": "0.39.4",
-  "organization": "cangjie",
+  "cjc_version": "0.39.5",
+  "organization": "pllab",
   "name": "jwt4cj",
   "description": "nothing here",
   "version": "0.0.1",
   "requires": {
     "crypto4cj": {
       "organization": "cangjie",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "path": "./crypto4cj"
     }
   },

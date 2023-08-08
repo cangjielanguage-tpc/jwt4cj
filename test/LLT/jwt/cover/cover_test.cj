@@ -1,3 +1,5 @@
+// DEPENDENCE: ../algorithms/rsa/test_rsa_privateKey_02.pem
+// DEPENDENCE: ../algorithms/rsa/test_rsa_publicKey_02.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 from std import collection.*
@@ -24,9 +26,10 @@ main(){
     println(asStringList(JsonNodeClaim(JsonValue.fromStr(##"["a","b"]"##))).size)
     
     println(Algorithm.none().getName())
-    let rsaKey = RSAKeyProviderFileImpl("rsa_pri_key", "rsa_pub_key")
-    println(rsaKey.getPrivateKey().getKeyFilePath())
-    println(rsaKey.getPublicKey().getKeyFilePath())
+    let rsaKey = RSAKeyProviderFileImpl("test_rsa_privateKey_02.pem", "test_rsa_publicKey_02.pem")
+    println("rsaKey.getPrivateKey().getPrivateKey() : ${rsaKey.getPrivateKey().getPrivateKey()}")
+    println("rsaKey.getPrivateKey().getPublicKey() : ${rsaKey.getPrivateKey().getPublicKey()}")
+    println("rsaKey.getPublicKey().getPublicKey() : ${rsaKey.getPublicKey().getPublicKey()}")
     let ecKey = ECDSAKeyProviderFileImpl("ec_pri_key", "ec_pub_key")
     println(ecKey.getPrivateKey())
     println(ecKey.getPublicKey())
