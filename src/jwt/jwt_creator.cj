@@ -1,5 +1,6 @@
 package jwt
 
+from encoding import base64.*
 from std import collection.ArrayList
 from std import collection.HashMap
 from std import collection.Map
