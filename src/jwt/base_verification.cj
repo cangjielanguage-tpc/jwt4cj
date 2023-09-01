@@ -23,10 +23,6 @@ public class BaseVerification <: Verification {
         this.time = DateTime.ofEpoch(second: 0, nanosecond: 0)
     }
 
-    private func getExpectedChecks(): ArrayList<ExpectedCheckHolder> {
-        return expectedChecks
-    }
-
     public func withAnyOfAudience(audience: Array<String>): Verification {
         let value: ArrayList<String> = ArrayList<String>(audience)
         return withAnyOfAudience(value)
@@ -404,7 +400,4 @@ public class BaseVerification <: Verification {
         return ExpectedCheckHolderImpl(claimName, check)
     }
 
-    private func isNullOrEmpty(args: ArrayList<String>): Bool {
-        return args.isEmpty()
-    }
 }
