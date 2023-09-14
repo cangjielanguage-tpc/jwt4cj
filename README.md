@@ -60,13 +60,13 @@
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
-### 编译
+### 编译（win/linux）
 
 ```shell
-# 使用cpm编译
 # jwt4cj依赖crypto4cj, 需要在module.json中requires项配置crypto4cj目录
+# crypto4cj编译准备参考其说明
 # 然后在jwt4cj目录build
-cpm build
+cjpm build
 ```
 
 ### 功能示例
