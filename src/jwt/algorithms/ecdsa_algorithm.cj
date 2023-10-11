@@ -2,17 +2,14 @@ package jwt.algorithms
 
 from std import math.*
 from crypto4cj import eccj.*
-from crypto4cj import sha256cj.*
-from crypto4cj import sha384cj.*
-from crypto4cj import sha512cj.*
 
 class ECDSAAlgorithm <: Algorithm {
-    private let keyProviderFile: ECDSAKeyProviderFileImpl
+    private let keyProvider: ECDSAKeyProvider<ECPublicKey, ECPrivateKey>
     private let ecNumberSize: Int64
 
-    init(id: String, algorithm: String, ecNumberSize: Int64, keyProviderFile: ECDSAKeyProviderFileImpl) {
+    init(id: String, algorithm: String, ecNumberSize: Int64, keyProvider: ECDSAKeyProvider<ECPublicKey, ECPrivateKey>) {
         super(id, algorithm)
-        this.keyProviderFile = keyProviderFile
+        this.keyProvider = keyProvider
         this.ecNumberSize = ecNumberSize
     }
 
@@ -22,10 +19,13 @@ class ECDSAAlgorithm <: Algorithm {
             let signature = Base64Util.urlDecode2Byte(jwt.getSignature())
             let valid = verify(content, signature)
             if (!valid) {
-                throw SignatureGenerationException("SignatureGenerationException..")
+                throw SignatureVerificationException("SignatureVerificationException..")
             }
-        } catch (e: IllegalArgumentException) {
-            throw SignatureVerificationException("SignatureVerificationException..")
+        } catch (e: Exception) {
+            throw match (e) {
+                case v: SignatureVerificationException => v
+                case _ => SignatureVerificationException("SignatureVerificationException..")
+            }
         }
     }
 
@@ -43,13 +43,13 @@ class ECDSAAlgorithm <: Algorithm {
         signature: Array<UInt8>,
         shaFunc: (Array<UInt8>) -> Array<UInt8>
     ): Bool {
-        let uchash = shaFunc(content)
-        var keyPub: EC_KEY = ecKeyNew()
-        keyPub = pemReadEcPub(keyProviderFile.getPublicKey())
-        let sinStr: SINSTR = SINSTR(signature, Int32(signature.size))
-        let ret = ecdsaVerify(uchash, sinStr, keyPub)
-        ecKeyFree(keyPub)
-        ret == 1
+        try {
+            let uchash = shaFunc(content)
+            EC.verify(uchash, signature, keyProvider.getPublicKey())
+        } catch (_) {
+            return false
+        }
+        return true
     }
 
     public func sign(content: Array<UInt8>): Array<UInt8> {
@@ -67,11 +67,6 @@ class ECDSAAlgorithm <: Algorithm {
 
     private func sign(content: Array<UInt8>, shaFunc: (Array<UInt8>) -> Array<UInt8>): Array<UInt8> {
         let uchash = shaFunc(content)
-        var keyPri: EC_KEY = ecKeyNew()
-        keyPri = pemReadEcPri(keyProviderFile.getPrivateKey())
-        let buf_len: Int32 = ecdsaSize(keyPri)
-        let sigbuf: SIN_MALLOC = SIN_MALLOC(buf_len)
-        let sin: SINSTR = ecdsaSign(uchash, sigbuf, keyPri)
-        sin.getSinStr()
+        EC.sign(uchash, keyProvider.getPrivateKey())
     }
 }
