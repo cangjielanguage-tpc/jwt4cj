@@ -1,5 +1,6 @@
 package jwt.algorithms
 
+from encoding import base64.*
 from crypto4cj import digestcj.*
 
 public abstract class Algorithm {
