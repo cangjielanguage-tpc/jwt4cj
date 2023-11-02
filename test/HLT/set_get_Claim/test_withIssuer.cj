@@ -60,8 +60,8 @@ public class JWTTest {
     func testWithIssuer_002(): Unit {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
-        jwtBuilder.withHeader(map_Bool).withIssuer(//拼接Str
-        entry[0][4]).withIssuer(entry[0][5]) //连续设置
+        jwtBuilder.withHeader(map_Bool).withIssuer( //拼接Str
+                                entry[0][4]).withIssuer(entry[0][5]) //连续设置
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
         token = jwtDecoder.getToken()

@@ -45,240 +45,235 @@ public class JWTTest {
     var t2 = DateTime.parse("2021-08-05T21:08:04+08:00")
 
     @TestCase
-       func testWithClaimViaMap_001():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withIssuer(entry[0][1])//中文字符
-         //public func withClaim(name: String, map: Map<String, Any>): Builder
-         jwtBuilder.withClaim(arrStr[0],map_String) //map_String:HashMap<String, Any>
-         jwtStr = jwtBuilder.sign(Algorithm.none())
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         // public func getClaim(name: String): Claim
-         strActual = jwtDecoder.getClaim(arrStr[0]).toString()
-         @Assert(strActual.size, 714)
-         // public func getClaims(): Map<String, Claim>
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         for(k in  claimMap.keys()){
-           strActual += k
-         }
-         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
-         @Assert(returnTag, 0)
-    
-       }
-    
-    
-       @TestCase
-       func testWithClaimViaMap_002():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withHeader(map_Bool)
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         jwtBuilder.withClaim(arrStr[0],map_Bool) // map_Bool:HashMap<String, Any>
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim(arrStr[0]).toString()
-         @Assert(strActual.size, 194)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         for(k in  claimMap.keys()){
-           strActual += k
-         }
-         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
-         /* ############################################ */
-         jwtBuilder.withClaim(arrStr[0],HashMap<String, Any>([("map_Bool","@$饕餮%*" is String)])) //重新设置Claim值，name相同
-         jwtStr = jwtBuilder.sign(Algorithm.none()) //二次签名
-         let jwtDecoder2 = JWTDecoder(jwtStr)
-         strActual = jwtDecoder2.getClaim(arrStr[0]).toString()
-         @Assert(strActual, "{\"map_Bool\":true}")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_003():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withHeader(map_Bool)
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         jwtBuilder.withClaim("",map_JsonValue) // map_JsonValue:HashMap<String, Any> & name 为空str
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim("iss").toString()
-         @Assert(strActual, "\"Hello Cangjie Lang\"你好仓颉！【】")
-         strActual = jwtDecoder.getClaim("").toString()
-         @Assert(strActual.size, 466)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         for(k in claimMap.keys()){
-           strActual += k
-         }
-         @Assert(strActual, "iss")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_004():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withHeader(map_Bool)
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         jwtBuilder.withClaim(arrStr[2],map_Time) // map_Time:HashMap<String, Any>
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-         @Assert(strActual.size, 215)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         var str_1 = ""
-         for(k in claimMap.keys()){
-           strActual += k
-           if(k == "iss"){
-             str_1 = claimMap[k].toString()
-           }
-         }
-         @Assert(str_1, "\"Hello Cangjie Lang\"你好仓颉！【】")
-         @Assert(strActual, "iss你好仓颉！【】")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_005():Unit{
-         returnTag = -1
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withHeader(map_Bool)
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         try{
-             jwtBuilder.withClaim(arrStr[2],map_Cla_1) // map_Cla_1:HashMap<String, Any>
-         }catch(e1:Exception){
-           @Assert(e1.toString(), "IllegalArgumentException: Expected map containing Map, List, Bool, Int64, Float64, String and Time")
-           returnTag = 0
-         }
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         try{
-             strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-         }catch(e2:Exception){
-          // println("e2: ${e2}")
-           @Assert(e2.toString(),"Exception: The Claim is not present in the JWT.")
-           returnTag = 0
-         }
-         try{
-             claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         }catch(e3:Exception){
-           returnTag = 3
-         }
-         strActual = ""
-         for(k in claimMap.keys()){
-           strActual += k
-         }
-         @Assert(strActual, "iss")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_006():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         jwtBuilder.withClaim(arrStr[2],HashMap<String, Any>([("map_Int64_1",-2654648),("map_Int64_2",235654841)]))
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-         @Assert(strActual.size, 48)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         var str_1 = ""
-         for((k,v) in claimMap){
-           strActual += k
-           if(k == arrStr[2]){
-             str_1 += v.toString()
-           }
-         }
-         @Assert(str_1, "{\"map_Int64_1\":-2654648,\"map_Int64_2\":235654841}")
-         @Assert(strActual, "iss你好仓颉！【】")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_007():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         jwtBuilder.withClaim(arrStr[2],HashMap<String, Any>([("map_Float64_1",-2.654648),("map_Float64_2",23.5654841)]))
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-         @Assert(strActual.size, 53)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         var str_1 = ""
-         for((k,v) in claimMap){
-           strActual += k
-           if(k == arrStr[2]){
-             str_1 += v.toString()
-           }
-         }
-         @Assert(str_1, "{\"map_Float64_1\":-2.654648,\"map_Float64_2\":23.565484}")
-         @Assert(strActual, "iss你好仓颉！【】")
-         @Assert(returnTag, 0)
-       }
-    
-       @TestCase
-       func testWithClaimViaMap_008():Unit{
-         returnTag = 0
-         let jwtBuilder :Builder = JWT.create()
-         jwtBuilder.withIssuer(entry[0][4]) //拼接Str
-         let map_ArrayL_Int64:ArrayList<Any> = ArrayList<Any>([12,-236,598144]) //Array<Int64>
-         jwtBuilder.withClaim(arrStr[2],HashMap<String, Any>([("map_ArrayList<Int64>",map_ArrayL_Int64)]))
-         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
-         let jwtDecoder = JWTDecoder(jwtStr)
-         token = jwtDecoder.getToken()
-         if(token != jwtStr){
-           returnTag = 1
-         }
-         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-         @Assert(strActual.size, 41)
-         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
-         strActual = ""
-         var str_1 = ""
-         for((k,v) in claimMap){
-           strActual += k
-           if(k == arrStr[2]){
-             str_1 += v.toString()
-           }
-         }
-         @Assert(str_1, "{\"map_ArrayList<Int64>\":[12,-236,598144]}")
-         @Assert(strActual, "iss你好仓颉！【】")
-         @Assert(returnTag, 0)
-       }
+    func testWithClaimViaMap_001(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withIssuer(entry[0][1]) //中文字符
+        jwtBuilder.withClaim(arrStr[0], map_String) //map_String:HashMap<String, Any>
+        jwtStr = jwtBuilder.sign(Algorithm.none())
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[0]).toString()
+        @Assert(strActual.toRuneArray().size, 714)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        for (k in claimMap.keys()) {
+            strActual += k
+        }
+        @Assert(strActual, "iss\"Hello Cangjie Lang\"")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_002(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withHeader(map_Bool)
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        jwtBuilder.withClaim(arrStr[0], map_Bool) // map_Bool:HashMap<String, Any>
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[0]).toString()
+        @Assert(strActual.toRuneArray().size, 194)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        for (k in claimMap.keys()) {
+            strActual += k
+        }
+        @Assert(strActual, "iss\"Hello Cangjie Lang\"")
+        /* ############################################ */
+        jwtBuilder.withClaim(arrStr[0], HashMap<String, Any>([("map_Bool", "@$饕餮%*" is String)])) //重新设置Claim值，name相同
+        jwtStr = jwtBuilder.sign(Algorithm.none()) //二次签名
+        let jwtDecoder2 = JWTDecoder(jwtStr)
+        strActual = jwtDecoder2.getClaim(arrStr[0]).toString()
+        @Assert(strActual, "{\"map_Bool\":true}")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_003(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withHeader(map_Bool)
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        jwtBuilder.withClaim("", map_JsonValue) // map_JsonValue:HashMap<String, Any> & name 为空str
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim("iss").toString()
+        @Assert(strActual, "\"Hello Cangjie Lang\"你好仓颉！【】")
+        strActual = jwtDecoder.getClaim("").toString()
+        @Assert(strActual.toRuneArray().size, 466)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        for (k in claimMap.keys()) {
+            strActual += k
+        }
+        @Assert(strActual, "iss")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_004(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withHeader(map_Bool)
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        jwtBuilder.withClaim(arrStr[2], map_Time) // map_Time:HashMap<String, Any>
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[2]).toString()
+        @Assert(strActual.toRuneArray().size, 215)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        var str_1 = ""
+        for (k in claimMap.keys()) {
+            strActual += k
+            if (k == "iss") {
+                str_1 = claimMap[k].toString()
+            }
+        }
+        @Assert(str_1, "\"Hello Cangjie Lang\"你好仓颉！【】")
+        @Assert(strActual, "iss你好仓颉！【】")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_005(): Unit {
+        returnTag = -1
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withHeader(map_Bool)
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        try {
+            jwtBuilder.withClaim(arrStr[2], map_Cla_1) // map_Cla_1:HashMap<String, Any>
+        } catch (e1: Exception) {
+            @Assert(e1.toString(), "IllegalArgumentException: Expected map containing Map, List, Bool, Int64, Float64, String and Time")
+            returnTag = 0
+        }
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        try {
+            strActual = jwtDecoder.getClaim(arrStr[2]).toString()
+        } catch (e2: Exception) {
+            @Assert(e2.toString(),"Exception: The Claim is not present in the JWT.")
+            returnTag = 0
+        }
+        try {
+            claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        } catch (e3: Exception) {
+            returnTag = 3
+        }
+        strActual = ""
+        for (k in claimMap.keys()) {
+            strActual += k
+        }
+        @Assert(strActual, "iss")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_006(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>([("map_Int64_1", -2654648), ("map_Int64_2", 235654841)]))
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[2]).toString()
+        @Assert(strActual.toRuneArray().size, 48)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        var str_1 = ""
+        for ((k, v) in claimMap) {
+            strActual += k
+            if (k == arrStr[2]) {
+                str_1 += v.toString()
+            }
+        }
+        @Assert(str_1, "{\"map_Int64_1\":-2654648,\"map_Int64_2\":235654841}")
+        @Assert(strActual, "iss你好仓颉！【】")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_007(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>([("map_Float64_1", -2.654648), ("map_Float64_2", 23.5654841)]
+        ))
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[2]).toString()
+        @Assert(strActual.toRuneArray().size, 53)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        var str_1 = ""
+        for ((k, v) in claimMap) {
+            strActual += k
+            if (k == arrStr[2]) {
+                str_1 += v.toString()
+            }
+        }
+        @Assert(str_1, "{\"map_Float64_1\":-2.654648,\"map_Float64_2\":23.565484}")
+        @Assert(strActual, "iss你好仓颉！【】")
+        @Assert(returnTag, 0)
+    }
+
+    @TestCase
+    func testWithClaimViaMap_008(): Unit {
+        returnTag = 0
+        let jwtBuilder: Builder = JWT.create()
+        jwtBuilder.withIssuer(entry[0][4]) //拼接Str
+        let map_ArrayL_Int64: ArrayList<Any> = ArrayList<Any>([12, -236, 598144]) //Array<Int64>
+        jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>([("map_ArrayList<Int64>", map_ArrayL_Int64)]))
+        jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
+        let jwtDecoder = JWTDecoder(jwtStr)
+        token = jwtDecoder.getToken()
+        if (token != jwtStr) {
+            returnTag = 1
+        }
+        strActual = jwtDecoder.getClaim(arrStr[2]).toString()
+        @Assert(strActual.size, 41)
+        claimMap = jwtDecoder.getClaims() //Map<String, Claim>
+        strActual = ""
+        var str_1 = ""
+        for ((k, v) in claimMap) {
+            strActual += k
+            if (k == arrStr[2]) {
+                str_1 += v.toString()
+            }
+        }
+        @Assert(str_1, "{\"map_ArrayList<Int64>\":[12,-236,598144]}")
+        @Assert(strActual, "iss你好仓颉！【】")
+        @Assert(returnTag, 0)
+    }
 
     @TestCase
     func testWithClaimViaMap_009(): Unit {
@@ -299,11 +294,11 @@ public class JWTTest {
             returnTag = 2
         }
         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-        @Assert(strActual.size, 37)
+        @Assert(strActual.toRuneArray().size, 37)
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
         var str_1 = ""
-        for((k,v) in claimMap){
+        for ((k, v) in claimMap) {
             strActual += k
             if (k == arrStr[2]) {
                 str_1 += v.toString()
@@ -325,7 +320,6 @@ public class JWTTest {
         try {
             jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>([("map_map_D3_String", map_map_D2_String)]))
         } catch (e1: Exception) {
-            println("e1: ${e1}")
             returnTag = 1
         }
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
@@ -335,10 +329,10 @@ public class JWTTest {
             returnTag = 2
         }
         strActual = jwtDecoder.getClaim(arrStr[2]).toString()
-        @Assert(strActual.size, 1489)
+        @Assert(strActual.toRuneArray().size, 1489)
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
-        for(k in claimMap.keys()){
+        for (k in claimMap.keys()) {
             strActual += k
         }
         @Assert(strActual, "iss你好仓颉！【】")
@@ -347,7 +341,6 @@ public class JWTTest {
         try {
             jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>()) // 空map
         } catch (e2: Exception) {
-            println("e2: ${e2}")
             returnTag = 3
         }
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
@@ -356,11 +349,10 @@ public class JWTTest {
         @Assert(strActual, "{}")
         claimMap = jwtDecoder2.getClaims() //Map<String, Claim>
         strActual = ""
-        for(k in claimMap.keys()){
+        for (k in claimMap.keys()) {
             strActual += k
         }
         @Assert(strActual, "iss你好仓颉！【】")
         @Assert(returnTag, 0)
-    } 
-
+    }
 }

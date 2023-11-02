@@ -61,7 +61,7 @@ let token =
 
 main() {
     let decoder = JWT.decode(token)
-    let arr = token.split('.')
+    let arr = token.split(".")
     if (decoder.getHeader() != arr[0]) {
         println(decoder.getHeader())
         return 1

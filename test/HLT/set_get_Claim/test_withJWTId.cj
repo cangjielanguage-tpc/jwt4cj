@@ -57,8 +57,8 @@ public class JWTTest {
     func testWithSubject_002(): Unit {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
-        jwtBuilder.withHeader(map_Bool).withIssuer(//拼接Str
-        entry[0][5])
+        jwtBuilder.withHeader(map_Bool).withIssuer( //拼接Str
+                    entry[0][5])
         jwtBuilder.withJWTId("") //空字符   
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
@@ -76,7 +76,7 @@ public class JWTTest {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
         jwtBuilder.withHeader(map_Bool).withSubject("$%^&^(*&)(#@#@|||<>)") //特殊字符   
-        .withJWTId("$%^&^(*&)(#@#@|||<>)") //特殊字符   
+            .withJWTId("$%^&^(*&)(#@#@|||<>)") //特殊字符   
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
         token = jwtDecoder.getToken()

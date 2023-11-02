@@ -89,9 +89,9 @@ public class JWTTest {
 
         let builder: JWTVerifier = require.build()
         try {
-            JWT.decode("ewogICJhbGciOiAibm9uZSIsCiAgInR5cCI6ICJKV1QiCn0..")
+            JWT.decode("ewogICJhbGciOiAibm9uZSIsCiAgInR5cCI6ICJKV1QiCn0..") 
         } catch (e1: Exception) {
-            @Assert(e1.toString(), "Exception: The input is not a valid base 64 encoded string.")
+            @Assert(e1.toString(), "Exception: The string '' doesn't have a valid JSON format.")
         }
         try {
             let jwtDecoder: DecodedJWT = builder.verify(jwtStr)
@@ -100,9 +100,7 @@ public class JWTTest {
             for(k in claimMap.keys()){
                 strActual += k
             }
-            // @Assert(strActual, "k_header_1kidalgtypctyisssubjtik_Stringaud") 
         } catch (e2: Exception) {
-            // println("e2: ${e2}")
             returnTag = 1
         }
         @Assert(returnTag, 0)
@@ -130,7 +128,6 @@ public class JWTTest {
             let builder: JWTVerifier = require.build()
             builder.verify(jwtStr)
         } catch (e1: Exception) {
-            // println("e1: ${e1}")
             @Assert(e1.toString(), "Exception: The claim 'iat' is not time.")
             returnTag = 0
         }
@@ -178,7 +175,6 @@ public class JWTTest {
             return true
         }
 
-        // public func withClaim(name: String, predicate: (Claim, DecodedJWT)->Bool): Verification
         require.withClaim("k_2", predicate)
         let builder: JWTVerifier = require.build()
         try {
