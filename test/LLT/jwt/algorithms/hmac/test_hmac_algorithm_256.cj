@@ -3,7 +3,6 @@
 from std import collection.*
 from jwt4cj import jwt.algorithms.*
 from encoding import hex.*
-from crypto4cj import hmaccj.*
 
 main() {
     var hmac1 = Algorithm.HMAC256("test1280".toArray())

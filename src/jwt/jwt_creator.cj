@@ -261,6 +261,11 @@ public class Builder {
         return this
     }
 
+    public func withClaim(name: String, obj: NodeType): Builder {
+        addClaim(name, obj)
+        return this
+    }
+
     /*
      * Add a custom claim with null value.
      *

@@ -1,8 +1,14 @@
 package jwt.algorithms
 
+from crypto import digest.*
+from crypto import keys.*
 from encoding import base64.*
-from crypto4cj import digestcj.*
-from encoding import base64.*
+from std import crypto.digest.*
+from std import fs.File
+from std import math.*
+import jwt.exception.*
+import jwt.interfaces.*
+import jwt.utils.*
 
 public abstract class Algorithm {
     private var name: String
@@ -49,15 +55,15 @@ public abstract class Algorithm {
         return HMACAlgorithm("HS512", "HmacSHA512", secret)
     }
 
-    public static func ECDSA256(keyProvider: ECDSAKeyProviderFileImpl): Algorithm {
+    public static func ECDSA256(keyProvider: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey>): Algorithm {
         return ECDSAAlgorithm("ES256", "SHA256withECDSA", 32, keyProvider)
     }
 
-    public static func ECDSA384(keyProvider: ECDSAKeyProviderFileImpl): Algorithm {
+    public static func ECDSA384(keyProvider: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey>): Algorithm {
         return ECDSAAlgorithm("ES384", "SHA384withECDSA", 32, keyProvider)
     }
 
-    public static func ECDSA512(keyProvider: ECDSAKeyProviderFileImpl): Algorithm {
+    public static func ECDSA512(keyProvider: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey>): Algorithm {
         return ECDSAAlgorithm("ES512", "SHA512withECDSA", 32, keyProvider)
     }
 
@@ -100,16 +106,4 @@ func buildContent(header: Array<UInt8>, payload: Array<UInt8>): Array<UInt8> {
     content[header.size] = b'.'
     payload.copyTo(content, 0, (header.size + 1), payload.size)
     content
-}
-
-let sha256Func = {
-    content: Array<UInt8> => Digest.digest(DigestType.sha256, content)
-}
-
-let sha384Func = {
-    content: Array<UInt8> => Digest.digest(DigestType.sha384, content)
-}
-
-let sha512Func = {
-    content: Array<UInt8> => Digest.digest(DigestType.sha512, content)
 }

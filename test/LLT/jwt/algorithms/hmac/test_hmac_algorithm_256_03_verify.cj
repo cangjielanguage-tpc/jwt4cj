@@ -6,7 +6,6 @@ from jwt4cj import jwt.utils.*
 from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.*
 from jwt4cj import jwt.exception.*
-from crypto4cj import hmaccj.*
 
 main() {
     let hmac = Algorithm.HMAC256("pri_key")

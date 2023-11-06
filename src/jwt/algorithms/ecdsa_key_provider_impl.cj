@@ -1,48 +1,60 @@
 package jwt.algorithms
 
-public class ECDSAKeyProviderFileImpl <: ECDSAKeyProvider<ECPublicKey, ECPrivateKey> {
-    private var ecPublicKey: ?ECPublicKey
-    private var ecPrivateKey: ?ECPrivateKey
+public class ECDSAKeyProviderFileImpl <: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey> {
+    private var ecPublicKey: ?ECDSAPublicKey
+    private var ecPrivateKey: ?ECDSAPrivateKey
 
-    public init(filePath: String) {
-        ecPublicKey = try {
-            EC.readPubKeyfromFile(filePath)
+    public init(filePath: String, password!: ?String = None) {
+        let bytes = File.readFrom(filePath)
+        let text = String.fromUtf8(bytes)
+        this.ecPublicKey = try {
+            ECDSAPublicKey.decodeFromPem(text)
         } catch (_) {
             None
         }
-        ecPrivateKey = try {
-            EC.readPriKeyfromFile(filePath)
+        this.ecPrivateKey = try {
+            ECDSAPrivateKey.decodeFromPem(text, password: password)
         } catch (_) {
             None
         }
     }
 
-    public init(privateKeyFile: String, publicKeyFile: String) {
-        this.ecPrivateKey = EC.readPriKeyfromFile(privateKeyFile)
-        this.ecPublicKey = EC.readPubKeyfromFile(publicKeyFile)
+    public init(privateKeyFile: ?String, publicKeyFile: ?String, password!: ?String = None) {
+        this.ecPublicKey = try {
+            let textpub = String.fromUtf8(File.readFrom(publicKeyFile.getOrThrow()))
+            ECDSAPublicKey.decodeFromPem(textpub)
+        } catch (_) {
+            None
+        }
+        this.ecPrivateKey = try {
+            let textpri = String.fromUtf8(File.readFrom(privateKeyFile.getOrThrow()))
+            ECDSAPrivateKey.decodeFromPem(textpri, password: password)
+        } catch (_) {
+            None
+        }
     }
 
-    public func getPublicKey(): ECPublicKey {
+    public func getPublicKey(): ECDSAPublicKey {
         return ecPublicKey.getOrThrow()
     }
 
-    public func getPrivateKey(): ECPrivateKey {
+    public func getPrivateKey(): ECDSAPrivateKey {
         return ecPrivateKey.getOrThrow()
     }
 }
 
-public class ECDSAKeyProviderImpl <: ECDSAKeyProvider<ECPublicKey, ECPrivateKey> {
-    private var ecPublicKey: ?ECPublicKey
-    private var ecPrivateKey: ?ECPrivateKey
+public class ECDSAKeyProviderImpl <: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey> {
+    private var ecPublicKey: ?ECDSAPublicKey
+    private var ecPrivateKey: ?ECDSAPrivateKey
 
-    public init(privateKey: ECPrivateKey, publicKey: ECPublicKey) {
+    public init(privateKey: ?ECDSAPrivateKey, publicKey: ?ECDSAPublicKey) {
         this.ecPublicKey = publicKey
         this.ecPrivateKey = privateKey
     }
-    public func getPublicKey(): ECPublicKey {
+    public func getPublicKey(): ECDSAPublicKey {
         return ecPublicKey.getOrThrow()
     }
-    public func getPrivateKey(): ECPrivateKey {
+    public func getPrivateKey(): ECDSAPrivateKey {
         return ecPrivateKey.getOrThrow()
     }
 }
