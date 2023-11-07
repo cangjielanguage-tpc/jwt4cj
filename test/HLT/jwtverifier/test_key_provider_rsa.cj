@@ -33,7 +33,7 @@ public class JWTTest {
         let secret =
         "PeuJlL-zJaeZUeECfSL5xxHr8YuX23qYoKZdKEeYuUSC1RDGh2YFIJlkYXBCOVku1OyYo4HFvnYh543aPvn78OruBtwRUPmdsWcaqxF9hVONFMYij1wIxKdoSqUGlvXZBRilVkDmqCPf59vWVGl5sBhaGtKRBuMwNO83bXOlSQZv_5FlrH7fdVpXe2ff14wvGYpCRyDO-sTuK9EdcFrafqKb6kdL8wY4-65Ya4lflAAHFrOBVxODYxRItgcWBy-pnPmo51qI05zUHGIyWczAOUc-hwVi4uYzzpeAdoGRKZbixOyPOqPgYc9o_Sb5QEOmtT4EDKkOpu_J0vDIn623vw"
         let token = "${header}.${payload}.${secret}"
-        let src: Array<UInt8> = "${header}.${payload}".toUtf8Array()
+        let src: Array<UInt8> = "${header}.${payload}".toArray()
         let privatekey = RSA.readPriKeyfromFile(pri_key)
         var pri = privatekey.getPrivateKey()
         var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
@@ -58,7 +58,7 @@ public class JWTTest {
         let secret =
         "RGy5CnyyIxw3FcYtWBFJUQwgU1sIu9Vm_9TaWbxuhPjWQyIhaDH3tdC2lEseEZeh78tMHLgzYf7m3PLuFdkosdC-7_OCeFtIFqtmdFJHZPVWmnqlHEJuE95moYTtaKnUBXXomleRDtN4KB3obFwJe6q4R01IQgBjSKmmqW7oUBy1yiei5e39WKEX2_tGAoZax8sczANNAyQNrfwtRZDv1cBQ5wLRhRF3mEwAb78dgmJ7E30vXdzknKT2AUZEi1rc4cog-VVo4p9Kdhr5BrwuQ0jag9SUFQ8fab-YUNhp2OGBdhqrwyoXeemYHDAfZPfOpbaTfnAv285_FDSdIpf9IQ"
         let token = "${header}.${payload}.${secret}"
-        let src: Array<UInt8> = "${header}.${payload}".toUtf8Array()
+        let src: Array<UInt8> = "${header}.${payload}".toArray()
         let privatekey = RSA.readPriKeyfromFile(pri_key)
         var pri = privatekey.getPrivateKey()
         var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
@@ -83,7 +83,7 @@ public class JWTTest {
         let secret =
         "FwUyA4jkTtcCSpvbIpGyrzJAEpmaw6Z5k48XXySPnsUg-U8RNuqGGjpu9Q2phx4MiPS5DTR9auoAEXV6n4C8Tz2gWbI0u4u0ZKZ5cCVhhzah5qkboYgWSuMDnzIK3Ikf8hbKjl2XwP2v2pM1nKAXETLBXx_Ov13vsxr8WF17SzlrFAGp4WqCrrI4c_wAwjJaPueDyMo3NyJ3XBBSvd0RS4uN399bDVADtRDtYsy5KSrNsnxVYkIJk5v7iHNhMyoDnxXjfHyCcAAQe-awCbwtG5sc6WPrlIbZGGsy0mepQu_T3X2GytaCKviWOz4ZA2hQ6930wnZq5oF0Zi1rhz_VSQ"
         let token = "${header}.${payload}.${secret}"
-        let src: Array<UInt8> = "${header}.${payload}".toUtf8Array()
+        let src: Array<UInt8> = "${header}.${payload}".toArray()
         let privatekey = RSA.readPriKeyfromFile(pri_key)
         var pri = privatekey.getPrivateKey()
         var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()

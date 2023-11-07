@@ -64,7 +64,7 @@ public class BaseJWTVerifier <: JWTVerifier {
         //     case None => throw AlgorithmMismatchException(
         //         "The provided Algorithm doesn't match the one defined in the JWT's Header.")
         // }
-        if (!expectedAlgorithm.getName().equals(jwt.getAlgorithm())) {
+        if (expectedAlgorithm.getName() != jwt.getAlgorithm()) {
             throw AlgorithmMismatchException(
                 "The provided Algorithm doesn't match the one defined in the JWT's Header.")
         }

@@ -155,7 +155,7 @@ public class BaseVerification <: Verification {
     }
 
     public func withJWTId(jwtId: String): Verification {
-        let fun = extractFun({claim: Claim => jwtId.equals(claim.asString())})
+        let fun = extractFun({claim: Claim => jwtId == claim.asString()})
         addCheck(RegisteredClaims.JWT_ID, fun)
         return this
     }
@@ -209,7 +209,7 @@ public class BaseVerification <: Verification {
 
     public func withClaim(name: String, value: String): Verification {
         // { a: Int64, b: Int64 => print(a-b);false }
-        let fun = extractFun({claim: Claim => value.equals(claim.asString())})
+        let fun = extractFun({claim: Claim => value == claim.asString()})
         addCheck(name, fun)
         return this
     }

@@ -4,7 +4,7 @@ import jwt.exception.*
 
 abstract class TokenUtils {
     static func splitToken(token: String): Array<String> {
-        let arr = token.split('.')
+        let arr = token.split(".")
         if (arr.size != 3) {
             throw wrongNumberOfParts(arr.size)
         }

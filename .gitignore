@@ -17,3 +17,4 @@ test/tmp
 test/report/
 module-lock.json
 .cjpm-history
+*.macrocall

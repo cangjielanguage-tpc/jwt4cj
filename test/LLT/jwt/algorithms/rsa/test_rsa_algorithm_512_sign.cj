@@ -13,9 +13,9 @@ from std import fs.*
 
 main() {
 
-    let src: Array<UInt8> = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
-    let src_header: Array<UInt8> = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9".toUtf8Array()
-    let src_payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    let src: Array<UInt8> = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toArray()
+    let src_header: Array<UInt8> = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9".toArray()
+    let src_payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toArray()
     var path: String = getcwd()
     let pri_key: String = "${path}/test_rsa_privateKey_02.pem"
     let pub_key: String = "${path}/test_rsa_publicKey_02.pem"

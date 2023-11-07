@@ -30,7 +30,7 @@ class JWTCreator {
         let headerB64 = Base64Util.urlEncode(headerJson)
         let payloadB64 = Base64Util.urlEncode(payloadJson)
 
-        let signatureBytes = algorithm.sign("${headerB64}.${payloadB64}".toUtf8Array())
+        let signatureBytes = algorithm.sign("${headerB64}.${payloadB64}".toArray())
         let signature = Base64Util.urlEncode(signatureBytes)
 
         return "${headerB64}.${payloadB64}.${signature}"

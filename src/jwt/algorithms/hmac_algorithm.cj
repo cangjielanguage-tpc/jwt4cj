@@ -19,7 +19,7 @@ public class HMACAlgorithm <: Algorithm {
     }
 
     static func getSecretBytes(secretStr: String): Array<UInt8> {
-        return secretStr.toUtf8Array()
+        return secretStr.toArray()
     }
 
     public func verify(jwt: DecodedJWT): Unit {
@@ -51,7 +51,7 @@ public class HMACAlgorithm <: Algorithm {
     }
 
     func verifySignatureFor(algorithm: String, secretBytes: Array<UInt8>, header: String, payload: String, signatureBytes: Array<UInt8>): Bool {
-        return verifySignatureFor(algorithm, secretBytes, header.toUtf8Array(), payload.toUtf8Array(), signatureBytes)
+        return verifySignatureFor(algorithm, secretBytes, header.toArray(), payload.toArray(), signatureBytes)
     }
 
     func verifySignatureFor(algorithm: String, secretBytes: Array<UInt8>, headerBytes: Array<UInt8>, payloadBytes: Array<UInt8>, signatureBytes: Array<UInt8>): Bool {

@@ -8,7 +8,7 @@ public class Base64Util {
     }
 
     public static func urlEncode(content: String): String {
-        return toBase64String(content.toUtf8Array()).replace("+", "-").replace("/", "_").replace("=", "")
+        return toBase64String(content.toArray()).replace("+", "-").replace("/", "_").replace("=", "")
     }
 
     public static func urlDecode2Byte(content: String): Array<UInt8> {

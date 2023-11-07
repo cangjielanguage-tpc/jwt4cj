@@ -2,6 +2,7 @@ package jwt.algorithms
 
 from encoding import base64.*
 from crypto4cj import digestcj.*
+from encoding import base64.*
 
 public abstract class Algorithm {
     private var name: String
@@ -90,7 +91,7 @@ public abstract class Algorithm {
 }
 
 func buildContent(header: String, payload: String): Array<UInt8> {
-    "${header}.${payload}".toUtf8Array()
+    "${header}.${payload}".toArray()
 }
 
 func buildContent(header: Array<UInt8>, payload: Array<UInt8>): Array<UInt8> {

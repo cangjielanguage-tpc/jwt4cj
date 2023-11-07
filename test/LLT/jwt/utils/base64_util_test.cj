@@ -4,7 +4,7 @@ from jwt4cj import jwt.utils.*
 
 main() {
     let str = "as?0"
-    let bytes = str.toUtf8Array()
+    let bytes = str.toArray()
     let urlsafe_b64 = "YXM_MA"
 
     let str2b64 = Base64Util.urlEncode(str)

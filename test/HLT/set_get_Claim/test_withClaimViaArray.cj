@@ -55,10 +55,10 @@ public class JWTTest {
             returnTag = 1
         }
         strActual = jwtDecoder.getClaim(arrStr[0]).toString()
-        @Assert(strActual.size, 250)
+        @Assert(strActual.toRuneArray().size, 250)
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
-        for(k in claimMap.keys()){
+        for (k in claimMap.keys()) {
             strActual += k
         }
         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
@@ -89,7 +89,7 @@ public class JWTTest {
         }
         @Assert(res,19)
         strActual = jwtDecoder.getHeaderClaim("kid").toString()
-        @Assert(strActual.size, 95)
+        @Assert(strActual.toRuneArray().size, 95)
         var tag: Bool = jwtDecoder.getHeaderClaim(entry[0][5]).isMissing() // name:entry[0][5] 不存在
         if (tag == true) {
             returnTag = 0
@@ -111,7 +111,7 @@ public class JWTTest {
         @Assert(strActual, "[]")
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
-        for(k in claimMap.keys()){
+        for (k in claimMap.keys()) {
             strActual += k
         }
         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
@@ -122,7 +122,7 @@ public class JWTTest {
         jwtStr = jwtBuilder.sign(Algorithm.none())
         let jwtDecoder2 = JWTDecoder(jwtStr)
         strActual = jwtDecoder2.getClaim(arrStr[0]).toString()
-        @Assert(strActual.size, 2084957)
+        @Assert(strActual.toRuneArray().size, 2084957)
         var tag: Bool = jwtDecoder2.getHeaderClaim(RegisteredClaims.JWT_ID).isMissing() //JWT_ID为 Payload 的Claim对象，getHeaderClaim的name无对应的HeaderClaim
         if (tag == true) {
             returnTag = 0

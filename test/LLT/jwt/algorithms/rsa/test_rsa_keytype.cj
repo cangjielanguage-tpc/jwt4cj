@@ -18,7 +18,7 @@ main() {
     let payload = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ"
     let secret = "Q_CatS3ATEdvyR_T_jCFVDzVSJKWZpi5xYScdji3D6JBY335_AjanEzJFERNKO-d1KVs8Rx2xyNm6N_fI8y1Fg"
     let token = "${header}.${payload}.${secret}"
-    let src: Array<UInt8> = "${header}.${payload}".toUtf8Array()
+    let src: Array<UInt8> = "${header}.${payload}".toArray()
 
     var path: String = getcwd()
     let pri_key: String = "${path}/test_rsa_privateKey.pem"

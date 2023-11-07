@@ -15,9 +15,9 @@ main() {
     var path: String = getcwd()
     let pri_key: String = "${path}/test_ecdsa_privateKey.pem"
     let pub_key: String = "${path}/test_ecdsa_publicKey.pem"
-    var s: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
-    let header: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9".toUtf8Array()
-    let payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toUtf8Array()
+    var s: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toArray()
+    let header: Array<UInt8> = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9".toArray()
+    let payload: Array<UInt8> = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0".toArray()
     let ecdsa = Algorithm.ECDSA512(ECDSAKeyProviderFileImpl(pri_key))
     Algorithm.ECDSA512(ECDSAKeyProviderFileImpl(pri_key, pub_key))
     println("*****************************************************************************")

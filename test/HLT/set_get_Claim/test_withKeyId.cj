@@ -134,8 +134,8 @@ public class JWTTest {
     func testWithKeyId_006(): Unit {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
-        jwtBuilder.withHeader(map_Bool).withKeyId(//拼接Str
-        entry[0][4]).withKeyId(entry[0][5]) //连续设置keyId
+        jwtBuilder.withHeader(map_Bool).withKeyId( //拼接Str
+                                entry[0][4]).withKeyId(entry[0][5]) //连续设置keyId
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
         token = jwtDecoder.getToken()

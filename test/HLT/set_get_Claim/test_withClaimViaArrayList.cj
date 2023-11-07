@@ -60,10 +60,10 @@ public class JWTTest {
             returnTag = 1
         }
         strActual = jwtDecoder.getClaim(arrStr[0]).toString()
-        @Assert(strActual.size, 406)
+        @Assert(strActual.toRuneArray().size, 406)
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
-        for(k in claimMap.keys()){
+        for (k in claimMap.keys()) {
             strActual += k
         }
         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
@@ -109,7 +109,6 @@ public class JWTTest {
         try {
             jwtBuilder.withClaim(arrStr[2], arrL_Cla_1) // arrL_Cla_1:ArrayList<Any>
         } catch (e1: Exception) {
-            // println("e1: ${e1}")
             @Assert(e1.toString(), "IllegalArgumentException: Expected list containing Map, List, Bool, Int64, Float64, String and Time")
             returnTag = 0
         }
@@ -146,13 +145,11 @@ public class JWTTest {
         try {
             jwtBuilder.withClaim(arrStr[0], ArrayList<Any>([arr_Int64, arr_Int64])) // arrL_:ArrayList<Array<Any>>
         } catch (e1: Exception) {
-            // println("e1: ${e1}")
             returnTag = 1
         }
         try {
             jwtBuilder.withClaim(arrStr[2], ArrayList<Any>([arrL_Float64, arrL_Float64])) // arrL_ArrayList<ArrayList<Any>>
         } catch (e2: Exception) {
-            // println("e2: ${e2}")
             returnTag = 2
         }
         jwtStr = jwtBuilder.sign(Algorithm.none())
@@ -188,14 +185,11 @@ public class JWTTest {
         try {
             jwtBuilder.withClaim(arrStr[0], ArrayList<Any>([map_map_D2_String])) // arrL_:ArrayList<HashMap<String, HashMap<String, Any>>>
         } catch (e1: Exception) {
-            // println("e1: ${e1}")
             returnTag = 1
         }
         try {
-            // public func withNullClaim(name: String): Builder
             jwtBuilder.withNullClaim(arrStr[2])
         } catch (e2: Exception) {
-            // println("e2: ${e2}")
             returnTag = 2
         }
         jwtStr = jwtBuilder.sign(Algorithm.none())
@@ -205,7 +199,7 @@ public class JWTTest {
             returnTag = 3
         }
         strActual = jwtDecoder.getClaim(arrStr[0]).toString()
-        @Assert(strActual.size, 1469)
+        @Assert(strActual.toRuneArray().size, 1469)
         claimMap = jwtDecoder.getClaims() //Map<String, Claim>
         strActual = ""
         var str_1 = ""
