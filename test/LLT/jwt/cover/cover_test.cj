@@ -1,4 +1,5 @@
 // DEPENDENCE: ../algorithms/rsa/test_rsa_privateKey_02.pem
+// DEPENDENCE: ../algorithms/rsa/test_rsa_privateKey.pem
 // DEPENDENCE: ../algorithms/rsa/test_rsa_publicKey_02.pem
 // DEPENDENCE: ../algorithms/ecdsa/test_ecdsa_privateKey.pem
 // DEPENDENCE: ../algorithms/ecdsa/test_ecdsa_publicKey.pem
@@ -14,7 +15,8 @@ from jwt4cj import jwt.*
 from encoding import json.*
 from std import collection.*
 from std import time.*
-from crypto4cj import eccj.*
+from std import fs.*
+from crypto import keys.*
 
 main() {
     println(JsonNodeClaim(JsonValue.fromStr("null")).isNull())
@@ -29,18 +31,60 @@ main() {
     println(asStringList(JsonNodeClaim(JsonValue.fromStr(##"["a","b"]"##))).size)
 
     println(Algorithm.none().getName())
-    let rsaKey = RSAKeyProviderFileImpl("test_rsa_privateKey_02.pem", "test_rsa_publicKey_02.pem")
-    println("rsaKey.getPrivateKey().getPrivateKey() : ${rsaKey.getPrivateKey().getPrivateKey()}")
-    println("rsaKey.getPrivateKey().getPublicKey() : ${rsaKey.getPrivateKey().getPublicKey()}")
-    println("rsaKey.getPublicKey().getPublicKey() : ${rsaKey.getPublicKey().getPublicKey()}")
-    let ecKey = ECDSAKeyProviderFileImpl("test_ecdsa_privateKey.pem", "test_ecdsa_publicKey.pem")
-    println(ecKey.getPrivateKey().getSize())
-    println(ecKey.getPublicKey().getCurveName())
 
-    let ecPrivateKey = EC.readPriKeyfromFile("test_ecdsa_privateKey.pem")
-    let ecPublicKey = EC.readPubKeyfromFile("test_ecdsa_publicKey.pem")
+    let rsaKey = RSAKeyProviderFileImpl("test_rsa_privateKey_02.pem", "test_rsa_publicKey_02.pem")
+    println("rsaKey.getPrivateKey().toString() : ${rsaKey.getPrivateKey().toString()}")
+    println("rsaKey.getPrivateKey().toString() : ${rsaKey.getPrivateKey().toString()}")
+
+    let rsaPublicKey: ?RSAPublicKey = try {
+        let textpub = String.fromUtf8(File.readFrom("test_rsa_publicKey_02.pem"))
+        println(textpub)
+        RSAPublicKey.decodeFromPem(textpub)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        None
+    }
+    println(rsaPublicKey?.toString())
+
+    var rsaPri = RSAPrivateKey(1024)
+    var rsaPub = RSAPublicKey(rsaKey.getPrivateKey())
+    let pemEntry = rsaPub.encodeToPem()
+    println(pemEntry.toString())
+    println(pemEntry.label)
+    for (kv in pemEntry.headers) {
+        println("${kv[0]},${kv[1]}")
+    }
+    println(pemEntry.encode())
+
+    println("rsaKey.getPublicKey().toString() : ${rsaPub.toString()}")
+
+    let ecKey = ECDSAKeyProviderFileImpl("test_ecdsa_privateKey.pem", "test_ecdsa_publicKey.pem")
+    println(ecKey.getPrivateKey().toString())
+    println(ecKey.getPublicKey().toString())
+
+    try {
+        let ecPrivateKey = ECDSAPrivateKey.decodeFromPem("test_ecdsa_privateKey.pem")
+        let ecPublicKey = ECDSAPublicKey.decodeFromPem("test_ecdsa_publicKey.pem")
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    
+    let ecPrivateKey = ECDSAPrivateKey(P224)
+    let ecPublicKey = ECDSAPublicKey(ecPrivateKey)
     let ecKey1 = ECDSAKeyProviderImpl(ecPrivateKey, ecPublicKey)
-    println(ecKey1.getPrivateKey().getSize())
-    println(ecKey1.getPublicKey().getCurveName())
+    println(ecKey1.getPrivateKey().toString())
+    println(ecKey1.getPublicKey().toString())
+
+    var rsapri = RSAPrivateKey(1024)
+    var rsapub = RSAPublicKey(rsapri)
+    File.writeTo("rsa_private.pem", rsapri.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+    File.writeTo("rsa_public.pem", rsapub.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+    var ecdsapri = ECDSAPrivateKey(P224)
+    var ecdsapub = ECDSAPublicKey(ecdsapri)
+    File.writeTo("ecdsa_private.pem", ecdsapri.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+    File.writeTo("ecdsa_public.pem", ecdsapub.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+
+    println(RSAPublicKey(RSAKeyProviderFileImpl("test_rsa_privateKey.pem").getPrivateKey()).encodeToPem().encode())
+    println(ECDSAPublicKey(ECDSAKeyProviderFileImpl("test_ecdsa_privateKey.pem").getPrivateKey()).encodeToPem().encode())
     0
 }

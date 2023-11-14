@@ -7,11 +7,11 @@ from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.*
 from jwt4cj import jwt.utils.*
-from crypto4cj import rsacj.*
 from std import os.posix.*
 from std import fs.*
 from std import unittest.*
 from std import unittest.testmacro.*
+from crypto import keys.*
 
 main() {
     let header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9"
@@ -21,15 +21,15 @@ main() {
     let src: Array<UInt8> = "${header}.${payload}".toArray()
 
     var path: String = getcwd()
-    let pri_key: String = "${path}/test_rsa_privateKey.pem"
-    let pub_key: String = "${path}/test_rsa_publicKey.pem"
+    let pri_key: String = String.fromUtf8(File.readFrom("${path}/test_rsa_privateKey.pem"))
+    let pub_key: String = String.fromUtf8(File.readFrom("${path}/test_rsa_publicKey.pem"))
 
     // let prikey: KeyType = MyKeyType({ => pri_key})
     // let pubkey: KeyType = MyKeyType({ => pub_key})
     // let kp: KeyProvider<KeyType, KeyType> = RSAKeyProviderFileImpl(prikey, pubkey)
 
-    var pub: RSAPublicKey = RSA.readPubKeyfromFile(pub_key)
-    var pri: RSAPrivateKey = RSA.readPriKeyfromFile(pri_key)
+    var pub: RSAPublicKey = RSAPublicKey.decodeFromPem(pub_key)
+    var pri: RSAPrivateKey = RSAPrivateKey.decodeFromPem(pri_key)
     let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
 
     let rsa = Algorithm.RSA256(kp)

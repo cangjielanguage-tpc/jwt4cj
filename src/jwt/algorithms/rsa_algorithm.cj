@@ -1,8 +1,5 @@
 package jwt.algorithms
 
-import jwt.utils.*
-from crypto4cj import rsacj.*
-
 class RSAAlgorithm <: Algorithm {
     private let keyProvider: RSAKeyProvider<RSAPublicKey, RSAPrivateKey>
 
@@ -29,48 +26,28 @@ class RSAAlgorithm <: Algorithm {
 
     func verify(content: Array<UInt8>, signature: Array<UInt8>): Bool {
         match (getDescription()) {
-            case "SHA256withRSA" =>
-                verify(
-                    content,
-                    signature,
-                    DigestType.sha256
-                )
-            case "SHA384withRSA" =>
-                verify(
-                    content,
-                    signature,
-                    DigestType.sha384
-                )
-            case "SHA512withRSA" =>
-                verify(
-                    content,
-                    signature,
-                    DigestType.sha512
-                )
+            case "SHA256withRSA" => this.verify(content, signature, SHA256())
+            case "SHA384withRSA" => this.verify(content, signature, SHA384())
+            case "SHA512withRSA" => this.verify(content, signature, SHA512())
             case _ => false
         }
     }
 
-    private func verify(
-        content: Array<UInt8>,
-        signature: Array<UInt8>,
-        digestType: DigestType
-    ): Bool {
+    private func verify(content: Array<UInt8>, signature: Array<UInt8>, digestType: Digest): Bool {
         try {
-            let uchash = Digest.digest(digestType, content)
-            RSA.verify(digestType, uchash, signature, keyProvider.getPublicKey())
+            let uchash = digest(digestType, content)
+            return keyProvider.getPublicKey().verify(digestType, uchash, signature, padType: keyProvider.padType)
         } catch (_) {
             return false
         }
-        return true
     }
 
     public func sign(content: Array<UInt8>): Array<UInt8> {
         try {
             match (getDescription()) {
-                case "SHA256withRSA" => sign(content, DigestType.sha256)
-                case "SHA384withRSA" => sign(content, DigestType.sha384)
-                case "SHA512withRSA" => sign(content, DigestType.sha512)
+                case "SHA256withRSA" => this.sign(content, SHA256())
+                case "SHA384withRSA" => this.sign(content, SHA384())
+                case "SHA512withRSA" => this.sign(content, SHA512())
                 case _ => Array<UInt8>()
             }
         } catch (_) {
@@ -78,8 +55,8 @@ class RSAAlgorithm <: Algorithm {
         }
     }
 
-    private func sign(content: Array<UInt8>, digestType: DigestType): Array<UInt8> {
-        let uchash = Digest.digest(digestType, content)
-        RSA.sign(digestType, uchash, keyProvider.getPrivateKey())
+    private func sign(content: Array<UInt8>, digestType: Digest): Array<UInt8> {
+        let uchash = digest(digestType, content)
+        keyProvider.getPrivateKey().sign(digestType, uchash, padType: keyProvider.padType)
     }
 }

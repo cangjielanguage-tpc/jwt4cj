@@ -4,9 +4,6 @@
 // EXEC: ./main
 from std import fs.*
 from std import os.posix.*
-from crypto4cj import rsacj.*
-from crypto4cj import sha256cj.*
-from crypto4cj import utils.*
 from jwt4cj import jwt.algorithms.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.interfaces.*

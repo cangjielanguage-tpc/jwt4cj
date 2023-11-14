@@ -7,11 +7,11 @@ from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.*
 from jwt4cj import jwt.utils.*
-from crypto4cj import rsacj.*
 from std import os.posix.*
 from std import fs.*
 from std import unittest.*
 from std import unittest.testmacro.*
+from crypto import keys.*
 
 main() {
     let header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9"
@@ -28,10 +28,10 @@ main() {
     // let pubkey: KeyType = MyKeyType({ => pub_key})
     // let kp: KeyProvider<KeyType, KeyType> = RSAKeyProviderFileImpl(prikey, pubkey)
 
-    let privatekey = RSA.readPriKeyfromFile(pri_key)
-    var pri = privatekey.getPrivateKey()
-    var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
-    @Assert(pub, privatekey.getPublicKey())
+    let privatekey = String.fromUtf8(File.readFrom(pri_key))
+    var pri = RSAPrivateKey.decodeFromPem(privatekey)
+    var pub = RSAPublicKey(pri)
+    // @Assert(pub, privatekey.getPublicKey())
     let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
 
     let rsa = Algorithm.RSA256(kp)

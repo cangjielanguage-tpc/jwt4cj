@@ -4,13 +4,7 @@
   "name": "jwt4cj",
   "description": "nothing here",
   "version": "0.0.1",
-  "requires": {
-    "crypto4cj": {
-      "organization": "cangjie",
-      "version": "0.0.7",
-      "path": "./crypto4cj"
-    }
-  },
+  "requires": {},
   "package_requires": {
     "path_option": [],
     "package_option": {}

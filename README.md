@@ -16,10 +16,11 @@
 
 ### 特性
 
+- 🚀 支持 JWT 创建与解析
+- 🚀 支持 Payload 校验
 - 🚀 支持 HMAC 算法签名及验证
-- 🚀 支持 ECDSA 算法签名及验证
 - 🚀 支持 RSA 算法签名及验证
-- 🚀 支持 Payload 字段校验
+- 🚀 支持 ECDSA 算法签名及验证
 
 ### 路线
 
@@ -63,9 +64,6 @@
 ### 编译（win/linux）
 
 ```shell
-# jwt4cj依赖crypto4cj, 需要在module.json中requires项配置crypto4cj目录
-# crypto4cj编译准备参考其说明
-# 然后在jwt4cj目录build
 cjpm build
 ```
 

@@ -1,5 +1,4 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
-// 3rd_party_lib:jwt4cj/ci_lib/crypto4cj
 //data_file:test_rsa_privateKey.pem 
 //data_file:test_rsa_publicKey.pem
 from jwt4cj import jwt.algorithms.*
@@ -8,15 +7,14 @@ from jwt4cj import jwt.interfaces.*
 from jwt4cj import jwt.impl.*
 from jwt4cj import jwt.exception.*
 from jwt4cj import jwt.*
-from crypto4cj import hmaccj.*
-from crypto4cj import eccj.*
-from crypto4cj import rsacj.*
+from encoding import hex.*
 from std import unittest.*
 from std import collection.*
 from std import time.*
 from encoding import json.*
 from std import os.posix.*
 from std import fs.*
+from crypto import keys.*
 
 @Test
 public class JWTTest {
@@ -34,15 +32,13 @@ public class JWTTest {
         "PeuJlL-zJaeZUeECfSL5xxHr8YuX23qYoKZdKEeYuUSC1RDGh2YFIJlkYXBCOVku1OyYo4HFvnYh543aPvn78OruBtwRUPmdsWcaqxF9hVONFMYij1wIxKdoSqUGlvXZBRilVkDmqCPf59vWVGl5sBhaGtKRBuMwNO83bXOlSQZv_5FlrH7fdVpXe2ff14wvGYpCRyDO-sTuK9EdcFrafqKb6kdL8wY4-65Ya4lflAAHFrOBVxODYxRItgcWBy-pnPmo51qI05zUHGIyWczAOUc-hwVi4uYzzpeAdoGRKZbixOyPOqPgYc9o_Sb5QEOmtT4EDKkOpu_J0vDIn623vw"
         let token = "${header}.${payload}.${secret}"
         let src: Array<UInt8> = "${header}.${payload}".toArray()
-        let privatekey = RSA.readPriKeyfromFile(pri_key)
-        var pri = privatekey.getPrivateKey()
-        var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
-        @Assert(pub, privatekey.getPublicKey())
+        let privatekey = String.fromUtf8(File.readFrom(pri_key))
+        var pri = RSAPrivateKey.decodeFromPem(privatekey)
+        var pub = RSAPublicKey(pri)
         let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
         let rsa = Algorithm.RSA256(kp)
         let signResBytes = rsa.sign(src)
         let signresStr = Base64Util.urlEncode(signResBytes)
-        // println(signresStr)
         @Assert(signresStr, secret)
         let jd = JWTDecoder(token)
         try {
@@ -59,15 +55,14 @@ public class JWTTest {
         "RGy5CnyyIxw3FcYtWBFJUQwgU1sIu9Vm_9TaWbxuhPjWQyIhaDH3tdC2lEseEZeh78tMHLgzYf7m3PLuFdkosdC-7_OCeFtIFqtmdFJHZPVWmnqlHEJuE95moYTtaKnUBXXomleRDtN4KB3obFwJe6q4R01IQgBjSKmmqW7oUBy1yiei5e39WKEX2_tGAoZax8sczANNAyQNrfwtRZDv1cBQ5wLRhRF3mEwAb78dgmJ7E30vXdzknKT2AUZEi1rc4cog-VVo4p9Kdhr5BrwuQ0jag9SUFQ8fab-YUNhp2OGBdhqrwyoXeemYHDAfZPfOpbaTfnAv285_FDSdIpf9IQ"
         let token = "${header}.${payload}.${secret}"
         let src: Array<UInt8> = "${header}.${payload}".toArray()
-        let privatekey = RSA.readPriKeyfromFile(pri_key)
-        var pri = privatekey.getPrivateKey()
-        var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
-        @Assert(pub, privatekey.getPublicKey())
+        let privatekey = String.fromUtf8(File.readFrom(pri_key))
+        var pri = RSAPrivateKey.decodeFromPem(privatekey)
+        var pub = RSAPublicKey(pri)
+        // @Assert(pub, privatekey.getPublicKey())
         let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
         let rsa = Algorithm.RSA384(kp)
         let signResBytes = rsa.sign(src)
         let signresStr = Base64Util.urlEncode(signResBytes)
-        // println(signresStr)
         @Assert(signresStr, secret)
         let jd = JWTDecoder(token)
         try {
@@ -84,15 +79,13 @@ public class JWTTest {
         "FwUyA4jkTtcCSpvbIpGyrzJAEpmaw6Z5k48XXySPnsUg-U8RNuqGGjpu9Q2phx4MiPS5DTR9auoAEXV6n4C8Tz2gWbI0u4u0ZKZ5cCVhhzah5qkboYgWSuMDnzIK3Ikf8hbKjl2XwP2v2pM1nKAXETLBXx_Ov13vsxr8WF17SzlrFAGp4WqCrrI4c_wAwjJaPueDyMo3NyJ3XBBSvd0RS4uN399bDVADtRDtYsy5KSrNsnxVYkIJk5v7iHNhMyoDnxXjfHyCcAAQe-awCbwtG5sc6WPrlIbZGGsy0mepQu_T3X2GytaCKviWOz4ZA2hQ6930wnZq5oF0Zi1rhz_VSQ"
         let token = "${header}.${payload}.${secret}"
         let src: Array<UInt8> = "${header}.${payload}".toArray()
-        let privatekey = RSA.readPriKeyfromFile(pri_key)
-        var pri = privatekey.getPrivateKey()
-        var pub = RSA.readPubKeyfromFile(pub_key).getPublicKey()
-        @Assert(pub, privatekey.getPublicKey())
+        let privatekey = String.fromUtf8(File.readFrom(pri_key))
+        var pri = RSAPrivateKey.decodeFromPem(privatekey)
+        var pub = RSAPublicKey(pri)
         let kp: RSAKeyProvider<RSAPublicKey, RSAPrivateKey> = RSAKeyProviderImpl(pri, pub)
         let rsa = Algorithm.RSA512(kp)
         let signResBytes = rsa.sign(src)
         let signresStr = Base64Util.urlEncode(signResBytes)
-        // println(signresStr)
         @Assert(signresStr, secret)
         let jd = JWTDecoder(token)
         try {
@@ -101,5 +94,5 @@ public class JWTTest {
             returnTag = 1
         }
         @Assert(returnTag, 0)
-    }
+    } 
 }
