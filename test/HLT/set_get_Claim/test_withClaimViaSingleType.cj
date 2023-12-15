@@ -37,7 +37,7 @@ public class JWTTest {
         [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10])
 
     var token = ""
-    var t1: DateTime = DateTime.now().inUTC()
+    var t1: DateTime = DateTime.fromUnixTimeStamp(DateTime.now().toUnixTimeStamp().toSeconds()*Duration.second)
     var t2 = DateTime.parse("2021-08-05T21:08:04Z")
 
     @TestCase
