@@ -19,3 +19,5 @@ module-lock.json
 .cjpm-history
 *.macrocall
 .cache
+cjpm.lock
+target
