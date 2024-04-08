@@ -13,22 +13,15 @@ public class RSAKeyProviderFileImpl <: RSAKeyProvider<RSAPublicKey, RSAPrivateKe
         }
     }
 
-    public init(filePath: String, password!: ?String = None) {
-        let bytes = File.readFrom(filePath)
-        let text = String.fromUtf8(bytes)
-        this.rsaPublicKey = try {
-            RSAPublicKey.decodeFromPem(text)
-        } catch (_) {
-            None
-        }
-        this.rsaPrivateKey = try {
-            RSAPrivateKey.decodeFromPem(text, password: password)
-        } catch (_) {
-            None
-        }
+    public init(filePath: String) {
+        this(filePath, filePath, None)
     }
 
-    public init(privateKeyFile: ?String, publicKeyFile: ?String, password!: ?String = None) {
+    public init(privateKeyFile: ?String, publicKeyFile: ?String) {
+        this(privateKeyFile, publicKeyFile, None)
+    }
+
+    public init(privateKeyFile: ?String, publicKeyFile: ?String, pwd: ?String) {
         this.rsaPublicKey = try {
             let textpub = String.fromUtf8(File.readFrom(publicKeyFile.getOrThrow()))
             RSAPublicKey.decodeFromPem(textpub)
@@ -37,7 +30,7 @@ public class RSAKeyProviderFileImpl <: RSAKeyProvider<RSAPublicKey, RSAPrivateKe
         }
         this.rsaPrivateKey = try {
             let textpri = String.fromUtf8(File.readFrom(privateKeyFile.getOrThrow()))
-            RSAPrivateKey.decodeFromPem(textpri, password: password)
+            RSAPrivateKey.decodeFromPem(textpri, password: pwd)
         } catch (_) {
             None
         }
