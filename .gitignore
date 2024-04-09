@@ -21,3 +21,4 @@ module-lock.json
 .cache
 cjpm.lock
 target
+test_temp
