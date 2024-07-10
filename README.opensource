@@ -3,9 +3,9 @@
         "Name": "jwt",
         "License": "MIT License",
         "License File": "LICENSE",
-        "Version Number": "v0.0.1",
-        "Owner": "@shawnzhao19 @heimudan @yangtao242"
+        "Version Number": "v4.2.1",
+        "Owner": "auth0"
         "Upstream URL": "https://github.com/auth0/java-jwt",
-        "Description": "A cangjie implemetation of JSON Wen Token (JWT) - RFC7519"
+        "Description": "An implemetation of JSON Wen Token (JWT) - RFC7519"
     }
 ]
