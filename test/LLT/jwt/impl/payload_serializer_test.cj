@@ -1,9 +1,9 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from std import collection.*
-from std import time.*
-from encoding import json.*
-from jwt4cj import jwt.impl.*
+internal import std.collection.*
+internal import std.time.*
+internal import encoding.json.*
+internal import jwt4cj.*
 
 main(){
     let map = HashMap<String, Any>()
@@ -19,7 +19,7 @@ main(){
   "String": "String1",
   "Bool": true,
   "Int64": 64,
-  "Float64": 3.140000,
+  "Float64": 3.14,
   "Time": 1673820000,
   "Array": [
     true

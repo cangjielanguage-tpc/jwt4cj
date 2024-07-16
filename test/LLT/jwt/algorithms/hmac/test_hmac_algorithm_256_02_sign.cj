@@ -1,8 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from std import collection.*
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.utils.*
+internal import std.collection.*
+internal import jwt4cj.*
 
 main() {
     let hmac1 = Algorithm.HMAC256("pri_key")

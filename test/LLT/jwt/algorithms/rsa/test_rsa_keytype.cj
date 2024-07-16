@@ -2,16 +2,12 @@
 // DEPENDENCE: test_rsa_publicKey.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
-from jwt4cj import jwt.utils.*
-from std import os.posix.*
-from std import fs.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from crypto import keys.*
+internal import jwt4cj.*
+internal import std.os.posix.*
+internal import std.fs.*
+internal import std.unittest.*
+import std.unittest.testmacro.Assert
+internal import crypto.keys.*
 
 main() {
     let header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9"

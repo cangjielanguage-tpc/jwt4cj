@@ -1,6 +1,6 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from jwt4cj import jwt.utils.*
+internal import jwt4cj.*
 
 main() {
     let str = "as?0"

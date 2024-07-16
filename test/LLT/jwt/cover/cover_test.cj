@@ -5,18 +5,15 @@
 // DEPENDENCE: ../algorithms/ecdsa/test_ecdsa_publicKey.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from std import collection.*
-from std import time.*
-from encoding import json.*
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.impl.json.*
-from jwt4cj import jwt.*
-from encoding import json.*
-from std import collection.*
-from std import time.*
-from std import fs.*
-from crypto import keys.*
+internal import std.collection.*
+internal import std.time.*
+internal import encoding.json.*
+internal import jwt4cj.*
+internal import encoding.json.*
+internal import std.collection.*
+internal import std.time.*
+internal import std.fs.*
+internal import crypto.keys.*
 
 main() {
     println(JsonNodeClaim(JsonValue.fromStr("null")).isNull())

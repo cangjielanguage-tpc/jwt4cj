@@ -1,21 +1,17 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 // 3rd_party_lib:jwt4cj/ci_lib/crypto4cj
 
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.utils.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
+internal import jwt4cj.*
 
-from std import collection.*
-from std import time.*
-from encoding import json.*
-from std import os.posix.*
-from std import fs.*
-import secodeFuzz.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.ArrayList
+internal import std.collection.*
+internal import std.time.*
+internal import encoding.json.*
+internal import std.os.posix.*
+internal import std.fs.*
+internal import secodeFuzz.*
+internal import std.unittest.*
+import std.unittest.testmacro.*
+internal import std.collection.ArrayList
 
 
 func call_fuzz(value:Int64){

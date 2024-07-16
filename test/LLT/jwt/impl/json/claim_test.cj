@@ -1,9 +1,8 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from std import collection.*
-from encoding import json.*
-from jwt4cj import jwt.impl.json.*
-from jwt4cj import jwt.exception.*
+internal import std.collection.*
+internal import encoding.json.*
+internal import jwt4cj.*
 
 main() {
     try {

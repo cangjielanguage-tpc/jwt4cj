@@ -1,17 +1,13 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 //dependence:../utils_test/createsourcedata.cj
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.utils.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
-from encoding import hex.*
-from std import unittest.*
-from std import collection.*
-from std import time.*
-from encoding import json.*
-from std import os.posix.*
-from std import fs.*
+internal import jwt4cj.*
+internal import encoding.hex.*
+internal import std.unittest.*
+internal import std.collection.*
+internal import std.time.*
+internal import encoding.json.*
+internal import std.os.posix.*
+internal import std.fs.*
 
 /**
    public static func create(): Builder
@@ -92,7 +88,11 @@ public class JWTTest {
                 str_1 = v.toString()
             }
         }
-        @Assert(str_1.size,172)
+        println(arrStr[1])
+        println(str_1)
+        println(str_1.size)
+        println((arrL_JsonValue as ToString)?.toString().size)
+        @Assert(str_1.size,172-11)
         @Assert(returnTag, 0)
     }
 
@@ -166,7 +166,7 @@ public class JWTTest {
                 str_1 = v.toString()
             }
         }
-        @Assert(str_1,"[[0.001200,-2.360000,598.144000],[0.001200,-2.360000,598.144000]]")
+        @Assert(str_1,"[[0.0012,-2.36,598.144],[0.0012,-2.36,598.144]]")
         @Assert(strActual,"iss\"Hello Cangjie Lang\"你好仓颉！【】")
         @Assert(returnTag, 0)
     }

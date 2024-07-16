@@ -1,18 +1,14 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 //dependence:../utils_test/createsourcedata.cj
 //data_file:../utils_test/test_rsa_publicKey.pem
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.utils.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
-from encoding import hex.*
-from std import unittest.*
-from std import collection.*
-from std import time.*
-from encoding import json.*
-from std import os.posix.*
-from std import fs.*
+internal import jwt4cj.*
+internal import encoding.hex.*
+internal import std.unittest.*
+internal import std.collection.*
+internal import std.time.*
+internal import encoding.json.*
+internal import std.os.posix.*
+internal import std.fs.*
 
 /**
    public static func create(): Builder

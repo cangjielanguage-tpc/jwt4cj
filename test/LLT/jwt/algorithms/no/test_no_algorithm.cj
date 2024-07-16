@@ -1,9 +1,6 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.exception.*
-from jwt4cj import jwt.*
+internal import jwt4cj.*
 
 main() {
     var noa = Algorithm.none()

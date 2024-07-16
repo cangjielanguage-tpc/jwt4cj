@@ -1,8 +1,8 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from std import collection.*
-from jwt4cj import jwt.algorithms.*
-from encoding import hex.*
+internal import std.collection.*
+internal import encoding.hex.*
+internal import jwt4cj.*
 
 main() {
     var hmac1 = Algorithm.HMAC384("test1280".toArray())
