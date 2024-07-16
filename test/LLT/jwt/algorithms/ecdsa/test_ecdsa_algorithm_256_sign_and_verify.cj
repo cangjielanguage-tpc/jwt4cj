@@ -3,12 +3,8 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from std import os.posix.*
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
-from jwt4cj import jwt.utils.*
+internal import std.os.posix.*
+internal import jwt4cj.*
 
 main() {  
     var path: String = getcwd()

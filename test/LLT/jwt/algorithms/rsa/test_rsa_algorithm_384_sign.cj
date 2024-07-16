@@ -2,13 +2,9 @@
 // DEPENDENCE: test_rsa_publicKey_02.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from jwt4cj import jwt.algorithms.*
-from jwt4cj import jwt.interfaces.*
-from jwt4cj import jwt.impl.*
-from jwt4cj import jwt.*
-from jwt4cj import jwt.utils.*
-from std import os.posix.*
-from std import fs.*
+internal import jwt4cj.*
+internal import std.os.posix.*
+internal import std.fs.*
 
 main() {
 

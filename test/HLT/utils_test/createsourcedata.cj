@@ -1,4 +1,4 @@
-from std import random.*
+internal import std.random.*
 
 public class SourceData {
     public init() {}
@@ -42,7 +42,7 @@ public class SourceData {
     var jv2: JsonValue = JsonValue.fromStr(jsonStr2)
 
     // ######################################################################################
-    public func generateStringMap(para_1: Array<Char>): HashMap<String, String> {
+    public func generateStringMap(para_1: Array<Rune>): HashMap<String, String> {
         var map_1: HashMap<String, String> = HashMap<String, String>()
         for (i in 0..para_1.size) {
             map_1.put("K_${i+1}", String(para_1))
@@ -51,7 +51,7 @@ public class SourceData {
     }
 
     public func generateString(len: Int64): String {
-        var charArr: Array<Char> = Array<Char>(len, item: 'Q')
+        var charArr: Array<Rune> = Array<Rune>(len, item: r'Q')
         return String(charArr)
     }
 
