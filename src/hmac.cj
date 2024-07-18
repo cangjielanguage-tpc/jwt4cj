@@ -1,10 +1,6 @@
 /*
- * Copyright (c) Huawei Technologies Co., Ltd. 2022-2023. All rights resvered.
+ * Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights resvered.
  */
-/*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
- */
-
 /**
  * @file
  * This file is HMAC.
