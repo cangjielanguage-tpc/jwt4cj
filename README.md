@@ -190,6 +190,10 @@ main() {
 }
 ```
 
+## 开源协议
+
+本项目基于 [MIT License](LICENSE) , 请自由享受和参与开源
+
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 
 欢迎给我们提交PR，欢迎给我们提交Issue，欢迎参与任何形式的贡献。
