@@ -10,17 +10,17 @@
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
-## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/>介绍
+## 介绍
 
-一个基于[RFC 7519](https://www.rfc-editor.org/rfc/rfc7519) 的 JSON Web Token 和 JSON Web Signature的仓颉库。
+一个基于 RFC 7519 的 JSON Web Token 和 JSON Web Signature的仓颉库。
 
 ### 特性
 
-- 🚀 支持 JWT 创建与解析
-- 🚀 支持 Payload 校验
-- 🚀 支持 HMAC 算法签名及验证
-- 🚀 支持 RSA 算法签名及验证
-- 🚀 支持 ECDSA 算法签名及验证
+- 支持 JWT 创建与解析
+- 支持 Payload 校验
+- 支持 HMAC 算法签名及验证
+- 支持 RSA 算法签名及验证
+- 支持 ECDSA 算法签名及验证
 
 ### 路线
 
@@ -28,7 +28,7 @@
 <img src="./doc/assets/milestone.png" width="100%" >
 </p>
 
-## <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构
+## 架构
 
 ### 源码目录
 
@@ -59,7 +59,7 @@
 
 主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
 
-## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
+## 使用说明
 
 ### 编译（win/linux）
 
@@ -194,6 +194,6 @@ main() {
 
 本项目基于 [MIT License](LICENSE) , 请自由享受和参与开源
 
-## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
+## 参与贡献
 
 欢迎给我们提交PR，欢迎给我们提交Issue，欢迎参与任何形式的贡献。
