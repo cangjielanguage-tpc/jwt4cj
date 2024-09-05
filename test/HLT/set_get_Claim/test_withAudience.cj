@@ -1,5 +1,6 @@
-// 3rd_party_lib:jwt4cj/build/jwt4cj
-//dependence:../utils_test/createsourcedata.cj
+// DEPENDENCE: ../utils_test/createsourcedata.cj
+// EXEC: cjc %import-path %L %l %f createsourcedata.cj --test
+// EXEC: export cjHeapSize=1GB && ./main
 internal import jwt4cj.*
 internal import encoding.hex.*
 internal import std.unittest.*
