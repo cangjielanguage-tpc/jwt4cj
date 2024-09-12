@@ -29,8 +29,7 @@ public class JWTTest {
     let map_String: HashMap<String, Any> = ins_1.generateSourceDataWithString()[2]
     let map_Bool: HashMap<String, Any> = ins_1.generateSourceDataWithBool()[2]
     let entry: (ArrayList<String>, ArrayList<Any>) = ins_1.getMapEntry(map_String)
-    let arrStr: Array<String> = Array<String>(
-        [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10])
+    let arrStr: Array<String> = [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10]
 
     var token = ""
     var t1: DateTime = DateTime.fromUnixTimeStamp(DateTime.now().toUnixTimeStamp().toSeconds()*Duration.second)

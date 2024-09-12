@@ -32,10 +32,8 @@ public class JWTTest {
     var jwtStr: String = ""
     var strActual: String = ""
     let ins_1: SourceData = SourceData()
-    var arrStr_header = Array<String>(["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty",
-    "JWT"])
-    var arrStr_payload = Array<String>(
-        ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"])
+    var arrStr_header = ["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty", "JWT"]
+    var arrStr_payload = ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"]
 
     var token: String = ""
     let path: String = getcwd()
@@ -55,7 +53,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withAudience(Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]))
+        jwtBuilder.withAudience(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")
         jwtStr = jwtBuilder.sign(alg_rsa_256)
@@ -88,7 +86,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withAudience(Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]))
+        jwtBuilder.withAudience(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")
         jwtStr = jwtBuilder.sign(alg_rsa_384)
@@ -110,7 +108,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withAudience(Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]))
+        jwtBuilder.withAudience(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         let strArrL: ArrayList<String> = ArrayList<String>(
             ["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         require512.withAnyOfAudience(strArrL) 

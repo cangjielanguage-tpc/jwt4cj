@@ -30,8 +30,7 @@ public class JWTTest {
     let map_Cla_1: HashMap<String, Any> = ins_1.generateSourceDataWithCla_1()[2]
 
     let entry: (ArrayList<String>, ArrayList<Any>) = ins_1.getMapEntry(map_String)
-    let arrStr: Array<String> = Array<String>(
-        [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10])
+    let arrStr: Array<String> = [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10]
     var claimMap: Map<String, Claim> = HashMap<String, Claim>()
     var token = ""
     var t1: DateTime = DateTime.now()
@@ -274,7 +273,7 @@ public class JWTTest {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
         jwtBuilder.withIssuer(entry[0][4]) //拼接Str  
-        let map_Array_Int64: Array<Int64> = Array<Int64>([12, -236, 598144]) //Array<Int64>
+        let map_Array_Int64: Array<Int64> = [12, -236, 598144] //Array<Int64>
         try {
             jwtBuilder.withClaim(arrStr[2], HashMap<String, Any>([("map_Array<Int64>", map_Array_Int64)]))
         } catch (e1: Exception) {

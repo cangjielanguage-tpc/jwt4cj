@@ -79,7 +79,7 @@ public class HMACAlgorithm <: Algorithm {
         headerBytes: Array<UInt8>,
         payloadBytes: Array<UInt8>
     ): Array<UInt8> {
-        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), item: 0)
+        var contentBytes: Array<UInt8> = Array<UInt8>((headerBytes.size + payloadBytes.size + 1), repeat: 0)
         headerBytes.copyTo(contentBytes, 0, 0, headerBytes.size)
         contentBytes[headerBytes.size] = ".".toArray()[0]
         payloadBytes.copyTo(contentBytes, 0, (headerBytes.size + 1), payloadBytes.size)

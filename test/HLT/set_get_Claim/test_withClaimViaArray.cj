@@ -29,8 +29,7 @@ public class JWTTest {
     let map_String: HashMap<String, Any> = ins_1.generateSourceDataWithString()[2]
     let arrL_Bool: ArrayList<Any> = ins_1.generateSourceDataWithBool()[1]
     let entry: (ArrayList<String>, ArrayList<Any>) = ins_1.getMapEntry(map_String)
-    let arrStr: Array<String> = Array<String>(
-        [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10])
+    let arrStr: Array<String> = [ins_1.s3, ins_1.s4, ins_1.s5, ins_1.s6, ins_1.s7, ins_1.s8, ins_1.s9, ins_1.s10]
     var claimMap: Map<String, Claim> = HashMap<String, Claim>()
     var token = ""
 
@@ -63,7 +62,7 @@ public class JWTTest {
         let jwtBuilder: Builder = JWT.create()
         jwtBuilder.withIssuer(entry[0][1]) //中文字符
         jwtBuilder.withKeyId(entry[0][5])
-        jwtBuilder.withArrayClaim(arrStr[1], Array<Int64>([12, 98948465, -2654])) // arr_String:Array<Int64> 
+        jwtBuilder.withArrayClaim(arrStr[1], [12, 98948465, -2654]) // arr_String:Array<Int64> 
         jwtStr = jwtBuilder.sign(Algorithm.none())
         let jwtDecoder = JWTDecoder(jwtStr)
         token = jwtDecoder.getToken()
@@ -109,7 +108,7 @@ public class JWTTest {
         @Assert(strActual, "iss\"Hello Cangjie Lang\"")
 
         /* ########################################### */
-        jwtBuilder.withArrayClaim(arrStr[0], Array<Int64>(521239, item: 110)) // Kong arr 
+        jwtBuilder.withArrayClaim(arrStr[0], Array<Int64>(521239, repeat: 110)) // Kong arr 
         jwtBuilder.withJWTId("withJWTId_Payload") // 设置Payload 的Claim对象
         jwtStr = jwtBuilder.sign(Algorithm.none())
         let jwtDecoder2 = JWTDecoder(jwtStr)

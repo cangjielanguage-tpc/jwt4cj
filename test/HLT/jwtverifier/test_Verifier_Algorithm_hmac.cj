@@ -29,10 +29,8 @@ public class JWTTest {
     var jwtStr: String = ""
     var strActual: String = ""
     let ins_1: SourceData = SourceData()
-    var arrStr_header = Array<String>(["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty",
-    "JWT"])
-    var arrStr_payload = Array<String>(
-        ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"])
+    var arrStr_header = ["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty", "JWT"]
+    var arrStr_payload = ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"]
     var token: String = ""
     let require256 = JWT.require(Algorithm.HMAC256("Algorithm.HMAC256"));
     let require384 = JWT.require(Algorithm.HMAC384("Algorithm.HMAC384"));
@@ -44,10 +42,10 @@ public class JWTTest {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withArrayClaim("arrayClaim", Array<Int64>([521239, -125, 3654]))
+        jwtBuilder.withArrayClaim("arrayClaim", [521239, -125, 3654])
         jwtBuilder.withClaim("arrLClaim_int64", ArrayList<Any>([521239, -125, 3654]))
         jwtBuilder.withClaim("arrLClaim_str", ArrayList<Any>(["521239", "-125", "3654"]))
-        jwtBuilder.withAudience(Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]))
+        jwtBuilder.withAudience(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("Algorithm.HMAC256"))
@@ -55,7 +53,7 @@ public class JWTTest {
         /* ########################JWTVerifier########################### */
         require256.withIssuer("iss_payload")
         require256.withSubject("subject_payload")
-        require256.withArrayClaim("arrayClaim", Array<Int64>([521239, -125, 3654])) // public func withArrayClaim(name: String, items: Array<Int64>): Verification 
+        require256.withArrayClaim("arrayClaim", [521239, -125, 3654]) // public func withArrayClaim(name: String, items: Array<Int64>): Verification 
         require256.withArrayClaim("arrLClaim_int64", [521239, -125, 3654]) // public func withArrayClaim(name: String, items: ArrayList<Int64>): Verification
         require256.withArrayClaim("arrLClaim_str", ["521239", "-125", "3654"]) // public func withArrayClaim(name: String, items: ArrayList<String>): Verification
         let builder: JWTVerifier = require256.build()
@@ -96,7 +94,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withArrayClaim("arrayClaim", Array<Int64>([521239, -125, 3654]))
+        jwtBuilder.withArrayClaim("arrayClaim", [521239, -125, 3654])
         jwtBuilder.withClaim("aud", ArrayList<Any>(["aud_1", "aud_2", "aud_3"]))
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")
@@ -132,7 +130,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
-        jwtBuilder.withArrayClaim("arrayClaim", Array<Int64>([521239, -125, 3654]))
+        jwtBuilder.withArrayClaim("arrayClaim", [521239, -125, 3654])
         jwtBuilder.withClaim("aud", ArrayList<Any>(["aud_1", "aud_2", "aud_3"]))
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload")

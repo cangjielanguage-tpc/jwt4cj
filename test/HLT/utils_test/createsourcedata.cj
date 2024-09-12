@@ -51,7 +51,7 @@ public class SourceData {
     }
 
     public func generateString(len: Int64): String {
-        var charArr: Array<Rune> = Array<Rune>(len, item: r'Q')
+        var charArr: Array<Rune> = Array<Rune>(len, repeat: r'Q')
         return String(charArr)
     }
 
@@ -60,7 +60,7 @@ public class SourceData {
         let str_2: String = s2 + s4 + s7 + s9 //单+多
         let str_3: String = s7 + s8 + s9 + s10 //多+多
         let str_4: String = "插值==>${s5}::${s10}" //插值
-        let strArr_D1: Array<Any> = Array<Any>([str_1, str_2, str_3, str_4])
+        let strArr_D1: Array<Any> = [str_1, str_2, str_3, str_4]
         let strArrL_D1: ArrayList<Any> = ArrayList<Any>([str_1, str_2, str_3, str_4])
         let strMap_D1: HashMap<String, Any> = HashMap<String, Any>(
             [(s1, s3), (s5, s9), (s7, str_4), (s10, str_3), (str_1, str_2), (str_4, s8)])
@@ -69,7 +69,7 @@ public class SourceData {
     }
 
     public func generateSourceDataWithBool(): (Array<Any>, ArrayList<Any>, HashMap<String, Any>) {
-        let boolArr_D1: Array<Any> = Array<Any>([b1, b2, b1 == b2, -23 is UInt8])
+        let boolArr_D1: Array<Any> = [b1, b2, b1 == b2, -23 is UInt8]
         let boolArrL_D1: ArrayList<Any> = ArrayList<Any>([b1, b2, b1 == b1, -23 is UInt8])
         let boolMap_D1: HashMap<String, Any> = HashMap<String, Any>([(s1, b1), (s5, b2), (s7, b1 == b2),
         (s10, -23 is UInt8)])
@@ -78,7 +78,7 @@ public class SourceData {
     }
 
     public func generateSourceDataWithJsonValue(): (Array<Any>, ArrayList<Any>, HashMap<String, Any>) {
-        let jsonValueArr_D1: Array<Any> = Array<Any>([jv1, jv2])
+        let jsonValueArr_D1: Array<Any> = [jv1, jv2]
         let jsonValueArrL_D1: ArrayList<Any> = ArrayList<Any>([jv1, jv2])
         let jsonValueMap_D1: HashMap<String, Any> = HashMap<String, Any>([(s5, jv1), (s7, jv2), (s10, jv1)])
         let tuple_res: (Array<Any>, ArrayList<Any>, HashMap<String, Any>) = (jsonValueArr_D1, jsonValueArrL_D1,
@@ -87,7 +87,7 @@ public class SourceData {
     }
 
     public func generateSourceDataWithTime(): (Array<Any>, ArrayList<Any>, HashMap<String, Any>) {
-        let timeArr_D1: Array<Any> = Array<Any>([t1, t2, t3, t4])
+        let timeArr_D1: Array<Any> = [t1, t2, t3, t4]
         let timeArrL_D1: ArrayList<Any> = ArrayList<Any>([t1, t2, t3, t4])
         let timeMap_D1: HashMap<String, Any> = HashMap<String, Any>([(s5, t1), (s7, t2), (s10, t3), (s8, t4)])
         let tuple_res: (Array<Any>, ArrayList<Any>, HashMap<String, Any>) = (timeArr_D1, timeArrL_D1, timeMap_D1)
@@ -95,7 +95,7 @@ public class SourceData {
     }
 
     public func generateSourceDataWithCla_1(): (Array<Any>, ArrayList<Any>, HashMap<String, Any>) {
-        let claArr_D1: Array<Any> = Array<Any>([Cla_1(-10), Cla_1(99), Cla_1(2562323)])
+        let claArr_D1: Array<Any> = [Cla_1(-10), Cla_1(99), Cla_1(2562323)]
         let claArrL_D1: ArrayList<Any> = ArrayList<Any>([Cla_1(-10), Cla_1(99), Cla_1(2562323)])
         let claMap_D1: HashMap<String, Any> = HashMap<String, Any>(
             [(s5, Cla_1(-10)), (s7, Cla_1(99)), (s10, Cla_1(2562323))])
@@ -125,7 +125,7 @@ public class SourceData {
     }
 
     public func convertArrAnyToArrString(arrAny: Array<Any>): Array<String> {
-        var arr_Str2: Array<String> = Array<String>(arrAny.size, item: "H")
+        var arr_Str2: Array<String> = Array<String>(arrAny.size, repeat: "H")
         for (i in 0..arrAny.size) {
             arr_Str2[i] = (arrAny[i] as String).getOrThrow()
         }
@@ -143,7 +143,7 @@ public class SourceData {
 
     public func getRandomStrArr(enter: Int64): Array<String> {
         let m: Random = Random(32)
-        var resArr: Array<String> = Array<String>(enter, item: "Q")
+        var resArr: Array<String> = Array<String>(enter, repeat: "Q")
         for (i in 0..enter) {
             resArr[i] = m.nextInt64(enter).toString()
         }

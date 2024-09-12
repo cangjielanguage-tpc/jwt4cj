@@ -98,7 +98,7 @@ public class JWTTest {
         returnTag = -1
         let jwtBuilder: Builder = JWT.create()
         jwtBuilder.withHeader(map_Bool)
-        jwtBuilder.withAudience(Array<String>(["2021-08-05T21:08:04Z"]))
+        jwtBuilder.withAudience(["2021-08-05T21:08:04Z"])
         jwtBuilder.withNotBefore(t3)
         jwtStr = jwtBuilder.sign(Algorithm.HMAC256("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
