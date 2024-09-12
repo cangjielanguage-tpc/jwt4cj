@@ -94,7 +94,7 @@ func buildContent(header: String, payload: String): Array<UInt8> {
 }
 
 func buildContent(header: Array<UInt8>, payload: Array<UInt8>): Array<UInt8> {
-    let content: Array<UInt8> = Array<UInt8>((header.size + payload.size + 1), item: 0)
+    let content: Array<UInt8> = Array<UInt8>((header.size + payload.size + 1), repeat: 0)
     header.copyTo(content, 0, 0, header.size)
     content[header.size] = ".".toArray()[0]
     payload.copyTo(content, 0, (header.size + 1), payload.size)

@@ -60,7 +60,7 @@ public class JWTTest {
         let jwtBuilder: Builder = JWT.create()
         jwtBuilder.withHeader(map_Bool)
         try {
-            jwtBuilder.withAudience(Array<String>(["2021-08-05T21:08:04+08:00"]))
+            jwtBuilder.withAudience(["2021-08-05T21:08:04+08:00"])
         } catch (e1: Exception) {
             returnTag = 1
         }

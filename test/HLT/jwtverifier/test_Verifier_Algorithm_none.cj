@@ -30,10 +30,8 @@ public class JWTTest {
     var strActual: String = ""
     let ins_1: SourceData = SourceData()
 
-    var arrStr_header = Array<String>(["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty",
-    "JWT"])
-    var arrStr_payload = Array<String>(
-        ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"])
+    var arrStr_header = ["k_header_1", "v_header_1", "kid", "keyId", "alg", "none", "typ", "JWT", "cty", "JWT"]
+    var arrStr_payload = ["iss", "iss_payload", "sub", "subject_payload", "jti", "jwtId_payload", "k_String", "abaaba"]
     var jsonStr_header = ##"{"k_header_1":"v_header_1","kid":"keyId","alg":"none","typ":"JWT","cty":"JWT"}"##
     var jsonStr_payload =
         ##"{"iss":"iss_payload","sub":"subject_payload","aud":["aud1","aud2","\"Hello Cangjie Lang\"","你好仓颉！【】"],"exp":3673835050,"nbf":1673835050,"iat":1673835000,"jti":"jwtId_payload","iat":"iat_payload","k_bool":true,"ddd":"dfdddff","k_int64":64,"k_float64":3.14,"k_String":"abaaba","k_time":1673850000,"k_map":{"mk2":"mv2"},"k_list":[56.51,41.96],"k_null":null,"k_arraystring":["astr1","astr2"],"arrayint":[684,64],"pk1":"pv1","pk2":"pv2"}"##
@@ -54,7 +52,7 @@ public class JWTTest {
         jwtBuilder.withClaim("k_Int64", 1265)
         jwtBuilder.withClaim("k_float64", -12.365)
         jwtBuilder.withClaim("k_Time", t1)
-        jwtBuilder.withAudience(Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]))
+        jwtBuilder.withAudience(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload_1")
         jwtBuilder.withIssuer("iss_payload_2")
@@ -104,7 +102,7 @@ public class JWTTest {
         let jwtBuilder: Builder = JWT.create()
         ins_1.createClaim(jwtBuilder, arrStr_header, arrStr_payload)
         jwtBuilder.withClaim("iat", "iat12466") // 设置的Claim "iat"的属性值不符合其申明，在校验时会抛异常
-        let strArr: Array<String> = Array<String>(["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"])
+        let strArr: Array<String> = ["aud1", "aud2", "\"Hello Cangjie Lang\"", "你好仓颉！【】"]
         jwtBuilder.withAudience(strArr)
         jwtBuilder.withJWTId("withJWTId")
         jwtBuilder.withIssuer("iss_payload_1")
