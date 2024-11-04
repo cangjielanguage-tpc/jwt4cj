@@ -6,7 +6,6 @@ internal import jwt4cj.*
 internal import std.collection.*
 internal import std.time.*
 internal import encoding.json.*
-internal import std.os.posix.*
 internal import std.fs.*
 internal import secodeFuzz.*
 internal import std.unittest.*

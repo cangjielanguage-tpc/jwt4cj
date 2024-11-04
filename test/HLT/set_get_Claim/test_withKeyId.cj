@@ -6,7 +6,6 @@ internal import std.unittest.*
 internal import std.collection.*
 internal import std.time.*
 internal import encoding.json.*
-internal import std.os.posix.*
 internal import std.fs.*
 
 /**
