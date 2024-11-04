@@ -2,7 +2,7 @@
 // DEPENDENCE: test_ecdsa_publicKey.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-internal import std.os.posix.*
+internal import std.posix.*
 internal import jwt4cj.*
 
 main() {

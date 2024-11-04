@@ -3,7 +3,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 internal import jwt4cj.*
-internal import std.os.posix.*
+internal import std.posix.*
 internal import std.fs.*
 internal import std.unittest.*
 import std.unittest.testmacro.Assert
