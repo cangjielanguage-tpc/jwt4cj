@@ -20,7 +20,7 @@ main() {
 }
 func f1() {
     let map: HashMap<String, Any> = HashMap()
-    map.put("any", C())
+    map.add("any", C())
     try {
         JWT.create().withClaim("map", map).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {
@@ -30,7 +30,7 @@ func f1() {
 }
 func f2() {
     let arr: ArrayList<Any> = ArrayList()
-    arr.append(C())
+    arr.add(C())
     try {
         JWT.create().withClaim("arr", arr).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {
@@ -40,7 +40,7 @@ func f2() {
 }
 func f3() {
     let map: HashMap<String, Any> = HashMap()
-    map.put("any", C())
+    map.add("any", C())
     try {
         JWT.create().withPayload(map).sign(Algorithm.none())
     } catch (e: IllegalArgumentException) {

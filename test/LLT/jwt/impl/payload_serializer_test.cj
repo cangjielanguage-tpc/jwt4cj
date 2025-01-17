@@ -7,13 +7,13 @@ internal import jwt4cj.*
 
 main(){
     let map = HashMap<String, Any>()
-    map.put("String", "String1")
-    map.put("Bool", true)
-    map.put("Int64", 64)
-    map.put("Float64", 3.14)
-    map.put("Time", DateTime.ofEpoch(second: 1673820000, nanosecond: 0))
-    map.put("Array", JsonValue.fromStr("[true]"))
-    map.put("Object", JsonValue.fromStr(##"{"k":"v"}"##))
+    map.add("String", "String1")
+    map.add("Bool", true)
+    map.add("Int64", 64)
+    map.add("Float64", 3.14)
+    map.add("Time", DateTime.ofEpoch(second: 1673820000, nanosecond: 0))
+    map.add("Array", JsonValue.fromStr("[true]"))
+    map.add("Object", JsonValue.fromStr(##"{"k":"v"}"##))
 
     let res = ###"{
   "String": "String1",

@@ -129,19 +129,19 @@ public class BaseVerification <: Verification {
 
     public func acceptExpiresAt(leeway: Int64): Verification {
         assertPositive(leeway)
-        customLeeways.put(RegisteredClaims.EXPIRES_AT, leeway)
+        customLeeways.add(RegisteredClaims.EXPIRES_AT, leeway)
         return this
     }
 
     public func acceptNotBefore(leeway: Int64): Verification {
         assertPositive(leeway)
-        customLeeways.put(RegisteredClaims.NOT_BEFORE, leeway)
+        customLeeways.add(RegisteredClaims.NOT_BEFORE, leeway)
         return this
     }
 
     public func acceptIssuedAt(leeway: Int64): Verification {
         assertPositive(leeway)
-        customLeeways.put(RegisteredClaims.ISSUED_AT, leeway)
+        customLeeways.add(RegisteredClaims.ISSUED_AT, leeway)
         return this
     }
 
@@ -221,7 +221,7 @@ public class BaseVerification <: Verification {
     public func withClaim(name: String, predicate: (Claim, DecodedJWT) -> Bool): Verification {
         // let fun = {claim: Claim, decodedJWT: DecodedJWT => predicate(claim, decodedJWT)}
         // addCheck(name, fun)
-        expectedChecks.append(constructExpectedCheck(name, predicate))
+        expectedChecks.add(constructExpectedCheck(name, predicate))
         return this
     }
 
@@ -285,10 +285,10 @@ public class BaseVerification <: Verification {
             )
         }
 
-        expectedChecks.append(constructExpectedCheck(RegisteredClaims.EXPIRES_AT, fun))
-        expectedChecks.append(constructExpectedCheck(RegisteredClaims.NOT_BEFORE, fun1))
+        expectedChecks.add(constructExpectedCheck(RegisteredClaims.EXPIRES_AT, fun))
+        expectedChecks.add(constructExpectedCheck(RegisteredClaims.NOT_BEFORE, fun1))
         if (!ignoreIssuedAt1) {
-            expectedChecks.append(constructExpectedCheck(RegisteredClaims.ISSUED_AT, fun2))
+            expectedChecks.add(constructExpectedCheck(RegisteredClaims.ISSUED_AT, fun2))
         }
     }
 
@@ -389,7 +389,7 @@ public class BaseVerification <: Verification {
             }
             return predicate(claim, decodedJWT)
         }
-        expectedChecks.append(constructExpectedCheck(name, fun))
+        expectedChecks.add(constructExpectedCheck(name, fun))
     }
 
     private func constructExpectedCheck(claimName: String, check: (Claim, DecodedJWT) -> Bool): ExpectedCheckHolder {

@@ -47,7 +47,7 @@ public class Builder {
      */
     public func withHeader(headerClaims: Map<String, Any>): Builder {
         for ((key, value) in headerClaims) {
-            this.headerClaims.put(key, value)
+            this.headerClaims.add(key, value)
         }
         return this
     }
@@ -61,7 +61,7 @@ public class Builder {
      * @return this same Builder instance.
      */
     public func withKeyId(keyId: String): Builder {
-        this.headerClaims.put(HeaderParams.KEY_ID, keyId)
+        this.headerClaims.add(HeaderParams.KEY_ID, keyId)
         return this
     }
 
@@ -385,14 +385,14 @@ public class Builder {
      * or there was a problem with the signing key.
      */
     public func sign(algorithm: Algorithm): String {
-        headerClaims.put(HeaderParams.ALGORITHM, algorithm.getName())
+        headerClaims.add(HeaderParams.ALGORITHM, algorithm.getName())
         if (!headerClaims.contains(HeaderParams.TYPE)) {
-            headerClaims.put(HeaderParams.TYPE, "JWT")
+            headerClaims.add(HeaderParams.TYPE, "JWT")
         }
         return JWTCreator(algorithm, headerClaims, payloadClaims).sign()
     }
 
     private func addClaim(name: String, value: Any) {
-        payloadClaims.put(name, value)
+        payloadClaims.add(name, value)
     }
 }

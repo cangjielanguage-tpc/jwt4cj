@@ -9,13 +9,13 @@ main() {
     let map = HashMap<String, Any>()
 
     // let m1: Map<String, Any> = HashMap()
-    // m1.put("1", "11")
-    // map.put("m1", m1)
+    // m1.add("1", "11")
+    // map.add("m1", m1)
     let nullNode: JsonValue = JsonNull()
     let a2 = ArrayList<Any>(["asd", true, 1, 3.14, DateTime.ofEpoch(second: 1673835090, nanosecond: 0), nullNode, JsonValue.fromStr(##""jsonstring""##)]
     )
-    map.put("a2", a2)
-    map.put("", nullNode)
+    map.add("a2", a2)
+    map.add("", nullNode)
     let token = JWT.create().withClaim("map", map).sign(Algorithm.none())
     println(token)
     0
