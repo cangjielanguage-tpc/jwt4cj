@@ -74,12 +74,12 @@ main() {
 
     var rsapri = RSAPrivateKey(1024)
     var rsapub = RSAPublicKey(rsapri)
-    File.writeTo("rsa_private.pem", rsapri.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
-    File.writeTo("rsa_public.pem", rsapub.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+    File.writeTo("rsa_private.pem", rsapri.encodeToPem().encode().toArray())
+    File.writeTo("rsa_public.pem", rsapub.encodeToPem().encode().toArray())
     var ecdsapri = ECDSAPrivateKey(P224)
     var ecdsapub = ECDSAPublicKey(ecdsapri)
-    File.writeTo("ecdsa_private.pem", ecdsapri.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
-    File.writeTo("ecdsa_public.pem", ecdsapub.encodeToPem().encode().toArray(), openOption: CreateOrTruncate(false))
+    File.writeTo("ecdsa_private.pem", ecdsapri.encodeToPem().encode().toArray())
+    File.writeTo("ecdsa_public.pem", ecdsapub.encodeToPem().encode().toArray())
 
     println(RSAPublicKey(RSAKeyProviderFileImpl("test_rsa_privateKey.pem").getPrivateKey()).encodeToPem().encode())
     println(ECDSAPublicKey(ECDSAKeyProviderFileImpl("test_ecdsa_privateKey.pem").getPrivateKey()).encodeToPem().encode())

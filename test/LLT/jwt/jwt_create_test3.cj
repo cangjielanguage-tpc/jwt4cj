@@ -8,8 +8,8 @@ internal import jwt4cj.*
 main() {
     let map = HashMap<String, Any>()
     let m1: Map<String, Any> = HashMap()
-    m1.put("1","11")
-    map.put("m1", m1)
+    m1.add("1","11")
+    map.add("m1", m1)
     let token = JWT.create().withClaim("map", map).sign(Algorithm.none())
     println(token)
     0

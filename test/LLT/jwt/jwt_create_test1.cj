@@ -7,15 +7,15 @@ internal import jwt4cj.*
 
 main() {
     let timeArr: ArrayList<Any> = ArrayList()
-    timeArr.append(DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
+    timeArr.add(DateTime.ofEpoch(second: 1673850000, nanosecond: 0))
     let boolArr: ArrayList<Any> = ArrayList()
-    boolArr.append(true)
+    boolArr.add(true)
     let anyArr: ArrayList<Any> = ArrayList()
-    anyArr.append(1)
-    anyArr.append("q")
-    anyArr.append(DateTime.ofEpoch(second: 1673850890, nanosecond: 0))
-    anyArr.append(false)
-    anyArr.append(3.14)
+    anyArr.add(1)
+    anyArr.add("q")
+    anyArr.add(DateTime.ofEpoch(second: 1673850890, nanosecond: 0))
+    anyArr.add(false)
+    anyArr.add(3.14)
     let token = 
         JWT.create().withClaim("timeArray", timeArr).withClaim("boolArray", boolArr).withClaim("anyArr", anyArr).sign(
         Algorithm.none())

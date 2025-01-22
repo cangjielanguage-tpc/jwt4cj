@@ -6,12 +6,12 @@ internal import jwt4cj.*
 
 main(){
     let map = HashMap<String, Any>()
-    map.put("String", "String1")
-    map.put("Bool", true)
-    map.put("Int64", 64)
-    map.put("Float64", 3.14)
-    map.put("Array", JsonValue.fromStr("[]"))
-    map.put("Object", JsonValue.fromStr("{}"))
+    map.add("String", "String1")
+    map.add("Bool", true)
+    map.add("Int64", 64)
+    map.add("Float64", 3.14)
+    map.add("Array", JsonValue.fromStr("[]"))
+    map.add("Object", JsonValue.fromStr("{}"))
 
     let res = ###"{
   "String": "String1",

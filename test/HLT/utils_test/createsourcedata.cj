@@ -45,7 +45,7 @@ public class SourceData {
     public func generateStringMap(para_1: Array<Rune>): HashMap<String, String> {
         var map_1: HashMap<String, String> = HashMap<String, String>()
         for (i in 0..para_1.size) {
-            map_1.put("K_${i+1}", String(para_1))
+            map_1.add("K_${i+1}", String(para_1))
         }
         return map_1
     }
@@ -107,8 +107,8 @@ public class SourceData {
         let aa: ArrayList<String> = ArrayList<String>()
         let bb: ArrayList<Any> = ArrayList<Any>()
         for ((k, v) in enter) {
-            aa.append(k)
-            bb.append(v)
+            aa.add(k)
+            bb.add(v)
         }
         let res: (ArrayList<String>, ArrayList<Any>) = (aa, bb)
         return res
@@ -153,11 +153,11 @@ public class SourceData {
     public func createClaimMap(header: Array<String>, payload: Array<String>): (HashMap<String, Any>, HashMap<String, Any>) {
         var map_h: HashMap<String, Any> = HashMap<String, Any>()
         for (i in 0..header.size : 2) {
-            map_h.put(header[i], (header[i + 1] as Any).getOrThrow())
+            map_h.add(header[i], (header[i + 1] as Any).getOrThrow())
         }
         var map_p: HashMap<String, Any> = HashMap<String, Any>()
         for (i in 0..payload.size : 2) {
-            map_p.put(payload[i], (payload[i + 1] as Any).getOrThrow())
+            map_p.add(payload[i], (payload[i + 1] as Any).getOrThrow())
         }
         return (map_h, map_p)
     }
