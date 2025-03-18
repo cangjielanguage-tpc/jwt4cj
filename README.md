@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.58.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.59.6-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-91.1%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -37,23 +37,14 @@
 ├── README.md
 ├── doc
 ├── src
-│   └── jwt
-│       ├── algorithms
-│       ├── common
-│       ├── exception
-│       ├── impl
-│       │   └── json
-│       ├── interfaces
-│       └── utils
 └── test   
     ├── HLT
-    ├── LLT
-    └── UT
+    └── LLT
 ```
 
 - `doc`存放库的设计文档、提案、库的使用文档
 - `src`存放库源码目录
-- `test`存放存放测试用例，包括HLT用例、LLT 用例和UT用例
+- `test`存放存放测试用例，包括HLT用例、LLT 用例和UT用例 (运行用例参考[TPC-Test-Framework](https://gitcode.com/Cangjie-TPC/TPC-Test-Framework))
 
 ### 接口说明
 
