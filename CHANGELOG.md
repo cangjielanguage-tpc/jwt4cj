@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.0
+
+cjc 0.60.5
+
 ## v0.0.1
 
 提供JSON Wen Token (JWT-RFC7519) 的仓颉语言实现

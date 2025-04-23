@@ -3,11 +3,11 @@
 //data_file:test_rsa_privateKey.pem 
 //data_file:test_rsa_publicKey.pem
 internal import jwt4cj.*
-internal import encoding.hex.*
+internal import stdx.encoding.hex.*
 internal import std.unittest.*
 internal import std.collection.*
 internal import std.time.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 internal import std.posix.*
 internal import std.fs.*
 
