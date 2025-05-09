@@ -2,7 +2,7 @@
 // EXEC: ./main
 internal import std.collection.*
 internal import std.time.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 
 main(){
 //     let jsonStr = ###"{

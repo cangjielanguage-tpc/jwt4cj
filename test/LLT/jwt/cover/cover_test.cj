@@ -7,13 +7,13 @@
 // EXEC: ./main
 internal import std.collection.*
 internal import std.time.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 internal import jwt4cj.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 internal import std.collection.*
 internal import std.time.*
 internal import std.fs.*
-internal import crypto.keys.*
+internal import stdx.crypto.keys.*
 
 main() {
     println(JsonNodeClaim(JsonValue.fromStr("null")).isNull())

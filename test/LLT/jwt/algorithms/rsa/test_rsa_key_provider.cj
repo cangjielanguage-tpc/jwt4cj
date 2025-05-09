@@ -7,7 +7,7 @@ internal import std.posix.*
 internal import std.fs.*
 internal import std.unittest.*
 import std.unittest.testmacro.*
-internal import crypto.keys.*
+internal import stdx.crypto.keys.*
 
 main() {
     let header = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9"

@@ -1,11 +1,11 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 //dependence:../utils_test/createsourcedata.cj
 internal import jwt4cj.*
-internal import encoding.hex.*
+internal import stdx.encoding.hex.*
 internal import std.unittest.*
 internal import std.collection.*
 internal import std.time.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 internal import std.fs.*
 
 /**

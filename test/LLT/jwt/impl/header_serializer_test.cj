@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 internal import std.collection.*
-internal import encoding.json.*
+internal import stdx.encoding.json.*
 internal import jwt4cj.*
 
 main(){

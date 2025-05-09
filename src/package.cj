@@ -3,12 +3,12 @@
  */
 package jwt4cj
 
-public import crypto.digest.*
-public import crypto.keys.*
-public import encoding.base64.*
-public import encoding.json.*
-public import encoding.json.JsonException
-public import encoding.json.JsonValue
+public import stdx.crypto.digest.*
+public import stdx.crypto.keys.*
+public import stdx.encoding.base64.*
+public import stdx.encoding.json.*
+public import stdx.encoding.json.JsonException
+public import stdx.encoding.json.JsonValue
 public import std.collection.*
 public import std.collection.*
 public import std.collection.ArrayList
