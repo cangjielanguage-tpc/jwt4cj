@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1
+
+cangjie 1.0.0
+
 ## v1.0.0
 
 cjc 0.60.5
