@@ -3,7 +3,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 internal import std.posix.*
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 main() {
     var path: String = getcwd()

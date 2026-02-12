@@ -1,7 +1,7 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 // 3rd_party_lib:jwt4cj/ci_lib/crypto4cj
 
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 internal import std.collection.*
 internal import std.time.*

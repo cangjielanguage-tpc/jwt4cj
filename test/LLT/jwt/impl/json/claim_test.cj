@@ -2,7 +2,7 @@
 // EXEC: ./main
 internal import std.collection.*
 internal import stdx.encoding.json.*
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 main() {
     try {

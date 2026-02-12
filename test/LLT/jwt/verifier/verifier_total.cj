@@ -3,7 +3,7 @@
 internal import std.collection.*
 internal import std.time.*
 internal import stdx.encoding.json.*
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 
 // withExpiresAt 2023-01-16T13:44:50+08:00

@@ -2,7 +2,7 @@
 // EXEC: ./main
 internal import std.collection.*
 internal import stdx.encoding.hex.*
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 main() {
     var hmac1 = Algorithm.HMAC256("test1280".toArray())

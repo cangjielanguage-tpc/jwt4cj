@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
-package jwt4cj
+package cangjie_tpc::jwt4cj
 
 class ECDSAAlgorithm <: Algorithm {
     private let keyProvider: ECDSAKeyProvider<ECDSAPublicKey, ECDSAPrivateKey>

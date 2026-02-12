@@ -1,7 +1,7 @@
 // 3rd_party_lib:jwt4cj/build/jwt4cj
 //dependence:../utils_test/createsourcedata.cj
 //data_file:../utils_test/test_rsa_publicKey.pem
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 internal import stdx.encoding.hex.*
 internal import std.unittest.*
 internal import std.collection.*

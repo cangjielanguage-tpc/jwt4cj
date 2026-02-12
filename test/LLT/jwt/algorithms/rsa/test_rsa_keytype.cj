@@ -2,7 +2,7 @@
 // DEPENDENCE: test_rsa_publicKey.pem
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 internal import std.posix.*
 internal import std.fs.*
 internal import std.unittest.*

@@ -3,7 +3,7 @@
 internal import std.collection.*
 internal import std.time.*
 internal import stdx.encoding.json.*
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 
 main(){
     let jwtStr = JWT.create()

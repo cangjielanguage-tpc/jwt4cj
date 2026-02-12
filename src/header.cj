@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
-package jwt4cj
+package cangjie_tpc::jwt4cj
 
 /*
  * The Header class represents the 1st part of the JWT, where the Header value is held.

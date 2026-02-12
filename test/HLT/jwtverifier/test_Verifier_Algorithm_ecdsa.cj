@@ -2,7 +2,7 @@
 //dependence:../utils_test/createsourcedata.cj
 //data_file:test_ecdsa_privateKey.pem
 //data_file:test_ecdsa_publicKey.pem
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 internal import std.unittest.*
 internal import std.unittest.*
 internal import std.collection.*

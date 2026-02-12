@@ -1,7 +1,7 @@
 // DEPENDENCE: ../utils_test/createsourcedata.cj
 // EXEC: cjc %import-path %L %l %f createsourcedata.cj --test
 // EXEC: export cjHeapSize=1GB && ./main
-internal import jwt4cj.*
+internal import cangjie_tpc::jwt4cj.*
 internal import stdx.encoding.hex.*
 internal import std.unittest.*
 internal import std.collection.*
