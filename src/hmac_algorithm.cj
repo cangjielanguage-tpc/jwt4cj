@@ -32,7 +32,9 @@ public class HMACAlgorithm <: Algorithm {
             if (!valid) {
                 throw SignatureVerificationException("HMAC exception")
             }
-        } catch (e: IllegalArgumentException) {
+        } catch (e: SignatureVerificationException) {
+            throw e
+        } catch (e: Exception) {
             throw SignatureVerificationException("HMAC Algorithm exception")
         }
     }

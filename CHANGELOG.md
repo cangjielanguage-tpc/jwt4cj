@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+
+cangjie 1.2.0
+
 ## v1.0.1
 
 cangjie 1.0.0
