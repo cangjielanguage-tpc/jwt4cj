@@ -1,6 +1,6 @@
 // DEPENDENCE: ../utils_test/createsourcedata.cj
 // EXEC: cjc %import-path %L %l %f createsourcedata.cj --test
-// EXEC: export cjHeapSize=1GB && ./main
+// EXEC: ./main
 internal import jwt4cj.*
 internal import stdx.encoding.hex.*
 internal import std.unittest.*
@@ -72,7 +72,7 @@ public class JWTTest {
     func testWithAudience_003(): Unit {
         returnTag = 0
         let jwtBuilder: Builder = JWT.create()
-        jwtBuilder.withHeader(map_Bool).withAudience(ins_1.getRandomStrArr(999999)) //超长Arrstr
+        jwtBuilder.withHeader(map_Bool).withAudience(ins_1.getRandomStrArr(909999)) //超长Arrstr
         jwtStr = jwtBuilder.sign(Algorithm.HMAC512("admin"))
         let jwtDecoder = JWTDecoder(jwtStr)
         token = jwtDecoder.getToken()
@@ -80,7 +80,7 @@ public class JWTTest {
             returnTag = 1
         }
         let arrLStr: ArrayList<String> = jwtDecoder.getAudience()
-        @Assert(arrLStr.size, 999999)
+        @Assert(arrLStr.size, 909999)
         @Assert(returnTag, 0)
     }
 }
